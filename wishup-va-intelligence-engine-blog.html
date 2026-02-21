@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>We Built Something No VA Company Has Ever Built | Wishup</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700;900&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --green: #10b981;
+    --green-light: #d1fae5;
+    --green-dark: #065f46;
+    --ink: #0f1117;
+    --muted: #6b7280;
+    --bg: #ffffff;
+    --surface: #f9fafb;
+    --border: #e5e7eb;
+    --red: #ef4444;
+    --amber: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 17px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: #07090f;
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 500px;
+    height: 300px;
+    background: radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.08;
+    max-width: 760px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .hero h1 em {
+    color: var(--green);
+    font-style: normal;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.5);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 36px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+    position: relative;
+  }
+
+  .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ── ARTICLE WRAPPER ── */
+  .article {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 56px 0 18px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 36px 0 12px;
+    line-height: 1.3;
+  }
+
+  p { margin-bottom: 20px; color: #374151; }
+
+  strong { color: var(--ink); font-weight: 500; }
+
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    border-left: 4px solid var(--green);
+    background: var(--green-light);
+    border-radius: 0 10px 10px 0;
+    padding: 22px 28px;
+    margin: 36px 0;
+    font-family: 'Fraunces', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--green-dark);
+    line-height: 1.4;
+  }
+
+  /* ── CALLOUT BOX ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin: 28px 0;
+  }
+
+  .callout-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── SCENARIO BOX ── */
+  .scenario {
+    background: #07090f;
+    border-radius: 14px;
+    padding: 32px;
+    margin: 36px 0;
+    color: rgba(255,255,255,0.85);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scenario::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .scenario-label {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .scenario h3 {
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    margin: 0 0 16px;
+    position: relative;
+  }
+
+  .scenario p {
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .scenario-steps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+    padding-top: 3px;
+  }
+
+  .step-text strong { color: #fff; }
+
+  .scenario-result {
+    position: relative;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  /* ── ENGINE VISUAL (inline) ── */
+  .engine-visual {
+    background: #07090f;
+    border-radius: 16px;
+    padding: 40px 24px 32px;
+    margin: 40px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .engine-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .engine-visual svg { position: relative; z-index: 1; }
+
+  .ev-title {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-wrap {
+    margin: 40px 0;
+    overflow-x: auto;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .compare-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .compare-table th.wishup-col {
+    background: var(--green);
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+  }
+
+  .compare-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .compare-table td.wishup-col {
+    background: #f0fdf4;
+    text-align: center;
+    color: var(--green-dark);
+    font-weight: 500;
+    border-left: 1px solid #bbf7d0;
+    border-right: 1px solid #bbf7d0;
+  }
+
+  .compare-table td.wishup-col.last-row {
+    border-radius: 0 0 8px 8px;
+    border-bottom: 1px solid #bbf7d0;
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+
+  .tick { color: var(--green); font-size: 17px; }
+  .cross { color: var(--red); font-size: 17px; }
+  .partial { color: var(--amber); font-size: 15px; }
+
+  .feature-label {
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .feature-sub {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 40px 0;
+  }
+
+  .stat-box {
+    background: var(--bg);
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  .stat-box-num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-box-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── USE CASE CARDS ── */
+  .use-cases {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .use-case-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    background: var(--surface);
+    transition: border-color 0.2s;
+  }
+
+  .use-case-card:hover { border-color: var(--green); }
+
+  .uc-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--green-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  .uc-industry {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .uc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .uc-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 24px;
+    margin: 40px 0;
+  }
+
+  .flow-diagram-title {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .flow-node {
+    text-align: center;
+    padding: 0 8px;
+  }
+
+  .flow-box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .flow-box.green {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+    box-shadow: 0 2px 12px rgba(16,185,129,0.25);
+  }
+
+  .flow-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--border);
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .flow-arrow.green { color: var(--green); }
+
+  /* ── BEFORE AFTER ── */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .ba-card {
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+
+  .ba-card.before {
+    background: #fff5f5;
+    border-color: #fecaca;
+  }
+
+  .ba-card.after {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  .ba-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .ba-card.before .ba-label { color: var(--red); }
+  .ba-card.after .ba-label { color: var(--green); }
+
+  .ba-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    align-items: flex-start;
+    line-height: 1.45;
+  }
+
+  .ba-card.before .ba-item { color: #7f1d1d; }
+  .ba-card.after .ba-item { color: var(--green-dark); }
+
+  /* ── CTA ── */
+  .cta-block {
+    background: #07090f;
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    margin: 60px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(16,185,129,0.15) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cta-block h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    color: #fff;
+    margin: 0 0 12px;
+  }
+
+  .cta-block p {
+    color: rgba(255,255,255,0.45);
+    font-size: 15px;
+    margin: 0 0 28px;
+    position: relative;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    position: relative;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+
+  /* ── INLINE BADGE ── */
+  .badge {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Animation */
+  @keyframes pulse-r {
+    0%,100%{opacity:0.15} 50%{opacity:0.35}
+  }
+  .pr1{animation:pulse-r 2.6s infinite}
+  .pr2{animation:pulse-r 2.6s 0.8s infinite}
+  .pr3{animation:pulse-r 2.6s 1.6s infinite}
+
+  @media (max-width: 640px) {
+    .use-cases, .before-after { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .flow-row { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-eyebrow">Wishup · Introducing</div>
+  <h1>Your VA Doesn't Start From Zero.<br>They Start From <em>Everything That Worked.</em></h1>
+  <p class="hero-sub">Introducing the VA Intelligence Engine — 10 years of proven workflows, templates, and decisions from 1,000+ businesses, ready on day one.</p>
+  <div class="hero-meta">
+    <span>📖 8 min read</span>
+    <span>·</span>
+    <span>Wishup Team</span>
+    <span>·</span>
+    <span>February 2026</span>
+  </div>
+</div>
+
+<!-- ══ ARTICLE ══ -->
+<div class="article">
+
+  <p>Every business that hires a Virtual Assistant hits the same wall.</p>
+
+  <p>The first few weeks are a grind. You're explaining how your CRM works. Why you use this email template and not that one. How to handle the client who never responds on time. What happened last quarter that you don't want repeated.</p>
+
+  <p>Then, eventually, your VA gets it. They hit their stride. Things run smoothly.</p>
+
+  <p>Then they leave, or you need a replacement, or your business scales and you need a second pair of hands — and you're back at zero. Explaining everything. All over again.</p>
+
+  <p>We've watched this happen with thousands of clients. And we've spent the last decade quietly building something to fix it permanently.</p>
+
+  <div class="pull-quote">
+    Most VA companies give you a person. We give you a person backed by a system — a system that already knows how your kind of business runs.
+  </div>
+
+  <h2>What Is the VA Intelligence Engine?</h2>
+
+  <p>Think of it as a constantly growing brain — built from 10 years of real work done by 1,500+ Wishup VAs across 1,000+ businesses in 20+ industries.</p>
+
+  <p>Every time a VA completes a task, solves a problem, handles a tricky situation, or finds a better way to do something — that knowledge gets captured, structured, and added to the engine.</p>
+
+  <p>It's not a manual. It's not a training video. It's a living library of <em>what actually works</em> — organized so any Wishup VA can access exactly what they need, for exactly your kind of business, from day one.</p>
+
+  <!-- ENGINE VISUAL -->
+  <div class="engine-visual">
+    <div class="ev-title">How the Engine Works</div>
+    <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+      <defs>
+        <radialGradient id="eg2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#10b981"/>
+          <stop offset="100%" stop-color="#065f46"/>
+        </radialGradient>
+        <filter id="gf2">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="aw" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="rgba(255,255,255,0.3)"/>
+        </marker>
+        <marker id="ag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#10b981"/>
+        </marker>
+      </defs>
+
+      <!-- Left inputs -->
+      <rect x="0" y="20"  width="150" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="10" y="36" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">📋 Proven workflows</text>
+      <text x="10" y="51" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">1,000+ businesses</text>
+
+      <rect x="0" y="74"  width="150" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="10" y="90" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">✉️ Templates & SOPs</text>
+      <text x="10" y="105" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">That convert, proven</text>
+
+      <rect x="0" y="128" width="150" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="10" y="144" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">🧠 Edge case library</text>
+      <text x="10" y="159" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">The hard situations, solved</text>
+
+      <rect x="0" y="182" width="150" height="38" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      <text x="10" y="198" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.7)">🏭 20+ industries</text>
+      <text x="10" y="213" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.3)">1,500+ VAs, 10 years</text>
+
+      <!-- Lines left → center -->
+      <line x1="150" y1="39"  x2="282" y2="125" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#aw)"/>
+      <line x1="150" y1="93"  x2="282" y2="128" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#aw)"/>
+      <line x1="150" y1="147" x2="282" y2="131" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#aw)"/>
+      <line x1="150" y1="201" x2="282" y2="134" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#aw)"/>
+
+      <!-- Center engine -->
+      <circle cx="340" cy="130" r="58" fill="none" stroke="#10b981" stroke-width="0.8" class="pr1"/>
+      <circle cx="340" cy="130" r="46" fill="none" stroke="#10b981" stroke-width="0.5" class="pr2"/>
+      <circle cx="340" cy="130" r="36" fill="url(#eg2)" filter="url(#gf2)"/>
+      <text x="340" y="120" text-anchor="middle" font-family="Fraunces,serif" font-size="11" font-weight="700" fill="#fff">VA Intelligence</text>
+      <text x="340" y="133" text-anchor="middle" font-family="Fraunces,serif" font-size="11" font-weight="700" fill="#10b981">Engine</text>
+      <text x="340" y="147" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="rgba(255,255,255,0.4)">10 years compounding</text>
+
+      <!-- Lines center → right -->
+      <line x1="398" y1="120" x2="526" y2="43"  stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#ag)"/>
+      <line x1="398" y1="126" x2="526" y2="97"  stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#ag)"/>
+      <line x1="398" y1="133" x2="526" y2="151" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#ag)"/>
+      <line x1="398" y1="140" x2="526" y2="205" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity="0.6" marker-end="url(#ag)"/>
+
+      <!-- Right outputs -->
+      <rect x="530" y="24"  width="148" height="38" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="540" y="40" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">⚡ Day-1 productivity</text>
+      <text x="540" y="55" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">No ramp. No hand-holding.</text>
+
+      <rect x="530" y="78"  width="148" height="38" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="540" y="94" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">🎯 Ready playbooks</text>
+      <text x="540" y="109" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">Start where others finish</text>
+
+      <rect x="530" y="132" width="148" height="38" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="540" y="148" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">🔄 Zero knowledge loss</text>
+      <text x="540" y="163" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">System holds it, not a person</text>
+
+      <rect x="530" y="186" width="148" height="38" rx="8" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.25)" stroke-width="1"/>
+      <text x="540" y="202" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">📈 Better ideas, faster</text>
+      <text x="540" y="217" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">Draws from what worked before</text>
+
+      <!-- Animated dots -->
+      <circle r="3" fill="rgba(255,255,255,0.6)">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="0s" path="M150,39 L282,125"/>
+      </circle>
+      <circle r="3" fill="rgba(255,255,255,0.6)">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.55s" path="M150,93 L282,128"/>
+      </circle>
+      <circle r="3" fill="rgba(255,255,255,0.6)">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.1s" path="M150,147 L282,131"/>
+      </circle>
+      <circle r="3" fill="rgba(255,255,255,0.6)">
+        <animateMotion dur="2.2s" repeatCount="indefinite" begin="1.65s" path="M150,201 L282,134"/>
+      </circle>
+      <circle r="3.5" fill="#10b981">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.1s" path="M398,120 L526,43"/>
+      </circle>
+      <circle r="3.5" fill="#10b981">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="0.55s" path="M398,126 L526,97"/>
+      </circle>
+      <circle r="3.5" fill="#10b981">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="1s" path="M398,133 L526,151"/>
+      </circle>
+      <circle r="3.5" fill="#10b981">
+        <animateMotion dur="1.8s" repeatCount="indefinite" begin="1.45s" path="M398,140 L526,205"/>
+      </circle>
+    </svg>
+  </div>
+
+  <h2>Why Every Other Solution Falls Short</h2>
+
+  <p>Before we show you what the engine does, let's be honest about what the alternatives look like — because you've probably tried some of them.</p>
+
+  <div class="before-after">
+    <div class="ba-card before">
+      <div class="ba-label">❌ Without the Engine</div>
+      <div class="ba-item"><span>⏳</span><span>Weeks of onboarding before your VA is useful</span></div>
+      <div class="ba-item"><span>🔁</span><span>Repeat yourself every time there's a change</span></div>
+      <div class="ba-item"><span>💸</span><span>Pay for learning time, not working time</span></div>
+      <div class="ba-item"><span>😬</span><span>VA leaves and takes everything with them</span></div>
+      <div class="ba-item"><span>🎲</span><span>No guarantee the next VA will perform the same</span></div>
+    </div>
+    <div class="ba-card after">
+      <div class="ba-label">✅ With the Engine</div>
+      <div class="ba-item"><span>⚡</span><span>Day-one productivity, no ramp required</span></div>
+      <div class="ba-item"><span>📚</span><span>Proven workflows already loaded and ready</span></div>
+      <div class="ba-item"><span>🎯</span><span>Pay for output, not for figuring things out</span></div>
+      <div class="ba-item"><span>🔒</span><span>Knowledge stays in the system, not the person</span></div>
+      <div class="ba-item"><span>📈</span><span>Every replacement starts stronger than the last</span></div>
+    </div>
+  </div>
+
+  <h2>How It Actually Works: Two Things Happening at Once</h2>
+
+  <p>The VA Intelligence Engine does two things simultaneously — and both matter.</p>
+
+  <h3>1. Whatever you need is probably already in there</h3>
+
+  <p>Think about your business for a second. You're probably in one of these buckets: real estate, healthcare, e-commerce, SaaS, legal, finance, or professional services. Maybe a combination.</p>
+
+  <p>We've had VAs working inside businesses like yours for 10 years. The workflows they used. The templates that worked. The mistakes they helped avoid. The edge cases nobody warns you about. All of it is structured and searchable inside the engine.</p>
+
+  <p>So when your VA sits down on day one, they're not starting fresh. They're starting with a proven foundation built by 1,500 people who've done this before them, across 1,000+ businesses exactly like yours.</p>
+
+  <h3>2. When something is new, they learn from what's closest</h3>
+
+  <p>Your business isn't identical to anyone else's. You have specific quirks, tools, and preferences. When your VA encounters something the engine doesn't cover exactly, they don't guess. They search for the closest model that worked — a similar industry, a similar workflow, a similar situation — and adapt from there.</p>
+
+  <p>That's not improvisation. That's informed judgment backed by a decade of structured experience.</p>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="flow-diagram">
+    <div class="flow-diagram-title">How a Wishup VA Approaches Any New Task</div>
+    <div class="flow-row">
+      <div class="flow-node">
+        <div class="flow-box">New task arrives</div>
+        <div class="flow-sub">From client</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box green">Check the Engine</div>
+        <div class="flow-sub">Proven match?</div>
+      </div>
+      <div class="flow-arrow green">→</div>
+      <div class="flow-node">
+        <div class="flow-box">Adapt & Execute</div>
+        <div class="flow-sub">With context</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="flow-box">Result captured</div>
+        <div class="flow-sub">Engine gets smarter</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>See It in Action: Real Use Cases</h2>
+
+  <p>Here's what this looks like across the industries we work with most.</p>
+
+  <div class="use-cases">
+    <div class="use-case-card">
+      <div class="uc-icon">🏠</div>
+      <div class="uc-industry">Real Estate</div>
+      <div class="uc-title">CRM & Lead Follow-Up</div>
+      <p class="uc-body">Your VA accesses 3 years of follow-up sequences used by real estate agents with 200+ listings. Email cadences, call scripts, what to do with cold leads — all proven, all ready.</p>
+    </div>
+    <div class="use-case-card">
+      <div class="uc-icon">🏥</div>
+      <div class="uc-industry">Healthcare</div>
+      <div class="uc-title">Patient Coordination</div>
+      <p class="uc-body">Appointment reminders that reduced no-shows by 40% at a 50-doctor practice. Insurance follow-up workflows. Compliance-safe communication templates. Already structured in the engine.</p>
+    </div>
+    <div class="use-case-card">
+      <div class="uc-icon">🛒</div>
+      <div class="uc-industry">E-commerce</div>
+      <div class="uc-title">Inventory & Customer Support</div>
+      <p class="uc-body">Proven SOPs for handling refund requests, supplier escalations, and seasonal inventory spikes — including edge cases like how to handle a product recall over email.</p>
+    </div>
+    <div class="use-case-card">
+      <div class="uc-icon">⚖️</div>
+      <div class="uc-industry">Legal</div>
+      <div class="uc-title">Document Management</div>
+      <p class="uc-body">Intake workflows, client communication templates, and deadline-tracking systems built from years of working inside law firms. Your VA doesn't ask what format you want — they already know what works.</p>
+    </div>
+    <div class="use-case-card">
+      <div class="uc-icon">💼</div>
+      <div class="uc-industry">SaaS / Startups</div>
+      <div class="uc-title">Exec Support & Operations</div>
+      <p class="uc-body">Calendar management systems, investor update templates, and onboarding playbooks built for fast-moving teams. Your VA operates like they've been at your company for months — from week one.</p>
+    </div>
+    <div class="use-case-card">
+      <div class="uc-icon">📊</div>
+      <div class="uc-industry">Finance</div>
+      <div class="uc-title">Bookkeeping & Reporting</div>
+      <p class="uc-body">Monthly close workflows, expense categorization rules, and reporting formats that CFOs actually use — pulled from hundreds of finance teams. Clean books, no coaching required.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>Wishup vs. Everyone Else</h2>
+
+  <p>Here's the honest comparison. Not a marketing chart — an actual breakdown of what you get and what you don't, across your options.</p>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th style="width:30%">What you're evaluating</th>
+          <th style="width:23%" class="wishup-col">Wishup + Engine</th>
+          <th style="width:23%">Other VA companies</th>
+          <th style="width:24%">Freelancer / Upwork</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span class="feature-label">Day-one readiness</span>
+            <span class="feature-sub">How fast can they actually work?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>Starts with proven workflows</small></td>
+          <td><span class="partial">~</span><br><small>Trained, but learns your biz fresh</small></td>
+          <td><span class="cross">✗</span><br><small>You train them from scratch</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Knowledge continuity</span>
+            <span class="feature-sub">What happens when they leave?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>Stays in the engine forever</small></td>
+          <td><span class="cross">✗</span><br><small>Walks out the door with them</small></td>
+          <td><span class="cross">✗</span><br><small>Starts over completely</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Industry-specific knowledge</span>
+            <span class="feature-sub">Do they know your world?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>20+ industries, structured</small></td>
+          <td><span class="partial">~</span><br><small>Depends on the VA you get</small></td>
+          <td><span class="partial">~</span><br><small>Depends who you find</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Edge case handling</span>
+            <span class="feature-sub">What about the unusual situations?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>Library of solved edge cases</small></td>
+          <td><span class="cross">✗</span><br><small>Escalates to you every time</small></td>
+          <td><span class="cross">✗</span><br><small>You answer or it doesn't get done</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Scales with your business</span>
+            <span class="feature-sub">Add more VAs without re-training?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>Every new VA plugs into the engine</small></td>
+          <td><span class="cross">✗</span><br><small>Each new hire = new onboarding</small></td>
+          <td><span class="cross">✗</span><br><small>You start the whole process again</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Gets smarter over time</span>
+            <span class="feature-sub">Does it improve automatically?</span>
+          </td>
+          <td class="wishup-col"><span class="tick">✓</span><br><small>Every task adds to the engine</small></td>
+          <td><span class="cross">✗</span><br><small>Only as good as the individual VA</small></td>
+          <td><span class="cross">✗</span><br><small>No institutional learning</small></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="feature-label">Cost</span>
+            <span class="feature-sub">What are you actually paying for?</span>
+          </td>
+          <td class="wishup-col last-row"><span class="tick">✓</span><br><small>Output, not learning time</small></td>
+          <td>Mixed<br><small>Output + your time training</small></td>
+          <td>Cheaper hourly<br><small>But hidden costs in your time</small></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCENARIO -->
+  <div class="scenario">
+    <div class="scenario-label">Real Scenario</div>
+    <h3>A Real Estate Agent Hires a New VA</h3>
+    <p>She manages 80 active listings. Her previous VA handled all CRM updates and lead follow-ups. That VA just left. Here's what happens next — with and without the engine.</p>
+
+    <div class="scenario-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>New Wishup VA starts Monday.</strong> Before they even meet the client, they've accessed workflows from 12 real estate agents with similar listing volumes — CRM structures, lead stages, follow-up cadences.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>First week: they're already working.</strong> Lead follow-up emails go out using templates that converted in comparable markets. The CRM is updated using a workflow that reduced errors by 90% at a similar firm.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>An edge case comes up.</strong> A lead goes dark for 45 days. Instead of asking the client what to do, the VA checks the engine — there's a re-engagement sequence that worked in exactly this scenario. They execute it.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>The client notices something different.</strong> Instead of spending 2 weeks re-explaining everything, she's reviewing output by day 3. Her previous VA took 6 weeks to hit this level.</div>
+      </div>
+    </div>
+
+    <div class="scenario-result">
+      Result: Faster ramp. No dropped leads. The next VA they hire will be even better — because this engagement just added more to the engine.
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <h2>The Network Effect Nobody Else Has</h2>
+
+  <p>Here's the part that makes this a permanent moat — not just a feature.</p>
+
+  <p>Every client who works with Wishup makes the engine smarter. Every VA who solves a problem adds a solved case. Every workflow that gets refined gets stored. The engine in 2026 is exponentially more useful than it was in 2020 — and it will be exponentially more useful in 2030 than it is today.</p>
+
+  <p>A freelancer can't replicate this. A new VA company can't replicate this. They'd need 10 years of structured operational knowledge across 1,000+ businesses. You can't shortcut that.</p>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-box-num">1,000+</div>
+      <div class="stat-box-label">Businesses in the engine</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-num">20+</div>
+      <div class="stat-box-label">Industries covered</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-num">1,500+</div>
+      <div class="stat-box-label">VAs who've contributed</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-box-num">10 Yrs</div>
+      <div class="stat-box-label">Of compounding knowledge</div>
+    </div>
+  </div>
+
+  <h2>What This Means for You, Practically</h2>
+
+  <p>If you've never hired a VA before, the engine removes the biggest fear: wasting weeks getting someone up to speed before seeing any return. Your VA arrives ready. You see real output in the first week.</p>
+
+  <p>If you've had VAs before and it hasn't worked, the engine is often why. The VA was good — but the system wasn't there. With Wishup, the system is always there, regardless of which VA you work with.</p>
+
+  <p>If you're scaling and need multiple VAs, the engine is the answer to the question every growing business dreads: how do we keep quality consistent as we add people? Every VA, new or experienced, operates from the same proven foundation.</p>
+
+  <div class="pull-quote">
+    A freelancer brings their own experience. A Wishup VA brings the collective experience of every business that came before yours.
+  </div>
+
+  <h2>This Is the Only VA Company Built This Way</h2>
+
+  <p>We're not saying this to be dramatic. We're saying it because it's verifiable.</p>
+
+  <p>Other VA companies match you with a person. Some train that person well. Some don't. But the knowledge lives with the individual. When they go, it goes with them.</p>
+
+  <p>Wishup is the only VA company that has built a system where operational knowledge compounds — where each client and each VA makes the entire network smarter. Where your VA starts not from their own experience, but from the collective experience of 1,500 people across 1,000 businesses.</p>
+
+  <p>That's not a feature. That's a fundamentally different category of service.</p>
+
+  <div class="callout">
+    <div class="callout-label">Plain English Summary</div>
+    <p style="margin:0;font-size:16px;color:var(--ink);">When you hire a Wishup VA, you're not just hiring a person. You're plugging into a decade of structured knowledge about how businesses like yours run — what works, what doesn't, and how to handle everything in between. Your VA starts where every other VA finishes.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <h2>Your VA Shouldn't Start From Zero.</h2>
+    <p>See how the VA Intelligence Engine works for your specific business and industry.</p>
+    <a href="#" class="cta-btn">Talk to Wishup →</a>
+  </div>
+
+</div>
+</body>
+</html>
