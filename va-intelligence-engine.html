@@ -3,1105 +3,1567 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VA Intelligence Engine | Wishup</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Wishup — Business Continuity, Owned End-to-End</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ════════════════════════════════════════
-   TOKENS
-════════════════════════════════════════ */
 :root {
-  --g:       #0f9f6e;
-  --g-l:     #10b981;
-  --g-xl:    #d1fae5;
-  --g-xxl:   #ecfdf5;
-  --g-d:     #065f46;
-  --g-dd:    #022c22;
-  --ink:     #0a1a12;
-  --ink2:    #1c3328;
-  --body:    #2d4a3e;
-  --muted:   #5a7a6e;
-  --border:  #c6e8d8;
-  --border2: #a7f3d0;
-  --bg:      #f4fdf8;
-  --surface: #ffffff;
-  --red:     #dc2626;
-  --amber:   #d97706;
-  --font-d:  'Playfair Display', Georgia, serif;
-  --font-b:  'DM Sans', sans-serif;
+  --green-deep: #0a3d2e;
+  --green-mid: #1a6b4a;
+  --green-accent: #22c55e;
+  --green-light: #dcfce7;
+  --green-pale: #f0fdf4;
+  --gold: #c9a84c;
+  --cream: #fafaf8;
+  --dark: #0d1f17;
+  --text: #1c2e24;
+  --muted: #5a7a65;
+  --border: #d4e8dc;
+  --white: #ffffff;
 }
 
-/* ════════════════════════════════════════
-   RESET
-════════════════════════════════════════ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;font-size:17px}
-body{
-  font-family:var(--font-b);
-  background:var(--bg);
-  color:var(--body);
-  line-height:1.75;
-  overflow-x:hidden;
-}
-img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ════════════════════════════════════════
-   SCROLL REVEAL
-════════════════════════════════════════ */
-.sr{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
-.sr.in{opacity:1;transform:none}
-.sr-l{opacity:0;transform:translateX(-28px);transition:opacity .65s ease,transform .65s ease}
-.sr-l.in{opacity:1;transform:none}
-.sr-r{opacity:0;transform:translateX(28px);transition:opacity .65s ease,transform .65s ease}
-.sr-r.in{opacity:1;transform:none}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
-.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+html { scroll-behavior: smooth; }
 
-/* ════════════════════════════════════════
-   NAV
-════════════════════════════════════════ */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  height:56px;padding:0 40px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(244,253,248,.9);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-  transition:box-shadow .3s;
-}
-nav.scrolled{box-shadow:0 2px 20px rgba(15,159,110,.1)}
-.nav-logo{
-  font-family:var(--font-d);font-size:20px;font-weight:900;
-  color:var(--g-d);letter-spacing:-.02em;
-}
-.nav-logo b{color:var(--g-l)}
-.nav-pill{
-  font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--g);background:var(--g-xl);
-  padding:5px 14px;border-radius:20px;
-  border:1px solid var(--border2);
-}
-.nav-cta{
-  font-size:13px;font-weight:600;color:#fff;
-  background:var(--g);padding:8px 20px;border-radius:8px;
-  transition:background .2s,transform .15s;
-}
-.nav-cta:hover{background:var(--g-d);transform:translateY(-1px)}
-
-/* ════════════════════════════════════════
-   HERO
-════════════════════════════════════════ */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:100px 24px 80px;
-  text-align:center;
-  position:relative;overflow:hidden;
-  background:linear-gradient(150deg,#e8fdf2 0%,#f4fdf8 50%,#edfaf3 100%);
-}
-.hero-bg-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(var(--border) 1px,transparent 1px),
-    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:52px 52px;
-  opacity:.4;
-}
-.hero-glow{
-  position:absolute;
-  width:800px;height:500px;
-  background:radial-gradient(ellipse,rgba(16,185,129,.1) 0%,transparent 65%);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-.hero-orb{
-  position:absolute;
-  border-radius:50%;
-  background:radial-gradient(circle,rgba(16,185,129,.06),transparent);
-  animation:orb-float 8s ease-in-out infinite;
-}
-.hero-orb.o1{width:300px;height:300px;top:10%;left:5%;animation-delay:0s}
-.hero-orb.o2{width:200px;height:200px;bottom:15%;right:8%;animation-delay:3s}
-@keyframes orb-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--g);margin-bottom:28px;position:relative;
-}
-.hero-eyebrow::before,.hero-eyebrow::after{
-  content:'';width:28px;height:1px;background:var(--g);opacity:.5;
-}
-.hero-h1{
-  font-family:var(--font-d);
-  font-size:clamp(36px,5.5vw,70px);
-  font-weight:900;color:var(--ink);
-  line-height:1.04;letter-spacing:-.025em;
-  max-width:860px;margin:0 auto 16px;position:relative;
-}
-.hero-h1 .em{
-  color:var(--g);font-style:italic;position:relative;
-}
-.hero-h1 .em::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--g),var(--g-l));
-  border-radius:2px;opacity:.35;
-}
-.hero-tagline{
-  font-family:var(--font-d);font-style:italic;font-weight:400;
-  font-size:clamp(15px,2vw,20px);
-  color:var(--muted);margin-bottom:8px;position:relative;
-}
-.hero-meta{
-  font-size:12px;color:var(--muted);margin-bottom:48px;
-  display:flex;align-items:center;gap:10px;justify-content:center;position:relative;
-}
-.hero-meta span{opacity:.35}
-
-/* Hero stats */
-.hero-stats{
-  display:flex;border:1px solid var(--border2);border-radius:16px;
-  background:var(--surface);overflow:hidden;
-  box-shadow:0 4px 32px rgba(15,159,110,.1);
-  position:relative;
-}
-.hs{
-  padding:20px 30px;border-right:1px solid var(--border);text-align:center;
-  min-width:120px;
-}
-.hs:last-child{border-right:none}
-.hs-num{
-  font-family:var(--font-d);font-size:28px;font-weight:900;
-  color:var(--g);line-height:1;margin-bottom:5px;
-}
-.hs-lbl{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
-
-/* scroll mouse */
-.hero-scroll{
-  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.5;
-}
-.scroll-mouse{
-  width:18px;height:28px;border:1.5px solid var(--border2);border-radius:9px;
-  display:flex;align-items:flex-start;justify-content:center;padding-top:4px;
-}
-.scroll-mouse::after{
-  content:'';width:3px;height:6px;background:var(--g);border-radius:2px;
-  animation:mouse-scroll 1.8s infinite;
-}
-@keyframes mouse-scroll{0%,100%{opacity:1;transform:none}60%{opacity:.2;transform:translateY(8px)}}
-
-/* ════════════════════════════════════════
-   ARTICLE WRAPPER
-════════════════════════════════════════ */
-.article{max-width:720px;margin:0 auto;padding:0 24px 120px}
-
-/* ════════════════════════════════════════
-   TYPOGRAPHY
-════════════════════════════════════════ */
-.sec{margin-bottom:72px}
-.sec-label{
-  display:inline-block;
-  font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;
-  color:var(--g);background:var(--g-xl);
-  border:1px solid var(--border2);
-  padding:4px 14px;border-radius:20px;margin-bottom:16px;
-}
-h2{
-  font-family:var(--font-d);
-  font-size:clamp(22px,3.2vw,36px);
-  font-weight:900;color:var(--ink);
-  line-height:1.18;letter-spacing:-.02em;
-  margin-bottom:20px;
-}
-h2 .acc{color:var(--g)}
-h3{
-  font-family:var(--font-d);font-size:19px;font-weight:700;
-  color:var(--ink2);margin:32px 0 10px;line-height:1.3;
-}
-p{margin-bottom:18px;color:var(--body)}
-p:last-child{margin-bottom:0}
-strong{color:var(--ink);font-weight:600}
-em{font-style:italic}
-hr.div{border:none;border-top:1px solid var(--border);margin:64px 0}
-
-/* ════════════════════════════════════════
-   FLOATING HIGHLIGHT QUOTES (7)
-════════════════════════════════════════ */
-.fq{
-  background:var(--g);
-  border-radius:16px;
-  padding:32px 40px;
-  margin:52px -48px;
-  position:relative;overflow:hidden;
-  box-shadow:0 8px 48px rgba(15,159,110,.22);
-}
-.fq::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 55%);
-}
-.fq::after{
-  content:'';position:absolute;
-  width:220px;height:220px;border-radius:50%;
-  background:rgba(255,255,255,.05);
-  right:-60px;bottom:-60px;
-}
-.fq-num{
-  font-family:var(--font-d);font-size:11px;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(255,255,255,.5);margin-bottom:10px;
-  display:flex;align-items:center;gap:8px;position:relative;z-index:1;
-}
-.fq-num::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.2)}
-.fq-text{
-  font-family:var(--font-d);
-  font-size:clamp(17px,2.5vw,22px);
-  font-weight:700;color:#fff;
-  line-height:1.45;position:relative;z-index:1;
-}
-.fq-icon{
-  position:absolute;right:36px;top:50%;transform:translateY(-50%);
-  font-size:48px;opacity:.12;z-index:0;
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+  font-size: 1.19rem; /* base size bumped +3pt */
 }
 
-/* ════════════════════════════════════════
-   PULL QUOTE (article-width)
-════════════════════════════════════════ */
-.pq{
-  border-left:4px solid var(--g);
-  background:linear-gradient(100deg,var(--g-xxl),var(--surface));
-  border-radius:0 12px 12px 0;
-  padding:22px 28px;margin:36px 0;
-  font-family:var(--font-d);font-style:italic;
-  font-size:18px;font-weight:700;color:var(--g-d);
-  line-height:1.5;
-  box-shadow:0 2px 16px rgba(15,159,110,.07);
-  position:relative;
+/* Custom cursor */
+.cursor {
+  width: 12px; height: 12px;
+  background: var(--green-accent);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
 }
-.pq::before{
-  content:'\201C';font-size:72px;font-family:var(--font-d);
-  color:var(--g);opacity:.12;
-  position:absolute;top:-8px;left:16px;line-height:1;
-}
-
-/* ════════════════════════════════════════
-   BEFORE / AFTER GRID
-════════════════════════════════════════ */
-.ba-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
-.ba-card{border-radius:14px;padding:24px;border:1px solid}
-.ba-card.bad{background:#fef8f8;border-color:#fecaca}
-.ba-card.good{background:var(--g-xxl);border-color:var(--border2)}
-.ba-head{
-  font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
-  margin-bottom:16px;display:flex;align-items:center;gap:7px;
-}
-.ba-card.bad .ba-head{color:var(--red)}
-.ba-card.good .ba-head{color:var(--g-d)}
-.ba-row{display:flex;gap:10px;font-size:13.5px;margin-bottom:9px;line-height:1.5;align-items:flex-start}
-.ba-card.bad .ba-row{color:#7f1d1d}
-.ba-card.good .ba-row{color:var(--g-d)}
-.ba-ic{flex-shrink:0;font-size:14px;margin-top:1px}
-
-/* ════════════════════════════════════════
-   ENGINE SVG WRAPPER
-════════════════════════════════════════ */
-.engine-box{
-  background:var(--ink);border-radius:20px;
-  padding:44px 28px 36px;margin:40px 0;
-  position:relative;overflow:hidden;
-}
-.engine-box::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(16,185,129,.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(16,185,129,.07) 1px,transparent 1px);
-  background-size:36px 36px;
-}
-.engine-cap{
-  text-align:center;font-size:10px;letter-spacing:.24em;
-  text-transform:uppercase;color:rgba(255,255,255,.3);
-  margin-bottom:28px;position:relative;
-}
-.engine-svg{width:100%;display:block;position:relative;z-index:1}
-
-@keyframes pr{0%,100%{opacity:.1}50%{opacity:.32}}
-@keyframes glow-pulse{0%,100%{filter:drop-shadow(0 0 6px #10b981)}50%{filter:drop-shadow(0 0 14px #10b981)}}
-.r1{animation:pr 3s infinite}
-.r2{animation:pr 3s .9s infinite}
-.r3{animation:pr 3s 1.8s infinite}
-.cg{animation:glow-pulse 2.5s infinite}
-
-/* ════════════════════════════════════════
-   USE CASE CARDS
-════════════════════════════════════════ */
-.uc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
-.uc-card{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:14px;padding:24px;
-  transition:border-color .2s,box-shadow .25s,transform .22s;
-  cursor:default;
-}
-.uc-card:hover{
-  border-color:var(--g-l);
-  box-shadow:0 6px 28px rgba(15,159,110,.12);
-  transform:translateY(-3px);
-}
-.uc-tag{
-  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--g);margin-bottom:8px;
-}
-.uc-title{
-  font-family:var(--font-d);font-size:16px;font-weight:700;
-  color:var(--ink);margin-bottom:10px;line-height:1.3;
-}
-.uc-body{font-size:13.5px;color:var(--muted);line-height:1.65}
-.uc-badge{
-  display:inline-block;margin-top:10px;
-  font-size:11px;font-weight:600;color:var(--g-d);
-  background:var(--g-xl);padding:3px 10px;border-radius:6px;
+.cursor-follower {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--green-mid);
+  border-radius: 50%;
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+  opacity: 0.6;
 }
 
-/* ════════════════════════════════════════
-   COMPARISON TABLE
-════════════════════════════════════════ */
-.cmp-wrap{margin:28px 0;overflow-x:auto}
-.cmp{
-  width:100%;border-collapse:separate;border-spacing:0;
-  font-size:13.5px;border-radius:14px;overflow:hidden;
-  border:1px solid var(--border);
-}
-.cmp th{
-  padding:13px 16px;text-align:center;
-  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  background:var(--g-xxl);border-bottom:2px solid var(--border);
-  white-space:nowrap;
-}
-.cmp th.wc{background:var(--g);color:#fff}
-.cmp th:first-child{text-align:left}
-.cmp td{
-  padding:13px 16px;border-bottom:1px solid var(--border);
-  text-align:center;vertical-align:middle;
-}
-.cmp td:first-child{text-align:left;font-weight:500;color:var(--ink2)}
-.cmp td.wc{background:var(--g-xxl)}
-.cmp tr:last-child td{border-bottom:none}
-.cmp tr:hover td{background:rgba(209,250,229,.4)}
-.cmp tr:hover td.wc{background:var(--g-xl)}
-.tk{color:var(--g);font-size:18px;font-weight:700}
-.cx{color:var(--red);font-size:18px}
-.pt{color:var(--amber)}
-.sn{font-size:11px;color:var(--muted);display:block;margin-top:2px}
-
-/* ════════════════════════════════════════
-   MOAT LINES
-════════════════════════════════════════ */
-.moat{display:flex;flex-direction:column;gap:0;margin:24px 0}
-.moat-row{
-  display:flex;gap:14px;align-items:flex-start;
-  padding:13px 0;border-bottom:1px solid var(--border);
-  font-size:15px;color:var(--body);
-}
-.moat-row:last-child{border-bottom:none}
-.moat-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--g);flex-shrink:0;margin-top:8px;
+/* NAV */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  padding: 0 60px;
+  background: rgba(250,250,248,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
 }
 
-/* ════════════════════════════════════════
-   STATS ROW
-════════════════════════════════════════ */
-.stats-row{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--border2);border-radius:14px;
-  overflow:hidden;background:var(--surface);
-  box-shadow:0 4px 24px rgba(15,159,110,.08);
-  margin:32px 0;
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; /* was 1.7rem */
+  font-weight: 600;
+  color: var(--green-deep);
+  letter-spacing: -0.02em;
 }
-.st-box{
-  padding:22px 14px;text-align:center;
-  border-right:1px solid var(--border);
-}
-.st-box:last-child{border-right:none}
-.st-num{
-  font-family:var(--font-d);font-size:28px;font-weight:900;
-  color:var(--g);line-height:1;margin-bottom:5px;
-}
-.st-lbl{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.nav-logo span { color: var(--green-accent); }
 
-/* ════════════════════════════════════════
-   SCENARIO BOX
-════════════════════════════════════════ */
-.scenario{
-  background:var(--ink);border-radius:18px;
-  padding:36px 36px 32px;margin:32px 0;
-  position:relative;overflow:hidden;
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-size: 1.04rem; /* was 0.85rem */
+  font-weight: 500; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
 }
-.scenario::before{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(16,185,129,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(16,185,129,.05) 1px,transparent 1px);
-  background-size:32px 32px;
+.nav-links a:hover { color: var(--green-deep); }
+
+.nav-cta {
+  background: var(--green-deep);
+  color: var(--white) !important;
+  padding: 10px 24px !important;
+  border-radius: 4px;
+  transition: background 0.2s !important;
 }
-.sc-label{
-  font-size:10px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--g-l);margin-bottom:12px;position:relative;
-}
-.scenario h3{color:#fff;margin-top:0;font-size:19px;position:relative}
-.scenario p{color:rgba(255,255,255,.6);font-size:14.5px;position:relative}
-.sc-steps{position:relative;margin-top:20px;display:flex;flex-direction:column;gap:14px}
-.sc-step{display:flex;gap:14px;align-items:flex-start}
-.sc-n{
-  width:27px;height:27px;border-radius:50%;
-  background:var(--g);color:#fff;
-  font-size:12px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.sc-t{font-size:14px;color:rgba(255,255,255,.7);line-height:1.55;padding-top:4px}
-.sc-t strong{color:#fff}
-.sc-result{
-  position:relative;
-  background:rgba(16,185,129,.14);
-  border:1px solid rgba(16,185,129,.28);
-  border-radius:8px;padding:14px 18px;margin-top:18px;
-  font-size:14px;font-weight:600;color:var(--g-l);
+.nav-cta:hover { background: var(--green-mid) !important; color: var(--white) !important; }
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 72px;
+  position: relative;
+  overflow: hidden;
 }
 
-/* ════════════════════════════════════════
-   PRIVACY CALLOUT
-════════════════════════════════════════ */
-.priv-callout{
-  background:var(--surface);border:1.5px solid var(--border2);
-  border-radius:14px;padding:26px 30px;margin:24px 0;
-}
-.grey-bar{
-  border-left:3px solid var(--border2);
-  padding:14px 22px;margin:22px 0;
-  background:var(--g-xxl);border-radius:0 10px 10px 0;
-  font-size:15px;color:var(--body);
+.hero-bg-pattern {
+  position: absolute; inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(34,197,94,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(10,61,46,0.05) 0%, transparent 50%);
+  z-index: 0;
 }
 
-/* ════════════════════════════════════════
-   SIMPLE SUMMARY
-════════════════════════════════════════ */
-.summary-box{
-  background:var(--surface);
-  border:1.5px solid var(--border2);
-  border-radius:14px;padding:28px 32px;margin:28px 0;
-  position:relative;
-}
-.summary-box::before{
-  content:'In simple words';
-  position:absolute;top:-11px;left:22px;
-  font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--g);background:var(--surface);padding:0 8px;
-}
-.summary-box p{
-  font-family:var(--font-d);font-style:italic;font-weight:400;
-  font-size:17px;color:var(--ink2);margin:0;line-height:1.75;
+.hero-grid-lines {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: 
+    linear-gradient(rgba(34,197,94,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-/* ════════════════════════════════════════
-   CTA BLOCK
-════════════════════════════════════════ */
-.cta-block{
-  background:linear-gradient(130deg,var(--ink) 0%,var(--ink2) 100%);
-  border-radius:20px;padding:56px 40px;
-  text-align:center;margin-top:64px;
-  position:relative;overflow:hidden;
+.hero-left {
+  padding: 100px 80px 80px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; z-index: 1;
 }
-.cta-block::before{
-  content:'';position:absolute;
-  width:600px;height:320px;
-  background:radial-gradient(ellipse,rgba(16,185,129,.15),transparent 65%);
-  top:50%;left:50%;transform:translate(-50%,-50%);
-}
-.cta-block::after{
-  content:'';position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(16,185,129,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(16,185,129,.04) 1px,transparent 1px);
-  background-size:40px 40px;
-}
-.cta-inner{position:relative;z-index:1}
-.cta-block h2{color:#fff;margin-bottom:10px}
-.cta-block p{color:rgba(255,255,255,.45);font-size:15.5px;margin-bottom:32px}
-.btn{
-  display:inline-flex;align-items:center;gap:10px;
-  background:var(--g);color:#fff;
-  font-family:var(--font-b);font-size:15px;font-weight:600;
-  padding:15px 36px;border-radius:10px;
-  border:none;cursor:pointer;
-  transition:background .2s,transform .18s,box-shadow .2s;
-  box-shadow:0 4px 20px rgba(16,185,129,.3);
-}
-.btn:hover{background:var(--g-d);transform:translateY(-2px);box-shadow:0 8px 28px rgba(16,185,129,.35)}
-.btn-ghost{
-  background:transparent;color:#fff;
-  border:1.5px solid rgba(255,255,255,.25);
-  box-shadow:none;margin-left:12px;
-}
-.btn-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
 
-/* ════════════════════════════════════════
-   RESPONSIVE
-════════════════════════════════════════ */
-@media(max-width:680px){
-  .ba-grid,.uc-grid{grid-template-columns:1fr}
-  .stats-row{grid-template-columns:1fr 1fr}
-  .hero-stats{flex-wrap:wrap}
-  .fq{margin:44px -16px;padding:26px 22px}
-  nav .nav-pill{display:none}
-  nav{padding:0 16px}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green-light);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: var(--green-mid);
+  font-size: 0.94rem; /* was 0.75rem */
+  font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 100px;
+  margin-bottom: 32px;
+  animation: fadeUp 0.8s ease forwards;
+  opacity: 0;
 }
-@media(max-width:480px){
-  .stats-row{grid-template-columns:1fr 1fr}
-  .hs{padding:16px 18px}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--green-accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.19rem, 4.7vw, 5.19rem); /* +0.19rem */
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--green-deep);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s 0.15s ease forwards;
+  opacity: 0;
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--green-mid);
+}
+
+.hero-headline .highlight {
+  position: relative; display: inline-block;
+}
+.hero-headline .highlight::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green-accent), transparent);
+  border-radius: 2px;
+}
+
+.hero-sub {
+  font-size: 1.29rem; /* was 1.1rem */
+  font-weight: 300; line-height: 1.7;
+  color: var(--muted); max-width: 480px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.8s 0.25s ease forwards;
+  opacity: 0;
+}
+
+.hero-stat-line {
+  font-size: 0.98rem; /* was 0.8rem */
+  letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--gold);
+  font-weight: 600; margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.35s ease forwards;
+  opacity: 0;
+}
+
+.hero-actions {
+  display: flex; align-items: center; gap: 20px;
+  animation: fadeUp 0.8s 0.45s ease forwards;
+  opacity: 0;
+}
+
+.btn-primary {
+  background: var(--green-deep);
+  color: var(--white);
+  padding: 16px 36px;
+  border-radius: 4px;
+  font-size: 1.09rem; /* was 0.9rem */
+  font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  text-decoration: none;
+  border: none; cursor: none;
+  transition: all 0.3s ease;
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--green-mid);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+  color: var(--green-deep);
+  font-size: 1.04rem; /* was 0.85rem */
+  font-weight: 600;
+  text-decoration: none; letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 6px;
+  border-bottom: 1px solid var(--green-accent);
+  padding-bottom: 2px;
+  transition: gap 0.2s;
+}
+.btn-secondary:hover { gap: 12px; }
+
+.hero-right {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 60px;
+}
+
+.hero-image-frame {
+  position: relative; width: 100%; max-width: 520px;
+  animation: fadeIn 1s 0.5s ease forwards;
+  opacity: 0;
+}
+
+.hero-image-frame img {
+  width: 100%; height: 500px;
+  object-fit: cover;
+  border-radius: 8px;
+  filter: saturate(0.9);
+}
+
+.hero-image-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(10,61,46,0.15) 0%, transparent 60%);
+  border-radius: 8px;
+}
+
+.hero-card {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 20px 60px rgba(10,61,46,0.15);
+}
+
+.hero-card-1 {
+  bottom: 40px; left: -40px;
+  animation: float 4s ease-in-out infinite, fadeIn 1s 0.8s ease forwards;
+  opacity: 0;
+}
+
+.hero-card-2 {
+  top: 40px; right: -40px;
+  animation: float 4s 2s ease-in-out infinite, fadeIn 1s 1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.card-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.19rem; /* was 2rem */
+  font-weight: 600;
+  color: var(--green-deep); line-height: 1;
+}
+.card-label {
+  font-size: 0.91rem; /* was 0.72rem */
+  color: var(--muted); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 2px;
+}
+
+.card-dot { width: 8px; height: 8px; background: var(--green-accent); border-radius: 50%; display: inline-block; margin-right: 6px; animation: pulse 2s infinite; }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* SECTION COMMON */
+section { padding: 120px 80px; }
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.91rem; /* was 0.72rem */
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 600; color: var(--green-accent);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.38rem, 3.7vw, 3.69rem); /* +0.19rem */
+  font-weight: 300; line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--green-deep);
+  margin-bottom: 20px;
+}
+
+.section-title em { font-style: italic; color: var(--green-mid); }
+
+/* OPS GRID */
+.ops-section {
+  background: var(--green-pale);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.ops-header { text-align: center; margin-bottom: 72px; }
+.ops-header p { font-size: 1.19rem; /* was 1rem */ color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+.ops-tabs {
+  display: flex; justify-content: center; gap: 8px;
+  flex-wrap: wrap; margin-bottom: 56px;
+}
+
+.ops-tab {
+  padding: 10px 22px;
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  font-size: 1.01rem; /* was 0.82rem */
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  background: var(--white);
+  color: var(--muted);
+  cursor: none;
+  transition: all 0.25s ease;
+}
+.ops-tab.active, .ops-tab:hover {
+  background: var(--green-deep);
+  border-color: var(--green-deep);
+  color: var(--white);
+}
+
+.ops-content { display: none; }
+.ops-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 32px 80px rgba(10,61,46,0.12); }
+
+.ops-panel-left {
+  background: var(--green-deep);
+  padding: 60px 56px;
+  color: var(--white);
+}
+
+.ops-panel-left h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.38rem; /* was 2.2rem */
+  font-weight: 300;
+  line-height: 1.2; margin-bottom: 36px;
+  letter-spacing: -0.02em;
+}
+
+.ops-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.ops-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 1.09rem; /* was 0.9rem */
+  line-height: 1.5;
+  color: rgba(255,255,255,0.85);
+}
+.ops-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--green-accent);
+  border-radius: 50%; margin-top: 7px; flex-shrink: 0;
+}
+
+.ops-panel-right {
+  background: var(--white);
+  padding: 60px 56px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.ops-panel-right img {
+  width: 100%; height: 320px;
+  object-fit: cover; border-radius: 8px;
+  filter: saturate(0.85);
+}
+
+.ops-panel-right .sub-label {
+  font-size: 0.94rem; /* was 0.75rem */
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600; margin-bottom: 12px; margin-top: 24px;
+}
+.ops-panel-right p { font-size: 1.09rem; /* was 0.9rem */ line-height: 1.7; color: var(--muted); }
+
+/* WHY SECTION */
+.why-section { background: var(--white); }
+
+.why-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  margin-top: 72px;
+  border: 2px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+}
+
+.why-card {
+  padding: 48px 40px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease;
+  position: relative; overflow: hidden;
+}
+.why-card:hover { background: var(--green-pale); }
+.why-card:last-child { border-right: none; }
+.why-card:nth-child(n+4) { border-bottom: none; }
+
+.why-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--green-accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.why-card:hover::before { transform: scaleX(1); }
+
+.why-icon {
+  width: 48px; height: 48px;
+  background: var(--green-light);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  font-size: 1.5rem; /* was 1.3rem */
+}
+
+.why-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.59rem; /* was 1.4rem */
+  font-weight: 600;
+  color: var(--green-deep); margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.why-card p { font-size: 1.07rem; /* was 0.88rem */ line-height: 1.7; color: var(--muted); }
+
+/* TESTIMONIAL / PROOF */
+.proof-section {
+  background: var(--green-deep);
+  color: var(--white);
+  padding: 120px 80px 120px;
+  position: relative; overflow: hidden;
+}
+
+.proof-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(34,197,94,0.08) 0%, transparent 70%);
+}
+
+.proof-header { text-align: center; margin-bottom: 80px; position: relative; z-index: 1; }
+.proof-header .section-tag { color: var(--green-accent); }
+.proof-header .section-title { color: var(--white); }
+
+.proof-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  position: relative; z-index: 1;
+}
+
+.proof-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 40px 36px;
+  transition: all 0.3s ease;
+}
+.proof-card:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+}
+
+.proof-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.24rem; /* was 1.05rem */
+  font-style: italic;
+  line-height: 1.75; color: rgba(255,255,255,0.88);
+  margin-bottom: 28px;
+  border-left: 2px solid rgba(34,197,94,0.4);
+  padding-left: 16px;
+}
+
+.proof-author { display: flex; align-items: center; gap: 14px; }
+.proof-author img {
+  width: 52px; height: 52px; border-radius: 50%;
+  object-fit: cover; border: 2px solid rgba(34,197,94,0.4);
+  background: var(--green-mid);
+}
+.proof-author-name { font-size: 1.07rem; /* was 0.88rem */ font-weight: 600; color: var(--white); }
+.proof-author-role { font-size: 0.94rem; /* was 0.75rem */ color: rgba(255,255,255,0.5); margin-top: 2px; line-height: 1.4; }
+
+/* STARS */
+.proof-stars {
+  color: #f59e0b;
+  font-size: 1.29rem; /* was 1.1rem */
+  letter-spacing: 3px;
+  margin-bottom: 16px;
+}
+
+/* PROOF ANIMATED HEADLINE */
+.proof-animated-headline {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.proof-static-line {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.19rem, 3.4vw, 3.38rem); /* +0.19rem */
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 10px;
+}
+
+.rotating-word {
+  color: var(--green-accent);
+  font-style: italic;
+  display: inline-block;
+  min-width: 4px;
+}
+
+.type-cursor {
+  color: var(--green-accent);
+  font-weight: 200;
+  animation: blink 0.7s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.proof-tagline {
+  font-size: 1.04rem; /* was 0.85rem */
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-top: 20px;
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--green-accent);
+  padding: 60px 80px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  text-align: center;
+}
+
+.stat-item { padding: 0 40px; position: relative; }
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute; right: 0; top: 10%; bottom: 10%;
+  width: 1px; background: rgba(10,61,46,0.2);
+}
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.69rem; /* was 3.5rem */
+  font-weight: 600;
+  color: var(--green-deep); line-height: 1;
+}
+
+.stat-label { font-size: 0.98rem; /* was 0.8rem */ font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-deep); opacity: 0.7; margin-top: 8px; }
+
+/* TEAM SECTION */
+.team-section {
+  background: var(--cream);
+  padding: 120px 80px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.team-header { margin-bottom: 64px; }
+
+.team-tagline {
+  font-size: 1.14rem;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-top: 12px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 52px;
+}
+
+.team-member {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  border: 2px solid var(--border);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  background: var(--green-light);
+}
+
+.team-member:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 28px 60px rgba(10,61,46,0.18);
+  border-color: var(--green-accent);
+}
+
+.team-member img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: filter 0.35s ease;
+}
+
+.team-member:hover img { filter: saturate(1.1) brightness(1.04); }
+
+.team-member-shine {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--green-deep);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.91rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 100px;
+}
+
+.team-badge-dot {
+  width: 5px; height: 5px;
+  background: var(--green-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* CASE STUDIES SECTION */
+.cases-section {
+  background: var(--green-pale);
+  padding: 120px 80px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.cases-header { margin-bottom: 64px; }
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.case-card {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(10,61,46,0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 64px rgba(10,61,46,0.14);
+}
+
+.case-thumb {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+}
+
+.case-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.case-card:hover .case-thumb img { transform: scale(1.06); }
+
+.case-thumb-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(10,61,46,0.25) 100%);
+}
+
+.case-tag-pill {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--green-deep);
+  color: var(--white);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+}
+
+.case-body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.case-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.32rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  line-height: 1.35;
+}
+
+.case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--green-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--green-accent);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: gap 0.2s, color 0.2s;
+}
+.case-link:hover { gap: 12px; color: var(--green-deep); }
+
+@media (max-width: 960px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .cases-grid { grid-template-columns: 1fr; }
+  .team-section, .cases-section { padding: 80px 40px; }
+}
+
+/* COMPARISON TABLE */
+.compare-section { background: var(--cream); }
+.compare-header { text-align: center; margin-bottom: 64px; }
+
+.compare-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(10,61,46,0.08);
+}
+
+.compare-table th {
+  background: var(--green-deep); color: var(--white);
+  padding: 22px 32px; text-align: left;
+  font-size: 0.97rem; /* was 0.78rem */
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.compare-table th:first-child { border-radius: 0; }
+.compare-table th.highlight-col { background: var(--green-mid); }
+
+.compare-table tr:nth-child(even) td { background: var(--green-pale); }
+.compare-table tr:hover td { background: var(--green-light); }
+
+.compare-table td {
+  padding: 18px 32px;
+  font-size: 1.07rem; /* was 0.88rem */
+  border-bottom: 1px solid var(--border);
+  color: var(--text); line-height: 1.5;
+  transition: background 0.2s;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: 600; color: var(--green-deep); }
+.compare-table td.yes { color: var(--green-mid); font-weight: 600; }
+.compare-table td.no { color: #dc2626; }
+
+/* CTA SECTION */
+.cta-section {
+  background: var(--green-deep);
+  padding: 140px 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  position: relative; overflow: hidden;
+}
+
+.cta-section::after {
+  content: '';
+  position: absolute; bottom: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.cta-left { position: relative; z-index: 1; }
+.cta-left .section-tag { color: var(--green-accent); }
+.cta-left .section-title { color: var(--white); }
+.cta-left p { font-size: 1.19rem; /* was 1rem */ line-height: 1.8; color: rgba(255,255,255,0.65); margin-top: 20px; max-width: 420px; }
+
+.cta-right {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.cta-input-group { display: flex; flex-direction: column; gap: 12px; }
+.cta-input {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px; padding: 16px 20px;
+  color: var(--white); font-size: 1.09rem; /* was 0.9rem */
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.cta-input::placeholder { color: rgba(255,255,255,0.35); }
+.cta-input:focus { border-color: var(--green-accent); background: rgba(255,255,255,0.12); }
+
+.btn-cta-large {
+  background: var(--green-accent);
+  color: var(--green-deep);
+  padding: 18px 36px;
+  border-radius: 6px;
+  font-size: 1.09rem; /* was 0.9rem */
+  font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  border: none; cursor: none;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+.btn-cta-large:hover { background: #16a34a; color: var(--white); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(34,197,94,0.3); }
+
+.cta-trust { font-size: 0.94rem; /* was 0.75rem */ color: rgba(255,255,255,0.35); text-align: center; margin-top: 4px; }
+
+/* FOOTER */
+footer {
+  background: var(--dark);
+  padding: 72px 80px 40px;
+  color: rgba(255,255,255,0.6);
+}
+
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px; margin-bottom: 60px;
+}
+
+.footer-brand .nav-logo { color: var(--white); margin-bottom: 16px; display: block; }
+.footer-brand p { font-size: 1.04rem; /* was 0.85rem */ line-height: 1.7; max-width: 260px; }
+
+.footer-col h5 {
+  font-size: 0.91rem; /* was 0.72rem */
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); margin-bottom: 20px; font-weight: 600;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col a { font-size: 1.04rem; /* was 0.85rem */ color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--green-accent); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 32px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.97rem; /* was 0.78rem */
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* COUNTER animation */
+.counter { display: inline-block; }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 80px 40px 60px; }
+  .hero-right { display: none; }
+  section { padding: 80px 40px; }
+  .ops-content.active { grid-template-columns: 1fr; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .compare-section { padding: 80px 20px; }
+  .cta-section { grid-template-columns: 1fr; padding: 80px 40px; }
+  .stats-bar { grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px 40px; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .why-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ NAV ══ -->
-<nav id="nav">
-  <div class="nav-logo">wish<b>up</b></div>
-  <div class="nav-pill">VA Intelligence Engine</div>
-  <a href="#cta" class="nav-cta">See How it Works →</a>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursor-follower"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Wish<span>up</span></div>
+  <ul class="nav-links">
+    <li><a href="#ops">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#contact" class="nav-cta">Talk to Us</a></li>
+  </ul>
 </nav>
 
-<!-- ══ HERO ══ -->
-<div class="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-orb o1"></div>
-  <div class="hero-orb o2"></div>
-
-  <div class="hero-eyebrow sr">Wishup · Introducing</div>
-
-  <h1 class="hero-h1 sr d1">
-    Your VA Doesn't Start<br>
-    From Zero.<br>
-    <span class="em">Your VA Starts With 10 Years<br>of Knowledge Built Across 1,000 Businesses.</span>
-  </h1>
-
-  <p class="hero-tagline sr d2">Introducing the <strong>VA Intelligence Engine</strong></p>
-
-  <div class="hero-meta sr d3">
-    Wishup Team <span>·</span> February 2026 <span>·</span> 8 min read
+<!-- HERO -->
+<section class="hero" style="padding: 0;">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid-lines"></div>
+  
+  <div class="hero-left">
+    <div class="hero-eyebrow">Trusted by 1200+ founders since 2015</div>
+    <h1 class="hero-headline">
+      Keep your business<br>
+      <em>running</em>—even when<br>
+      your team is <span class="highlight">out.</span>
+    </h1>
+    <p class="hero-sub">Integrate continuity into your day-to-day ops. Fully owned. Fully executed. 24/7 workflows across every core function of your business.</p>
+    <div class="hero-stat-line">✦ Owning execution since 2015 &nbsp;·&nbsp; Top 0.1% talent &nbsp;·&nbsp; 5-min response SLA</div>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><span>See How Wishup Does It</span> <span>→</span></a>
+      <a href="#compare" class="btn-secondary">Compare Plans ↓</a>
+    </div>
   </div>
 
-  <div class="hero-stats sr d4">
-    <div class="hs"><div class="hs-num" data-target="1000" data-suffix="+">1,000+</div><div class="hs-lbl">Businesses</div></div>
-    <div class="hs"><div class="hs-num" data-target="1500" data-suffix="+">1,500+</div><div class="hs-lbl">VAs</div></div>
-    <div class="hs"><div class="hs-num" data-target="20" data-suffix="+">20+</div><div class="hs-lbl">Industries</div></div>
-    <div class="hs"><div class="hs-num" data-target="10" data-suffix=" Yrs">10 Yrs</div><div class="hs-lbl">Of Learning</div></div>
+  <div class="hero-right">
+    <div class="hero-image-frame">
+      <img src="https://www.entrepreneur.com/wp-content/uploads/sites/2/2019/08/20190823150431-GettyImages-1077565558.jpeg" alt="Professional ops team at work">
+      <div class="hero-image-overlay"></div>
+      
+      <div class="hero-card hero-card-1">
+        <div class="card-number"><span class="counter" data-target="1200">0</span>+</div>
+        <div class="card-label">Founders Served</div>
+      </div>
+      
+      <div class="hero-card hero-card-2">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <span class="card-dot"></span>
+          <span style="font-size:0.89rem;font-weight:600;color:#0a3d2e;text-transform:uppercase;letter-spacing:0.06em;">Live Now</span>
+        </div>
+        <div class="card-number" style="font-size:1.69rem;">24/7</div>
+        <div class="card-label">Ops Coverage</div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="hero-scroll sr d5">
-    <div class="scroll-mouse"></div>
-    scroll
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-number"><span class="counter" data-target="1200">0</span>+</div>
+    <div class="stat-label">Founders Served</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">60</div>
+    <div class="stat-label">Min Onboarding</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">5<span style="font-size:1.69rem;">min</span></div>
+    <div class="stat-label">Response SLA</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">200+</div>
+    <div class="stat-label">Tools & AI Trained</div>
   </div>
 </div>
 
-<!-- ══ ARTICLE ══ -->
-<article class="article">
+<!-- OPS SECTION -->
+<section class="ops-section" id="ops">
+  <div class="ops-header reveal">
+    <div class="section-tag">What We Run</div>
+    <h2 class="section-title">24/7 workflows across<br>your <em>core functions.</em></h2>
+    <p>Not just tasks. Complete operating systems for every part of your business — built, run, and owned by Wishup.</p>
+  </div>
 
-  <!-- ── OPENING ── -->
-  <section class="sec" style="padding-top:72px">
-    <p class="sr">Hey, so you're thinking about hiring a Virtual Assistant. Great move.</p>
-    <p class="sr">But here's what nobody tells you before you do it.</p>
-    <p class="sr">The first few weeks aren't really work weeks. They're training weeks.</p>
-    <p class="sr">You're explaining how your CRM works, which email template to use, and how to handle the client who ghosts you every Tuesday. You're doing a second job, teaching someone how to do the first one.</p>
-    <p class="sr">And oh, you're paying for all of it. Every hour your VA spends figuring things out is an hour you're paying for.<br>Not for output. For orientation.</p>
-    <p class="sr">Ah, but it doesn't have to be that way.</p>
-    <p class="sr">Because here's what we did. We spent <strong>10 years working inside 1,000+ businesses across 20+ industries</strong>. And every single time a VA figured something out — found a workflow that clicked, wrote a template that converted, solved a situation nobody had a playbook for — <strong>we captured it. Structured it. Stored it.</strong></p>
-    <p class="sr">So your VA doesn't have to figure any of that out. They already have it.</p>
-    <p class="sr">No training weeks. No paid orientation. No wall.</p>
-    <p class="sr">Just a VA who walks in already knowing what took everyone else months to learn.</p>
-    <p class="sr"><strong>Results — from day one.</strong></p>
+  <div class="ops-tabs reveal">
+    <button class="ops-tab active" onclick="switchTab('founder')">Founder Ops</button>
+    <button class="ops-tab" onclick="switchTab('workflow')">Workflow Automation</button>
+    <button class="ops-tab" onclick="switchTab('customer')">Customer Ops</button>
+    <button class="ops-tab" onclick="switchTab('finance')">Finance Ops</button>
+    <button class="ops-tab" onclick="switchTab('business')">Business Ops</button>
+  </div>
 
-    <!-- FLOAT QUOTE 1 -->
-    <div class="fq sr">
-      <div class="fq-num">01 of 07</div>
-      <div class="fq-text">We started preparing for your business 10 years before you called us.</div>
-      <div class="fq-icon">⏳</div>
+  <div id="tab-founder" class="ops-content active">
+    <div class="ops-panel-left">
+      <h3>Founder Ops</h3>
+      <ul class="ops-list">
+        <li>Inbox and calendar ownership — so you never drop a ball</li>
+        <li>Daily priorities and follow-ups, handled before you wake up</li>
+        <li>Decision routing and execution tracking across your team</li>
+        <li>Recurring workflows and reporting, automated end-to-end</li>
+        <li>Founder-level delegation so you focus only on growth</li>
+      </ul>
     </div>
-
-    <div class="pq sr">
-      Most VAs need training. Wishup Ops team arrives trained — by 1,000 businesses before yours — to keep your business running 24x7.
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── WHAT IS IT ── -->
-  <section class="sec">
-    <div class="sec-label sr">The Engine</div>
-    <h2 class="sr">What Is the <span class="acc">VA Intelligence Engine?</span></h2>
-
-    <p class="sr">Think of it as a brain that never stops growing.</p>
-    <p class="sr">Built from 10 years of real work. 1,500+ Wishup VAs. 1,000+ businesses. 20+ industries. Every time a VA cracked a problem, found a faster way, or handled something tricky — we didn't let that knowledge walk out the door. We captured it, structured it, and added it to the engine.</p>
-    <p class="sr">So yeah, it's not a manual. It's not a training video you fast-forward through. It's a living, breathing library of what actually works — ready for any Wishup VA, for any business, from day one.</p>
-
-    <!-- ANIMATED ENGINE -->
-    <div class="engine-box sr">
-      <div class="engine-cap">How the Engine Works — Knowledge Flows In, Value Flows Out</div>
-      <svg class="engine-svg" viewBox="0 0 700 310" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="cg" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#10b981"/>
-            <stop offset="100%" stop-color="#065f46"/>
-          </radialGradient>
-          <filter id="gf2">
-            <feGaussianBlur stdDeviation="4" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <marker id="mw" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="rgba(255,255,255,.2)"/>
-          </marker>
-          <marker id="mg" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="#10b981"/>
-          </marker>
-        </defs>
-
-        <!-- LEFT CARDS -->
-        <g opacity=".9">
-          <rect x="2" y="18" width="155" height="42" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <text x="13" y="35" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">📋 Proven Workflows</text>
-          <text x="13" y="51" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,.32)">1,000+ businesses documented</text>
-
-          <rect x="2" y="72" width="155" height="42" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <text x="13" y="89" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">✉️ Templates &amp; SOPs</text>
-          <text x="13" y="105" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,.32)">That actually convert</text>
-
-          <rect x="2" y="126" width="155" height="42" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <text x="13" y="143" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">🧠 Edge Case Library</text>
-          <text x="13" y="159" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,.32)">Hard situations, solved</text>
-
-          <rect x="2" y="180" width="155" height="42" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <text x="13" y="197" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">🏭 20+ Industries</text>
-          <text x="13" y="213" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,.32)">Real estate, legal, SaaS…</text>
-
-          <rect x="2" y="234" width="155" height="42" rx="7" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.12)" stroke-width="1"/>
-          <text x="13" y="251" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">👥 1,500+ VAs</text>
-          <text x="13" y="267" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(255,255,255,.32)">10 years, collective knowledge</text>
-        </g>
-
-        <!-- LEFT → CENTER lines -->
-        <line x1="157" y1="39"  x2="287" y2="149" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#mw)"/>
-        <line x1="157" y1="93"  x2="287" y2="152" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#mw)"/>
-        <line x1="157" y1="147" x2="287" y2="155" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#mw)"/>
-        <line x1="157" y1="201" x2="287" y2="158" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#mw)"/>
-        <line x1="157" y1="255" x2="287" y2="161" stroke="rgba(255,255,255,.08)" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#mw)"/>
-
-        <!-- Animated white dots LEFT → CENTER -->
-        <circle r="3" fill="rgba(255,255,255,.7)"><animateMotion dur="2.1s" repeatCount="indefinite" begin="0s"    path="M157,39 Q220,100 287,149"/></circle>
-        <circle r="3" fill="rgba(255,255,255,.7)"><animateMotion dur="2.1s" repeatCount="indefinite" begin=".42s"  path="M157,93 Q215,120 287,152"/></circle>
-        <circle r="3" fill="rgba(255,255,255,.7)"><animateMotion dur="2.1s" repeatCount="indefinite" begin=".84s"  path="M157,147 Q215,150 287,155"/></circle>
-        <circle r="3" fill="rgba(255,255,255,.7)"><animateMotion dur="2.1s" repeatCount="indefinite" begin="1.26s" path="M157,201 Q215,180 287,158"/></circle>
-        <circle r="3" fill="rgba(255,255,255,.7)"><animateMotion dur="2.1s" repeatCount="indefinite" begin="1.68s" path="M157,255 Q210,210 287,161"/></circle>
-
-        <!-- CENTER ENGINE -->
-        <circle cx="350" cy="155" r="78" fill="none" stroke="#10b981" stroke-width=".7" class="r1"/>
-        <circle cx="350" cy="155" r="63" fill="none" stroke="#10b981" stroke-width=".5" class="r2"/>
-        <circle cx="350" cy="155" r="50" fill="none" stroke="#10b981" stroke-width=".4" class="r3"/>
-        <circle cx="350" cy="155" r="44" fill="url(#cg)" filter="url(#gf2)" class="cg"/>
-        <circle cx="350" cy="155" r="44" fill="none" stroke="rgba(110,231,183,.5)" stroke-width="1"/>
-        <text x="350" y="147" text-anchor="middle" font-family="Playfair Display,serif" font-size="11" font-weight="700" fill="#fff">VA Intelligence</text>
-        <text x="350" y="162" text-anchor="middle" font-family="Playfair Display,serif" font-size="11" font-weight="700" fill="#10b981">Engine</text>
-        <text x="350" y="175" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="rgba(255,255,255,.35)">10 years compounding</text>
-
-        <!-- CENTER → RIGHT lines -->
-        <line x1="394" y1="140" x2="537" y2="39"  stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity=".55" marker-end="url(#mg)"/>
-        <line x1="395" y1="149" x2="537" y2="93"  stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity=".55" marker-end="url(#mg)"/>
-        <line x1="396" y1="155" x2="537" y2="147" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity=".55" marker-end="url(#mg)"/>
-        <line x1="395" y1="162" x2="537" y2="201" stroke="#10b981" stroke-width="1.2" stroke-dasharray="4,4" opacity=".55" marker-end="url(#mg)"/>
-
-        <!-- Animated green dots CENTER → RIGHT -->
-        <circle r="3.5" fill="#10b981"><animateMotion dur="1.75s" repeatCount="indefinite" begin=".1s"   path="M394,140 Q460,80 537,39"/></circle>
-        <circle r="3.5" fill="#10b981"><animateMotion dur="1.75s" repeatCount="indefinite" begin=".54s"  path="M395,149 Q462,120 537,93"/></circle>
-        <circle r="3.5" fill="#10b981"><animateMotion dur="1.75s" repeatCount="indefinite" begin=".98s"  path="M396,155 Q462,150 537,147"/></circle>
-        <circle r="3.5" fill="#10b981"><animateMotion dur="1.75s" repeatCount="indefinite" begin="1.42s" path="M395,162 Q462,182 537,201"/></circle>
-
-        <!-- RIGHT OUTPUT CARDS -->
-        <g>
-          <rect x="541" y="18" width="157" height="42" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
-          <text x="553" y="35" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">⚡ Day-1 Productivity</text>
-          <text x="553" y="51" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">No ramp. No hand-holding.</text>
-
-          <rect x="541" y="72" width="157" height="42" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
-          <text x="553" y="89" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">🎯 Ready Playbooks</text>
-          <text x="553" y="105" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">Start where others finish</text>
-
-          <rect x="541" y="126" width="157" height="42" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
-          <text x="553" y="143" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">🔒 Zero Knowledge Loss</text>
-          <text x="553" y="159" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">System holds it, not a person</text>
-
-          <rect x="541" y="180" width="157" height="42" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.22)" stroke-width="1"/>
-          <text x="553" y="197" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,.85)" font-weight="600">📈 Better Ideas, Faster</text>
-          <text x="553" y="213" font-family="DM Sans,sans-serif" font-size="9" fill="#10b981">Draws from what worked before</text>
-        </g>
-
-        <!-- Bottom labels -->
-        <text x="79" y="298" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="rgba(255,255,255,.18)" letter-spacing="2">FEEDS IN</text>
-        <text x="619" y="298" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="#10b981" letter-spacing="2" opacity=".5">DELIVERS</text>
-        <line x1="0" y1="290" x2="700" y2="290" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
-        <text x="350" y="298" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="8" fill="#10b981" letter-spacing="2" opacity=".4">THE ENGINE</text>
-      </svg>
-    </div>
-
-    <!-- FLOAT QUOTE 2 -->
-    <div class="fq sr">
-      <div class="fq-num">02 of 07</div>
-      <div class="fq-text">We built this for you before we even knew you existed.</div>
-      <div class="fq-icon">🧬</div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── WHY OTHERS FALL SHORT ── -->
-  <section class="sec">
-    <div class="sec-label sr">The Reality Check</div>
-    <h2 class="sr">Why everything else <span class="acc">falls short?</span></h2>
-    <p class="sr">Ah, here's the honest bit. Because you've probably been down this road before.</p>
-
-    <div class="ba-grid">
-      <div class="ba-card bad sr-l">
-        <div class="ba-head"><span>✗</span> Without the engine</div>
-        <div class="ba-row"><span class="ba-ic">⏳</span><span>Weeks of onboarding before your VA is actually useful</span></div>
-        <div class="ba-row"><span class="ba-ic">🔁</span><span>Explaining yourself every time something changes</span></div>
-        <div class="ba-row"><span class="ba-ic">💸</span><span>Paying for learning time, not working time</span></div>
-        <div class="ba-row"><span class="ba-ic">🚪</span><span>Watching all that knowledge walk out the door when your VA leaves</span></div>
-        <div class="ba-row"><span class="ba-ic">🎲</span><span>Starting from scratch with the next one and hoping for the best</span></div>
-      </div>
-      <div class="ba-card good sr-r">
-        <div class="ba-head"><span>✓</span> With the engine</div>
-        <div class="ba-row"><span class="ba-ic">⚡</span><span>Your VA hits the ground running — no ramp, no hand-holding</span></div>
-        <div class="ba-row"><span class="ba-ic">📚</span><span>10 years of proven workflows are already loaded before they start</span></div>
-        <div class="ba-row"><span class="ba-ic">🎯</span><span>You pay for output, not orientation</span></div>
-        <div class="ba-row"><span class="ba-ic">🔒</span><span>Knowledge lives in the system, not in a person</span></div>
-        <div class="ba-row"><span class="ba-ic">📈</span><span>Every new VA starts stronger than the last one</span></div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── HOW IT WORKS ── -->
-  <section class="sec">
-    <div class="sec-label sr">Under the Hood</div>
-    <h2 class="sr">How it actually works — <span class="acc">two things, both kind of amazing</span></h2>
-    <p class="sr">Okay so the VA Intelligence Engine does two things at once. And honestly, both of them matter a lot.</p>
-
-    <!-- FLOAT QUOTE 3 -->
-    <div class="fq sr">
-      <div class="fq-num">03 of 07</div>
-      <div class="fq-text">Your VA's preparation started 10 years ago. Without you even knowing.</div>
-      <div class="fq-icon">📅</div>
-    </div>
-
-    <h3 class="sr">1. Whatever you need is probably already in there</h3>
-    <p class="sr">Think about your business for a second. Chances are you're in one of these: real estate, healthcare, e-commerce, SaaS, legal, finance, professional services. Maybe a mix of a few.</p>
-    <p class="sr">Well, here's the thing — we've had VAs working inside businesses exactly like yours for 10 years. The workflows that clicked. The templates that actually converted. The mistakes that kept coming up. The edge cases nobody puts in a handbook. All of it is sitting inside the engine, structured and searchable, waiting.</p>
-    <p class="sr">So when your VA sits down on day one, they're not staring at a blank page. They're starting from a foundation that 1,500 people already built — across 1,000+ businesses just like yours. That's not a small thing. That's kind of a big deal.</p>
-
-    <h3 class="sr">2. And when something is new? They don't guess.</h3>
-    <p class="sr">Because no two businesses are identical, right? You've got your own tools, your own quirks, your own way of doing things. And sometimes your VA will hit something the engine doesn't have an exact answer for.</p>
-    <p class="sr">But here's what they do — they don't wing it. They look for the closest model that worked. Similar industry. Similar workflow. Similar situation. And they adapt from there.</p>
-    <p class="sr">That's not improvisation. That's 10 years of structured experience making a smart, informed call.</p>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── USE CASES ── -->
-  <section class="sec">
-    <div class="sec-label sr">Real Use Cases</div>
-    <h2 class="sr">Okay, let's make it real. Here's what this looks like <span class="acc">in actual businesses.</span></h2>
-
-    <!-- FLOAT QUOTE 4 -->
-    <div class="fq sr">
-      <div class="fq-num">04 of 07</div>
-      <div class="fq-text">Everything your business needs has already been figured out. Long before you arrived.</div>
-      <div class="fq-icon">🏗️</div>
-    </div>
-
-    <div class="uc-grid">
-      <div class="uc-card sr d1">
-        <div class="uc-tag">Real Estate</div>
-        <div class="uc-title">CRM &amp; Lead Follow-Up</div>
-        <p class="uc-body">You know that sinking feeling when a lead goes cold and you're not sure what to do next? Your VA doesn't get that feeling. Because the engine already has 3 years of follow-up sequences from real estate agents managing 200+ listings. Email cadences, call scripts, exactly what to do with a lead that's gone quiet — all in there, all proven. You don't have to figure out the process. Your VA already has one that works.</p>
-        <span class="uc-badge">200+ listing agents · 3 yrs of sequences</span>
-      </div>
-      <div class="uc-card sr d2">
-        <div class="uc-tag">Healthcare</div>
-        <div class="uc-title">Patient Coordination</div>
-        <p class="uc-body">You shouldn't have to explain to a VA how a medical practice runs. And with Wishup, you don't. The engine carries appointment reminder sequences that cut no-shows by 40% at a 50-doctor practice. Insurance follow-up workflows. Compliance-safe communication templates. Your VA plugs straight into what works — and your patients experience a practice that has its act together.</p>
-        <span class="uc-badge">−40% no-shows · 50-doctor practice</span>
-      </div>
-      <div class="uc-card sr d1">
-        <div class="uc-tag">E-commerce</div>
-        <div class="uc-title">Inventory &amp; Customer Support</div>
-        <p class="uc-body">Oh, a product recall just landed in your inbox? An angry supplier? A refund request that doesn't fit the standard script? You don't need to jump in and figure it out. Your VA goes to the engine, finds the SOP that already handled this exact situation, and gets it resolved. The hard stuff? Already been through it. Already solved.</p>
-        <span class="uc-badge">Refunds · Escalations · Recalls — handled</span>
-      </div>
-      <div class="uc-card sr d2">
-        <div class="uc-tag">Legal</div>
-        <div class="uc-title">Document Management</div>
-        <p class="uc-body">Here's the thing about legal work — format and process matter enormously, and explaining that from scratch to a new VA is exhausting. But your Wishup VA already knows. Intake workflows, client communication templates, deadline-tracking systems — all built from years inside law firms. You don't brief them on how legal admin works. They already know how legal admin works.</p>
-        <span class="uc-badge">Years inside law firms · Zero briefing</span>
-      </div>
-      <div class="uc-card sr d1">
-        <div class="uc-tag">SaaS / Startups</div>
-        <div class="uc-title">Exec Support &amp; Operations</div>
-        <p class="uc-body">Fast-moving team, no time to onboard anyone properly — sound familiar? Well, your VA doesn't need a proper onboarding. The engine has calendar management systems, investor update templates, and operational playbooks built specifically for startups. Your VA operates like they've been on your team for six months. From week one. No catching up required.</p>
-        <span class="uc-badge">Operates like 6 months in · From week 1</span>
-      </div>
-      <div class="uc-card sr d2">
-        <div class="uc-tag">Finance</div>
-        <div class="uc-title">Bookkeeping &amp; Reporting</div>
-        <p class="uc-body">Month-end close shouldn't be a conversation you have with your VA every single month. With Wishup, it isn't. The engine has close workflows, expense categorization rules, and reporting formats pulled from hundreds of finance teams. Your VA knows exactly what to do, how to do it, and what it should look like when it's done. Clean books. No back and forth. No coaching.</p>
-        <span class="uc-badge">Hundreds of finance teams · Zero coaching</span>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── COMPARISON ── -->
-  <section class="sec">
-    <div class="sec-label sr">Honest Comparison</div>
-    <h2 class="sr">Wishup vs. <span class="acc">Everyone Else</span></h2>
-    <p class="sr">Here's the honest comparison. An actual breakdown of what you get and what you don't, across your options.</p>
-
-    <div class="cmp-wrap sr">
-      <table class="cmp">
-        <thead>
-          <tr>
-            <th style="width:32%">What you're evaluating</th>
-            <th class="wc" style="width:23%">Wishup + Engine</th>
-            <th style="width:22%">Other VA Companies</th>
-            <th style="width:23%">Freelancer</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Day-one readiness</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Starts with proven workflows</span></td>
-            <td><span class="pt">~</span><span class="sn">Trained, but learns fresh</span></td>
-            <td><span class="cx">✗</span><span class="sn">You train from scratch</span></td>
-          </tr>
-          <tr>
-            <td>Knowledge continuity</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Stays in engine forever</span></td>
-            <td><span class="cx">✗</span><span class="sn">Walks out the door</span></td>
-            <td><span class="cx">✗</span><span class="sn">Starts over completely</span></td>
-          </tr>
-          <tr>
-            <td>Industry-specific knowledge</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">20+ industries, structured</span></td>
-            <td><span class="pt">~</span><span class="sn">Depends on the VA</span></td>
-            <td><span class="pt">~</span><span class="sn">Depends who you find</span></td>
-          </tr>
-          <tr>
-            <td>Edge case handling</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Library of solved edge cases</span></td>
-            <td><span class="cx">✗</span><span class="sn">Escalates to you every time</span></td>
-            <td><span class="cx">✗</span><span class="sn">You answer or it doesn't get done</span></td>
-          </tr>
-          <tr>
-            <td>Scales without re-training</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Every new VA plugs in</span></td>
-            <td><span class="cx">✗</span><span class="sn">Each new hire = new onboarding</span></td>
-            <td><span class="cx">✗</span><span class="sn">Start the whole process again</span></td>
-          </tr>
-          <tr>
-            <td>Gets smarter over time</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Every task adds to the engine</span></td>
-            <td><span class="cx">✗</span><span class="sn">Only as good as the individual VA</span></td>
-            <td><span class="cx">✗</span><span class="sn">No institutional learning</span></td>
-          </tr>
-          <tr>
-            <td>What you're paying for</td>
-            <td class="wc"><span class="tk">✓</span><span class="sn">Output, not learning time</span></td>
-            <td><span class="sn" style="font-size:13px">Output + your time training</span></td>
-            <td><span class="sn" style="font-size:13px">Cheaper hourly, hidden costs</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── UNFAIR ADVANTAGE ── -->
-  <section class="sec">
-    <div class="sec-label sr">The Moat</div>
-    <h2 class="sr">Our unfair advantage is actually <span class="acc">yours. How?</span></h2>
-
-    <div class="moat sr">
-      <div class="moat-row"><div class="moat-dot"></div><span>Every business that worked with Wishup before you made the engine smarter.</span></div>
-      <div class="moat-row"><div class="moat-dot"></div><span>Every problem a VA solved, captured.</span></div>
-      <div class="moat-row"><div class="moat-dot"></div><span>Every workflow that got refined, stored.</span></div>
-      <div class="moat-row"><div class="moat-dot"></div><span>Every edge case that stumped someone, cracked and added.</span></div>
-    </div>
-
-    <!-- FLOAT QUOTE 5 -->
-    <div class="fq sr">
-      <div class="fq-num">05 of 07</div>
-      <div class="fq-text">We've been working for your business longer than you have.</div>
-      <div class="fq-icon">🚀</div>
-    </div>
-
-    <p class="sr">A freelancer can't build this.</p>
-    <p class="sr">A new VA company can't build this.</p>
-    <p class="sr">You can't just decide one day to have 10 years of structured knowledge across 1,000+ businesses.</p>
-    <p class="sr">There's no shortcut. No funding round that buys you this.</p>
-    <p class="sr">It's just time, and we already spent it — so you don't have to.</p>
-
-    <div class="stats-row sr">
-      <div class="st-box"><div class="st-num" data-target="1000" data-suffix="+">1,000+</div><div class="st-lbl">Businesses in the engine</div></div>
-      <div class="st-box"><div class="st-num" data-target="20" data-suffix="+">20+</div><div class="st-lbl">Industries covered</div></div>
-      <div class="st-box"><div class="st-num" data-target="1500" data-suffix="+">1,500+</div><div class="st-lbl">VAs contributed</div></div>
-      <div class="st-box"><div class="st-num" data-target="10" data-suffix=" years">10 years</div><div class="st-lbl">Compounding knowledge</div></div>
-    </div>
-
-    <p class="sr"><strong>All of it ready for you. Today. Now. Just a click away.</strong></p>
-
-    <div style="text-align:center;margin:28px 0" class="sr">
-      <a href="#cta" class="btn">See How it Works →</a>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── DATA PRIVACY ── -->
-  <section class="sec">
-    <div class="sec-label sr">Your Privacy</div>
-    <h2 class="sr"><span class="acc">"Oh wait —</span> is my business data going into this engine?"</h2>
-
-    <p class="sr">We heard you. Important question, though. And we want to be really clear about this.</p>
-    <p class="sr"><strong>No. Your business data never enters the VA Intelligence Engine.</strong> Not your client names. Not your financials. Not your emails, your contracts, your internal conversations, or anything that belongs to your business. None of it. Ever.</p>
-    <p class="sr">Here's what actually goes in — the <em>how</em>, not the <em>what</em>.</p>
-    <p class="sr">How a follow-up sequence should be structured. How a monthly close workflow runs. How to handle a refund request that escalates. How to draft a compliance-safe patient reminder. The templates, the processes, the automation workflows, the playbooks — the surface-level operational stuff that makes work run smoothly.</p>
-
-    <!-- FLOAT QUOTE 6 -->
-    <div class="fq sr">
-      <div class="fq-num">06 of 07</div>
-      <div class="fq-text">Your business gets 10 years of experience it never had to live through.</div>
-      <div class="fq-icon">🔐</div>
-    </div>
-
-    <div class="priv-callout sr">
-      <p>Think of it this way. When a Wishup VA figures out the best way to manage a CRM pipeline, the <strong>method</strong> goes into the engine. Not your pipeline. Not your contacts. Not your data. Just the method.</p>
-    </div>
-
-    <p class="sr">Your business stays completely yours. What your VA gets is the collective wisdom of how work gets done well — with zero access to what any specific business actually did.</p>
-
-    <div class="grey-bar sr">
-      <strong>So yeah — private, contained, and clean. Always.</strong>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ── ONLY ONE ── -->
-  <section class="sec">
-    <div class="sec-label sr">The Truth</div>
-    <h2 class="sr">There's no other VA company built like this. <span class="acc">And we're not just saying that.</span></h2>
-
-    <p class="sr">Look, every VA company will tell you they're different. Better vetting. Faster matching. Stronger training. And hey, some of them are genuinely good at those things.</p>
-    <p class="sr"><strong>But here's what none of them have built.</strong></p>
-    <p class="sr">When a VA leaves any other company — the knowledge leaves with them. Everything they learned about how your industry works, what templates convert, how to handle the hard situations — gone. The next person starts from scratch. That's just how it works everywhere else.</p>
-    <p class="sr">Wishup is the only VA company that said — wait, that's a broken model. Let's fix it.</p>
-    <p class="sr">So we built a system where knowledge doesn't live in a person. It lives in the engine. Every VA who solves something adds to it. Every client engagement makes it smarter. Every workflow that gets refined gets stored. The whole thing compounds — quietly, constantly, for 10 years now.</p>
-    <p class="sr">Which means your VA doesn't start from their own experience. They start from the collective experience of 1,500 people across 1,000 businesses. That's not something any other VA company can say today. Or honestly, anytime soon.</p>
-    <p class="sr">Oh and that last bit? That's not us being dramatic. That's just the truth.</p>
-
-    <!-- FLOAT QUOTE 7 -->
-    <div class="fq sr">
-      <div class="fq-num">07 of 07</div>
-      <div class="fq-text">VA doesn't start when you sign up. Your VA started 10 years ago.</div>
-      <div class="fq-icon">⚙️</div>
-    </div>
-
-    <div class="pq sr">
-      This isn't a feature upgrade. This is a completely different category of service.
-    </div>
-
-    <div class="summary-box sr">
-      <p>When you hire a Wishup VA, you're not just hiring a person. You're plugging into a decade of structured knowledge about how businesses like yours run — what works, what doesn't, and how to handle everything in between. Your VA starts where every other VA finishes.</p>
-    </div>
-  </section>
-
-  <!-- ── CTA ── -->
-  <div class="cta-block sr" id="cta">
-    <div class="cta-inner">
-      <h2>Your VA Shouldn't Start From Zero.</h2>
-      <p>See how the VA Intelligence Engine works for your specific business and industry.</p>
-      <a href="#" class="btn">See How it Works →</a>
-      <a href="#" class="btn btn-ghost">Talk to Wishup</a>
+    <div class="ops-panel-right">
+      <img src="https://york.ie/wp-content/uploads/2025/03/startup-business-operations-101-3-tips-for-founders.png" alt="Founder Ops">
+      <div class="sub-label">Outcome</div>
+      <p>Founders report 12+ hours reclaimed weekly. Never miss a critical follow-up, meeting, or decision again.</p>
     </div>
   </div>
 
-</article>
+  <div id="tab-workflow" class="ops-content">
+    <div class="ops-panel-left">
+      <h3>Workflow Automation</h3>
+      <ul class="ops-list">
+        <li>Lead, task, and follow-up automation across platforms</li>
+        <li>CRM and pipeline workflows built and maintained</li>
+        <li>Internal handoffs and reminders, zero slippage</li>
+        <li>Reporting and data syncs in real time</li>
+        <li>Process automation across 200+ tools</li>
+      </ul>
+    </div>
+    <div class="ops-panel-right">
+      <img src="https://www.spiegltec.at/wp-content/uploads/spiegltec-studio-010-process-automation-engineering-e1695817988660.jpg" alt="Workflow Automation">
+      <div class="sub-label">Outcome</div>
+      <p>Zero manual handoffs. Your workflows run themselves — with a human backup always monitoring.</p>
+    </div>
+  </div>
+
+  <div id="tab-customer" class="ops-content">
+    <div class="ops-panel-left">
+      <h3>Customer Ops</h3>
+      <ul class="ops-list">
+        <li>Appointment and request handling, 24/7</li>
+        <li>Customer follow-ups and escalations resolved fast</li>
+        <li>Record updates and compliance workflows on track</li>
+        <li>Billing coordination and reporting, no gaps</li>
+        <li>Service quality tracking across every touchpoint</li>
+      </ul>
+    </div>
+    <div class="ops-panel-right">
+      <img src="https://www.simon-kucher.com/sites/default/files/styles/webp/public/content-type-blog/2024-07/customeroperations.jpg.webp?itok=qrYcOy8J" alt="Customer Ops">
+      <div class="sub-label">Outcome</div>
+      <p>Customers always have a human on the other side — backed by systems that never let anything fall through.</p>
+    </div>
+  </div>
+
+  <div id="tab-finance" class="ops-content">
+    <div class="ops-panel-left">
+      <h3>Finance Ops</h3>
+      <ul class="ops-list">
+        <li>Invoicing and collections, every cycle — no chasing</li>
+        <li>Accounts receivable & payable kept spotless</li>
+        <li>Expense and transaction tracking, real time</li>
+        <li>Monthly reporting cadence never missed</li>
+        <li>Tool-led financial hygiene across all platforms</li>
+      </ul>
+    </div>
+    <div class="ops-panel-right">
+      <img src="https://s44783.pcdn.co/wp-content/uploads/2022/10/wh-pms-banner-768x329.jpeg.optimal.jpeg" alt="Finance Ops">
+      <div class="sub-label">Outcome</div>
+      <p>Clean books, on-time collections, and financial clarity — without hiring a full-time finance team.</p>
+    </div>
+  </div>
+
+  <div id="tab-business" class="ops-content">
+    <div class="ops-panel-left">
+      <h3>Business Ops</h3>
+      <ul class="ops-list">
+        <li>Process documentation & SOPs built to last</li>
+        <li>Vendor and inventory coordination, zero gaps</li>
+        <li>Daily performance tracking across functions</li>
+        <li>Cost reviews and efficiency checks, weekly</li>
+        <li>Ops dashboards and reporting — live, always</li>
+      </ul>
+    </div>
+    <div class="ops-panel-right">
+      <img src="https://s44783.pcdn.co/wp-content/uploads/2023/08/MO-AIP-650x325-1.jpg.optimal.jpg" alt="Business Ops">
+      <div class="sub-label">Outcome</div>
+      <p>A business that runs on documented systems — not tribal knowledge — ready to scale at any moment.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:48px;" class="reveal">
+    <a href="#contact" class="btn-secondary" style="display:inline-flex; font-size:1.09rem;">Check the full list of 100+ ops →</a>
+  </div>
+</section>
+
+<!-- WHY SECTION -->
+<section class="why-section" id="why">
+  <div style="text-align:center;" class="reveal">
+    <div class="section-tag">Why Wishup</div>
+    <h2 class="section-title">Why founders hand this off—<br>and <em>never look back.</em></h2>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <div class="why-icon">⚙️</div>
+      <h4>Execution-First Systems</h4>
+      <p>We don't just finish tasks — we run repeatable workflows across tools, teams, and timelines. Built once, run forever.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-icon">🎯</div>
+      <h4>End-to-End Ownership</h4>
+      <p>From onboarding to quality control, escalation handling, and continuity — we own the outcome, not just staffing.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-icon">💎</div>
+      <h4>Ops-Ready Talent</h4>
+      <p>Every operator is vetted, trained, and continuously guided to execute within defined operating standards. Top 0.1%.</p>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">⚡</div>
+      <h4>Speed as a Discipline</h4>
+      <p>Clear SLAs, fast turnarounds, and tight feedback loops. 5-minute response times in any timezone. Always.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-icon">🧠</div>
+      <h4>Founder-Aligned Mindset</h4>
+      <p>Operators who understand priorities, context, and trade-offs — so work moves without micromanagement from you.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-icon">🔄</div>
+      <h4>Built for Continuity</h4>
+      <p>Your ops don't pause when people do. 24/7 workflows mean your business keeps moving, always. No gaps. No surprises.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF SECTION -->
+<section class="proof-section">
+
+  <!-- Animated Headline -->
+  <div class="proof-animated-headline reveal">
+    <p class="proof-static-line">We showed up for their <span id="rotating-word" class="rotating-word"></span><span class="type-cursor">|</span></p>
+    <p class="proof-tagline">Every single time. No matter the time.</p>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="proof-grid">
+    <div class="proof-card reveal">
+      <div class="proof-stars">★★★★★</div>
+      <div class="proof-quote">The VA they assigned me is spectacular and is always showing me how to improve my business through workflow automation. He is incredibly smart and capable. If you are looking for a VA with incredible skills for workflow automation, AI, website design, Excel sheets, and client communication — look no further than Wishup.</div>
+      <div class="proof-author">
+        <img src="https://cms-assets.wishup.co/Jenn_Pfeiffer_d1bba4ff11.png?quality=75&width=640&format=webp" alt="Jenn Pfeiffer"
+          onerror="this.style.background='#1a6b4a';this.style.display='flex';this.style.alignItems='center';this.style.justifyContent='center';this.style.color='white';this.style.fontSize='1.2rem';this.style.fontWeight='700';this.innerHTML='JP';">
+        <div>
+          <div class="proof-author-name">Jenn Pfeiffer</div>
+          <div class="proof-author-role">Founder – The Jenn Pfeiffer Team</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-card reveal reveal-delay-1">
+      <div class="proof-stars">★★★★★</div>
+      <div class="proof-quote">I appreciate the value a Wishup VA can bring to a business. The VAs of Wishup are very understanding and well trained in multiple skillsets, making them indispensable.</div>
+      <div class="proof-author">
+        <img src="https://cms-assets.wishup.co/Niels_Growth_M_908f3ee1ca.webp?quality=75&width=640&format=webp" alt="Niels Van De Bergh">
+        <div>
+          <div class="proof-author-name">Niels Van De Bergh</div>
+          <div class="proof-author-role">Growth Consultant – Growth-Mechanics</div>
+        </div>
+      </div>
+    </div>
+    <div class="proof-card reveal reveal-delay-2">
+      <div class="proof-stars">★★★★★</div>
+      <div class="proof-quote">We have found the Wishup VAs to be a key part of our team at Springboard Pediatric Therapy. Utilizing a remote admin workforce has saved us money by making sure all our physical spaces are used for billable services and created an environment that has all the right, positive and happy therapy vibes.</div>
+      <div class="proof-author">
+        <img src="https://cms-assets.wishup.co/Trish_d9ad733caf.png?quality=75&width=640&format=webp" alt="Trish O'Brian">
+        <div>
+          <div class="proof-author-name">Trish O'Brian</div>
+          <div class="proof-author-role">Pediatric OT & Owner – Springboard Therapy Practice</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section class="team-section">
+  <div class="team-header reveal">
+    <h2 class="section-title" style="color:var(--green-deep);max-width:700px;margin:0 auto 16px;">The team that doesn't make you say, <em>"I thought this was handled."</em></h2>
+    <p class="team-tagline">Because it's owned. All the way up. By Wishup.</p>
+  </div>
+  <div class="team-grid reveal">
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_382159.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_495109.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_336083.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_113265.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_336898.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_82506.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+  </div>
+  <div class="team-badge reveal">
+    <span>Top 0.1% Vetted Talent</span>
+    <span class="team-badge-dot"></span>
+    <span>Trained by Founders</span>
+    <span class="team-badge-dot"></span>
+    <span>Ops-Ready from Day 1</span>
+  </div>
+</section>
+
+<!-- CASE STUDIES SECTION -->
+<section class="cases-section">
+  <div class="cases-header reveal">
+    <div class="section-tag">Case Studies</div>
+    <h2 class="section-title" style="max-width:600px;">Success stories you wouldn't believe, <em>if we didn't show you.</em></h2>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card reveal">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/09/eCommerce-case-study.png?quality=60&width=1080&format=webp" alt="eCommerce Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">eCommerce</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">The Catalog Management Overhaul by a VA That Transformed an eCommerce Brand</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-delay-1">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/08/AR-Cut-60-.png?quality=60&width=1080&format=webp" alt="Healthcare Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">Healthcare</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">How a Healthcare Brand Cut AR by 60% with One Virtual Assistant?</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-delay-2">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/10/real-estata-va---hull-case-study.png?quality=60&width=1080&format=webp" alt="Real Estate Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">Real Estate</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">How a VA Streamlined Bookings, Turnovers, and Compliance for a Real Estate Firm</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="compare-section" id="compare">
+  <div class="compare-header reveal">
+    <div class="section-tag">The Honest Comparison</div>
+    <h2 class="section-title">Not all help is built<br>for <em>continuity.</em></h2>
+    <p style="color:var(--muted); margin-top:16px; font-size:1.14rem;">Some stop when people stop. Wishup keeps going.</p>
+  </div>
+
+  <div class="reveal">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="highlight-col">Wishup Ops Team ✦</th>
+          <th>Freelance Assistants</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ownership Model</td>
+          <td class="yes">✅ End-to-end ownership</td>
+          <td class="no">❌ Task only</td>
+        </tr>
+        <tr>
+          <td>Continuity</td>
+          <td class="yes">✅ 24/7 workflows</td>
+          <td class="no">❌ Stops if unavailable</td>
+        </tr>
+        <tr>
+          <td>Founder Mindset</td>
+          <td class="yes">✅ Understands priorities</td>
+          <td class="no">❌ Needs constant guidance</td>
+        </tr>
+        <tr>
+          <td>Speed & Reliability</td>
+          <td class="yes">✅ Fast, proactive, SLA-backed</td>
+          <td class="no">❌ Variable and slow</td>
+        </tr>
+        <tr>
+          <td>Onboarding Speed</td>
+          <td class="yes">✅ Ready in 60 minutes</td>
+          <td class="no">❌ Hours to days</td>
+        </tr>
+        <tr>
+          <td>Talent Quality</td>
+          <td class="yes">✅ Top 0.1%, trained by founders</td>
+          <td class="no">❌ Skill level varies widely</td>
+        </tr>
+        <tr>
+          <td>Tech & AI Readiness</td>
+          <td class="yes">✅ 200+ AI tools trained</td>
+          <td class="no">❌ Limited tooling</td>
+        </tr>
+        <tr>
+          <td>Response Time</td>
+          <td class="yes">✅ 5-min responses, any timezone</td>
+          <td class="no">❌ Delayed, inconsistent</td>
+        </tr>
+        <tr>
+          <td>Proven Trust</td>
+          <td class="yes">✅ 1200+ founders since 2015</td>
+          <td class="no">❌ One-off gigs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="contact">
+  <div class="cta-left">
+    <div class="section-tag">Get Started Today</div>
+    <h2 class="section-title">Integrate continuity.<br><em>Integrate Wishup.</em></h2>
+    <p>The team that doesn't make you say "I thought this was handled." Because it's owned. All the way up. By Wishup.</p>
+    <div style="margin-top:32px; display:flex; gap:32px;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.19rem;font-weight:600;color:var(--green-accent);line-height:1;">60 min</div>
+        <div style="font-size:0.94rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">To get started</div>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.19rem;font-weight:600;color:var(--green-accent);line-height:1;">5 min</div>
+        <div style="font-size:0.94rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Response SLA</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-right">
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:40px;">
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.79rem;font-weight:300;color:var(--white);margin-bottom:8px;">Talk to an ops expert</div>
+      <p style="font-size:1.01rem;color:rgba(255,255,255,0.45);margin-bottom:28px;">No commitment. Just a 20-minute conversation about your ops.</p>
+      <div class="cta-input-group">
+        <input type="text" class="cta-input" placeholder="Your full name">
+        <input type="email" class="cta-input" placeholder="Work email">
+        <input type="text" class="cta-input" placeholder="Company / startup name">
+        <input type="tel" class="cta-input" placeholder="Phone number (optional)">
+        <button class="btn-cta-large" onclick="handleCTA()">Book My Ops Consultation →</button>
+      </div>
+      <p class="cta-trust">🔒 100% confidential · No spam ever · Cancel anytime</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo">Wish<span>up</span></span>
+      <p>Owning execution for 1200+ founders since 2015. Business continuity, built in.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">Founder Ops</a></li>
+        <li><a href="#">Workflow Automation</a></li>
+        <li><a href="#">Customer Ops</a></li>
+        <li><a href="#">Finance Ops</a></li>
+        <li><a href="#">Business Ops</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Wishup</a></li>
+        <li><a href="#">Case Studies</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Legal</h5>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Wishup. All rights reserved.</span>
+    <span>Owning execution since 2015 ✦</span>
+  </div>
+</footer>
 
 <script>
-/* ── SCROLL REVEAL ── */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('cursor-follower');
+let mx = 0, my = 0, fx = 0, fy = 0;
 
-document.querySelectorAll('.sr,.sr-l,.sr-r').forEach(el => io.observe(el));
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
 
-// Hero fires immediately
-setTimeout(() => document.querySelectorAll('.hero .sr').forEach(el => el.classList.add('in')), 80);
+function animateFollower() {
+  fx += (mx - fx) * 0.12;
+  fy += (my - fy) * 0.12;
+  follower.style.left = fx + 'px';
+  follower.style.top = fy + 'px';
+  requestAnimationFrame(animateFollower);
+}
+animateFollower();
 
-/* ── NAV SCROLL STATE ── */
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
+document.querySelectorAll('a, button, .ops-tab, .why-card, .proof-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+    follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+    follower.style.borderColor = 'var(--green-accent)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    follower.style.transform = 'translate(-50%, -50%) scale(1)';
+    follower.style.borderColor = 'var(--green-mid)';
+  });
+});
 
-/* ── COUNTER ANIMATION ── */
-function animateNum(el) {
-  if (el.dataset.animated) return;
-  el.dataset.animated = '1';
-  const target = parseInt(el.dataset.target);
-  const suffix = el.dataset.suffix || '';
-  let cur = 0;
-  const step = Math.ceil(target / 45);
-  const t = setInterval(() => {
-    cur = Math.min(cur + step, target);
-    el.textContent = cur.toLocaleString() + suffix;
-    if (cur >= target) clearInterval(t);
-  }, 28);
+// Tab switching
+function switchTab(id) {
+  document.querySelectorAll('.ops-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.ops-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
 }
 
-const cio = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('[data-target]').forEach(animateNum);
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
     }
   });
-}, { threshold: 0.3 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.stats-row, .hero-stats').forEach(el => cio.observe(el));
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-/* ── FLOAT QUOTE ENTRANCE ENHANCEMENT ── */
-document.querySelectorAll('.fq').forEach(fq => {
-  const sub = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.transform = 'scale(1)';
-        e.target.style.opacity = '1';
-      }
-    });
-  }, { threshold: 0.2 });
-  fq.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1), opacity .5s ease';
-  fq.style.transform = 'scale(.97)';
-  sub.observe(fq);
-});
+// Counter animation
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      current = target;
+      clearInterval(timer);
+    }
+    el.textContent = Math.floor(current);
+  }, 20);
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// CTA button
+function handleCTA() {
+  const btn = document.querySelector('.btn-cta-large');
+  btn.textContent = '✓ Request Submitted — We\'ll be in touch shortly!';
+  btn.style.background = 'var(--green-mid)';
+  btn.style.color = 'white';
+}
+
+// Typewriter rotating words
+const words = ['customers.', 'stakeholders.', 'projects.', 'continuity.'];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const rotatingEl = document.getElementById('rotating-word');
+
+function typeWord() {
+  if (!rotatingEl) return;
+  const currentWord = words[wordIndex];
+
+  if (isDeleting) {
+    charIndex--;
+    rotatingEl.textContent = currentWord.substring(0, charIndex);
+    if (charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(typeWord, 400);
+      return;
+    }
+    setTimeout(typeWord, 60);
+  } else {
+    charIndex++;
+    rotatingEl.textContent = currentWord.substring(0, charIndex);
+    if (charIndex === currentWord.length) {
+      isDeleting = true;
+      setTimeout(typeWord, 2000);
+      return;
+    }
+    setTimeout(typeWord, 90);
+  }
+}
+setTimeout(typeWord, 800);
 </script>
 </body>
 </html>
