@@ -605,6 +605,187 @@ section { padding: 120px 80px; }
 
 .stat-label { font-size: 0.98rem; /* was 0.8rem */ font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-deep); opacity: 0.7; margin-top: 8px; }
 
+/* TEAM SECTION */
+.team-section {
+  background: var(--cream);
+  padding: 120px 80px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.team-header { margin-bottom: 64px; }
+
+.team-tagline {
+  font-size: 1.14rem;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-top: 12px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto 52px;
+}
+
+.team-member {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  border: 2px solid var(--border);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  background: var(--green-light);
+}
+
+.team-member:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 28px 60px rgba(10,61,46,0.18);
+  border-color: var(--green-accent);
+}
+
+.team-member img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: filter 0.35s ease;
+}
+
+.team-member:hover img { filter: saturate(1.1) brightness(1.04); }
+
+.team-member-shine {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--green-deep);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.91rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 100px;
+}
+
+.team-badge-dot {
+  width: 5px; height: 5px;
+  background: var(--green-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* CASE STUDIES SECTION */
+.cases-section {
+  background: var(--green-pale);
+  padding: 120px 80px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.cases-header { margin-bottom: 64px; }
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.case-card {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px rgba(10,61,46,0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 64px rgba(10,61,46,0.14);
+}
+
+.case-thumb {
+  position: relative;
+  overflow: hidden;
+  height: 220px;
+}
+
+.case-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.case-card:hover .case-thumb img { transform: scale(1.06); }
+
+.case-thumb-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(10,61,46,0.25) 100%);
+}
+
+.case-tag-pill {
+  position: absolute;
+  top: 16px; left: 16px;
+  background: var(--green-deep);
+  color: var(--white);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+}
+
+.case-body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.case-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.32rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  line-height: 1.35;
+}
+
+.case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--green-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--green-accent);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: gap 0.2s, color 0.2s;
+}
+.case-link:hover { gap: 12px; color: var(--green-deep); }
+
+@media (max-width: 960px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+  .cases-grid { grid-template-columns: 1fr; }
+  .team-section, .cases-section { padding: 80px 40px; }
+}
+
 /* COMPARISON TABLE */
 .compare-section { background: var(--cream); }
 .compare-header { text-align: center; margin-bottom: 64px; }
@@ -1036,6 +1217,90 @@ footer {
   </div>
 </section>
 
+<!-- TEAM SECTION -->
+<section class="team-section">
+  <div class="team-header reveal">
+    <h2 class="section-title" style="color:var(--green-deep);max-width:700px;margin:0 auto 16px;">The team that doesn't make you say, <em>"I thought this was handled."</em></h2>
+    <p class="team-tagline">Because it's owned. All the way up. By Wishup.</p>
+  </div>
+  <div class="team-grid reveal">
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_382159.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_495109.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_336083.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_113265.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_336898.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+    <div class="team-member">
+      <img src="https://cms-assets.wishup.co/display_pics/va_82506.png?quality=75&width=640&format=webp" alt="Wishup VA">
+      <div class="team-member-shine"></div>
+    </div>
+  </div>
+  <div class="team-badge reveal">
+    <span>Top 0.1% Vetted Talent</span>
+    <span class="team-badge-dot"></span>
+    <span>Trained by Founders</span>
+    <span class="team-badge-dot"></span>
+    <span>Ops-Ready from Day 1</span>
+  </div>
+</section>
+
+<!-- CASE STUDIES SECTION -->
+<section class="cases-section">
+  <div class="cases-header reveal">
+    <div class="section-tag">Case Studies</div>
+    <h2 class="section-title" style="max-width:600px;">Success stories you wish were yours.</h2>
+  </div>
+  <div class="cases-grid">
+    <div class="case-card reveal">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/09/eCommerce-case-study.png?quality=60&width=1080&format=webp" alt="eCommerce Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">eCommerce</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">The Catalog Management Overhaul by a VA That Transformed an eCommerce Brand</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-delay-1">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/08/AR-Cut-60-.png?quality=60&width=1080&format=webp" alt="Healthcare Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">Healthcare</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">How a Healthcare Brand Cut AR by 60% with One Virtual Assistant?</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+    <div class="case-card reveal reveal-delay-2">
+      <div class="case-thumb">
+        <img src="https://cms-assets.wishup.co/blog/images/2025/10/real-estata-va---hull-case-study.png?quality=60&width=1080&format=webp" alt="Real Estate Case Study">
+        <div class="case-thumb-overlay"></div>
+        <div class="case-tag-pill">Real Estate</div>
+      </div>
+      <div class="case-body">
+        <h3 class="case-title">How a VA Streamlined Bookings, Turnovers, and Compliance for a Real Estate Firm</h3>
+        <a href="#contact" class="case-link">Read Case Study <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- COMPARE TABLE -->
 <section class="compare-section" id="compare">
   <div class="compare-header reveal">
@@ -1109,15 +1374,11 @@ footer {
   <div class="cta-left">
     <div class="section-tag">Get Started Today</div>
     <h2 class="section-title">Integrate continuity.<br><em>Integrate Wishup.</em></h2>
-    <p>The team that doesn't make you say "I thought this was handled." Because it's owned. All the way up. By Wishup.</p>
     <div style="margin-top:32px; display:flex; gap:32px;">
       <div>
         <div style="font-family:'Cormorant Garamond',serif;font-size:2.19rem;font-weight:600;color:var(--green-accent);line-height:1;">60 min</div>
         <div style="font-size:0.94rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">To get started</div>
       </div>
-      <div>
-        <div style="font-family:'Cormorant Garamond',serif;font-size:2.19rem;font-weight:600;color:var(--green-accent);line-height:1;">5 min</div>
-        <div style="font-size:0.94rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">Response SLA</div>
       </div>
     </div>
   </div>
