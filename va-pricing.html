@@ -404,6 +404,10 @@
   </div>
 </div>
 
+<div class="annual-note visible" id="annual-note">
+  ✦ Annual plans are billed every 12 months — lock in your rate and save big.
+</div>
+
 <div class="cards-grid">
 
   <!-- Basic VA -->
@@ -560,10 +564,10 @@ function setBilling(mode) {
   const note = document.getElementById('annual-note');
   if (mode === 'annually') {
     badge.style.opacity = '1';
-    note.classList.add('visible');
+    if (note) note.classList.add('visible');
   } else {
     badge.style.opacity = '0.4';
-    note.classList.remove('visible');
+    if (note) note.classList.remove('visible');
   }
 
   ['basic', 'elite', 'us'].forEach(updateCard);
