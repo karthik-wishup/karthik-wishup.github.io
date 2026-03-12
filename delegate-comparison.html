@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delegate by Wishup — Version Comparison</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a7a3c;
+    --green-dark: #0f4f26;
+    --green-light: #e8f5ed;
+    --green-mid: #2d9d54;
+    --green-border: #c8e6d0;
+    --gold: #f0a500;
+    --white: #ffffff;
+    --off-white: #f7faf7;
+    --text: #1a2e1a;
+    --text-muted: #5a7a5a;
+    --text-faint: #aabcaa;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #0c1f0e;
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 72px 40px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,122,60,0.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    border: 1px solid rgba(45,157,84,0.4);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--green-mid); }
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto 12px;
+    line-height: 1.6;
+  }
+  .wishup-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,122,60,0.2);
+    border: 1px solid rgba(26,122,60,0.4);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+  }
+  .wishup-badge strong { color: white; }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  .version-card {
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 32px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .version-card:last-child { border-right: none; }
+  .version-card:hover { background: rgba(26,122,60,0.07); }
+
+  .version-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 8px;
+  }
+  .version-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .version-tagline {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 28px;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── SKETCH ── */
+  .sketch {
+    background: #f0f4f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* shared mock elements */
+  .mock-browser {
+    width: 100%;
+    background: #e8ede8;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+  .mock-browser-bar {
+    background: #d4dcd4;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 5px;
+  }
+  .mock-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .mock-dot.r { background: #ff5f57; }
+  .mock-dot.y { background: #febc2e; }
+  .mock-dot.g { background: #28c840; }
+  .mock-url {
+    flex: 1;
+    background: white;
+    border-radius: 3px;
+    height: 12px;
+    margin-left: 8px;
+    opacity: 0.7;
+  }
+  .mock-content {
+    background: white;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .mock-page-lines {
+    padding: 12px;
+    width: 100%;
+  }
+  .mock-line {
+    height: 7px;
+    background: #e0e8e0;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+  .mock-line.short { width: 60%; }
+  .mock-line.med { width: 80%; }
+
+  /* V1 — popup only */
+  .sketch-v1 .mock-popup {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    overflow: hidden;
+    border: 1px solid #c8e6d0;
+  }
+  .sketch-v1 .mock-popup-header {
+    background: var(--green);
+    padding: 5px 8px;
+    font-size: 7px;
+    color: white;
+    font-weight: 700;
+  }
+  .sketch-v1 .mock-popup-body {
+    padding: 6px 8px;
+  }
+  .sketch-v1 .mock-popup-url {
+    height: 5px; background: #e8f5ed; border-radius: 2px; margin-bottom: 4px;
+  }
+  .sketch-v1 .mock-popup-textarea {
+    height: 20px; border: 1px dashed #c8e6d0; border-radius: 3px; margin-bottom: 5px;
+  }
+  .sketch-v1 .mock-popup-btn {
+    height: 12px; background: var(--green); border-radius: 3px;
+  }
+  .sketch-v1 .ext-icon {
+    position: absolute;
+    top: 8px; right: 32px;
+    width: 16px; height: 16px;
+    background: var(--green);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px;
+    color: white;
+    font-weight: 700;
+  }
+  .sketch-v1 .arrow {
+    position: absolute;
+    top: 22px; right: 38px;
+    font-size: 9px; color: var(--green);
+    font-weight: 700;
+  }
+
+  /* V2 — floating widget always open */
+  .sketch-v2 .mock-widget {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 100px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 1px solid #c8e6d0;
+  }
+  .sketch-v2 .mock-widget-header {
+    background: var(--green);
+    padding: 4px 7px;
+    font-size: 6px;
+    color: white;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sketch-v2 .mock-widget-btns { display: flex; gap: 2px; }
+  .sketch-v2 .mock-widget-btn {
+    width: 8px; height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+  }
+  .sketch-v2 .mock-widget-body { padding: 5px 7px; }
+  .sketch-v2 .mock-widget-url {
+    height: 4px; background: #e8f5ed; border-radius: 2px; margin-bottom: 3px;
+  }
+  .sketch-v2 .mock-widget-url.s { width: 70%; }
+  .sketch-v2 .mock-widget-textarea {
+    height: 16px; border: 1px dashed #c8e6d0; border-radius: 3px; margin-bottom: 4px;
+  }
+  .sketch-v2 .mock-widget-btn-send {
+    height: 10px; background: var(--green); border-radius: 3px;
+  }
+  .sketch-v2 .drag-hint {
+    position: absolute;
+    bottom: 8px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 7px; color: var(--green); font-weight: 600;
+    background: rgba(26,122,60,0.1);
+    padding: 2px 6px; border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  /* V3 — full side panel */
+  .sketch-v3 .mock-side-panel {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 90px;
+    background: white;
+    box-shadow: -4px 0 16px rgba(0,0,0,0.12);
+    border-left: 1px solid #c8e6d0;
+    overflow: hidden;
+  }
+  .sketch-v3 .mock-side-header {
+    background: var(--green);
+    padding: 6px 8px;
+  }
+  .sketch-v3 .mock-side-powered {
+    font-size: 5px; color: rgba(255,255,255,0.5); margin-bottom: 2px;
+  }
+  .sketch-v3 .mock-side-logo {
+    height: 7px; background: rgba(255,255,255,0.7); border-radius: 2px; width: 40px; margin-bottom: 4px;
+  }
+  .sketch-v3 .mock-side-actions {
+    display: flex; gap: 2px; justify-content: flex-end;
+  }
+  .sketch-v3 .mock-side-btn {
+    height: 8px; background: rgba(255,255,255,0.2); border-radius: 2px;
+  }
+  .sketch-v3 .mock-side-btn.s { width: 28px; }
+  .sketch-v3 .mock-side-btn.xs { width: 10px; }
+  .sketch-v3 .mock-side-body { padding: 6px 8px; }
+  .sketch-v3 .mock-side-label { height: 4px; background: #c8e6d0; border-radius: 2px; margin-bottom: 4px; width: 50%; }
+  .sketch-v3 .mock-side-box {
+    background: #f7faf7; border: 1px solid #ddeee3; border-radius: 3px; padding: 3px 4px; margin-bottom: 6px;
+  }
+  .sketch-v3 .mock-side-line { height: 4px; background: #ddeee3; border-radius: 2px; margin-bottom: 2px; }
+  .sketch-v3 .mock-side-line.s { width: 60%; }
+  .sketch-v3 .mock-side-textarea {
+    height: 24px; border: 1px dashed #c8e6d0; border-radius: 3px; margin-bottom: 5px;
+  }
+  .sketch-v3 .mock-side-send {
+    height: 11px; background: var(--green); border-radius: 3px;
+  }
+  .sketch-v3 .mock-tab {
+    position: absolute;
+    top: 50%; right: 90px;
+    transform: translateY(-50%);
+    background: var(--green);
+    border-radius: 6px 0 0 6px;
+    padding: 8px 5px;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+  }
+  .sketch-v3 .mock-tab-icon {
+    width: 12px; height: 12px; background: rgba(255,255,255,0.8); border-radius: 2px;
+  }
+  .sketch-v3 .mock-tab-label {
+    font-size: 5px; color: white; font-weight: 700; letter-spacing: 0.5px;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+
+  /* V4 — tab + small card */
+  .sketch-v4 .mock-small-card {
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 100px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    overflow: hidden;
+    border: 1px solid #c8e6d0;
+  }
+  .sketch-v4 .mock-small-header {
+    background: var(--green);
+    padding: 5px 7px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .sketch-v4 .mock-small-branding { display: flex; flex-direction: column; gap: 1px; }
+  .sketch-v4 .mock-small-powered { font-size: 5px; color: rgba(255,255,255,0.5); }
+  .sketch-v4 .mock-small-logo { height: 7px; background: rgba(255,255,255,0.7); border-radius: 1px; width: 36px; }
+  .sketch-v4 .mock-small-actions { display: flex; gap: 2px; align-items: center; }
+  .sketch-v4 .mock-small-btn { height: 8px; background: rgba(255,255,255,0.2); border-radius: 2px; }
+  .sketch-v4 .mock-small-btn.s { width: 22px; }
+  .sketch-v4 .mock-small-btn.xs { width: 8px; }
+  .sketch-v4 .mock-small-body { padding: 5px 7px; }
+  .sketch-v4 .mock-small-urlbox {
+    background: #f7faf7; border: 1px solid #ddeee3; border-radius: 3px; padding: 3px 4px; margin-bottom: 5px;
+  }
+  .sketch-v4 .mock-small-line { height: 4px; background: #ddeee3; border-radius: 2px; margin-bottom: 2px; }
+  .sketch-v4 .mock-small-line.s { width: 55%; }
+  .sketch-v4 .mock-small-textarea {
+    height: 18px; border: 1px dashed #c8e6d0; border-radius: 3px; margin-bottom: 5px;
+  }
+  .sketch-v4 .mock-small-send { height: 10px; background: var(--green); border-radius: 3px; }
+  .sketch-v4 .mock-tab {
+    position: absolute;
+    top: 50%; right: 0;
+    transform: translateY(-50%);
+    background: var(--green);
+    border-radius: 6px 0 0 6px;
+    padding: 8px 5px;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    opacity: 0.35;
+  }
+  .sketch-v4 .mock-tab-icon { width: 12px; height: 12px; background: rgba(255,255,255,0.8); border-radius: 2px; }
+  .sketch-v4 .mock-tab-label { font-size: 5px; color: white; font-weight: 700; letter-spacing: 0.5px; writing-mode: vertical-rl; transform: rotate(180deg); }
+
+  /* ── STEP FLOW ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.4;
+  }
+  .flow-num {
+    width: 18px; height: 18px;
+    background: rgba(26,122,60,0.3);
+    border: 1px solid rgba(45,157,84,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--green-mid);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── PROS ── */
+  .pros-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 10px;
+  }
+  .pro {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 7px;
+    line-height: 1.4;
+  }
+  .pro-dot {
+    width: 5px; height: 5px;
+    background: var(--green-mid);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1400px;
+    margin: 0 auto 0;
+    padding: 0 32px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* ── CLICKS BADGE ── */
+  .clicks-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(240,165,0,0.12);
+    border: 1px solid rgba(240,165,0,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── RECOMMENDED BADGE ── */
+  .recommended {
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: #1a2e1a;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 0 0 8px 8px;
+    white-space: nowrap;
+  }
+  .version-card.featured {
+    background: rgba(26,122,60,0.1);
+    border-right-color: rgba(26,122,60,0.2);
+  }
+
+  /* ── SUMMARY TABLE ── */
+  .summary {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+  .summary h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 28px;
+    color: rgba(255,255,255,0.9);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th {
+    background: rgba(26,122,60,0.2);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    border-bottom: 1px solid rgba(26,122,60,0.3);
+  }
+  td {
+    padding: 11px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.65);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:hover td { background: rgba(26,122,60,0.05); }
+  td:first-child { color: rgba(255,255,255,0.9); font-weight: 600; }
+  .check { color: var(--green-mid); font-size: 14px; }
+  .cross { color: rgba(255,255,255,0.2); font-size: 14px; }
+  .star { color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  @media (max-width: 1000px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .version-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Internal Stakeholder Review</div>
+  <h1>Delegate by <span>Wishup</span><br>Version Comparison</h1>
+  <p class="hero-sub">Four interface approaches for the delegation Chrome extension. Same core functionality, different UX behaviours.</p>
+  <div class="wishup-badge">
+    <span>Prepared by</span>
+    <strong>Wishup Product Team</strong>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- GRID -->
+<div class="grid">
+
+  <!-- V1 -->
+  <div class="version-card">
+    <div class="version-tag">Version 1.0</div>
+    <div class="version-name">The Popup</div>
+    <div class="version-tagline">Classic Chrome extension popup — click the toolbar icon to open</div>
+
+    <div class="sketch sketch-v1">
+      <div class="mock-browser">
+        <div class="mock-browser-bar">
+          <div class="mock-dot r"></div>
+          <div class="mock-dot y"></div>
+          <div class="mock-dot g"></div>
+          <div class="mock-url"></div>
+          <div class="ext-icon">W</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-page-lines">
+            <div class="mock-line"></div>
+            <div class="mock-line med"></div>
+            <div class="mock-line short"></div>
+          </div>
+          <div class="mock-popup">
+            <div class="mock-popup-header">⚡ Delegate</div>
+            <div class="mock-popup-body">
+              <div class="mock-popup-url"></div>
+              <div class="mock-popup-url" style="width:70%"></div>
+              <div class="mock-popup-textarea"></div>
+              <div class="mock-popup-btn"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clicks-badge">3 clicks to delegate</div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div>Browse to any page</div>
+      <div class="flow-step"><div class="flow-num">2</div>Click the W icon in Chrome toolbar</div>
+      <div class="flow-step"><div class="flow-num">3</div>Type task → Delegate Now</div>
+    </div>
+
+    <div class="pros-title">Pros</div>
+    <div class="pro"><div class="pro-dot"></div>Cleanest, no UI on any webpage</div>
+    <div class="pro"><div class="pro-dot"></div>Standard Chrome UX — familiar to all users</div>
+    <div class="pro"><div class="pro-dot"></div>Zero interference with page content</div>
+    <div class="pro"><div class="pro-dot"></div>Easiest to install and understand</div>
+  </div>
+
+  <!-- V2 -->
+  <div class="version-card">
+    <div class="version-tag">Version 2.0</div>
+    <div class="version-name">Always-On Widget</div>
+    <div class="version-tagline">Floating card permanently visible on every webpage, draggable anywhere</div>
+
+    <div class="sketch sketch-v2">
+      <div class="mock-browser">
+        <div class="mock-browser-bar">
+          <div class="mock-dot r"></div>
+          <div class="mock-dot y"></div>
+          <div class="mock-dot g"></div>
+          <div class="mock-url"></div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-page-lines">
+            <div class="mock-line"></div>
+            <div class="mock-line med"></div>
+            <div class="mock-line short"></div>
+            <div class="mock-line"></div>
+          </div>
+          <div class="mock-widget">
+            <div class="mock-widget-header">
+              <span>Delegate</span>
+              <div class="mock-widget-btns">
+                <div class="mock-widget-btn"></div>
+                <div class="mock-widget-btn"></div>
+              </div>
+            </div>
+            <div class="mock-widget-body">
+              <div class="mock-widget-url"></div>
+              <div class="mock-widget-url s"></div>
+              <div class="mock-widget-textarea"></div>
+              <div class="mock-widget-btn-send"></div>
+            </div>
+          </div>
+          <div class="drag-hint">↕ draggable</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clicks-badge">1 click to delegate</div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div>Widget is always visible — just type your task</div>
+      <div class="flow-step"><div class="flow-num">2</div>Click Delegate Now</div>
+      <div class="flow-step"><div class="flow-num">3</div>Minimise to a pill if not needed</div>
+    </div>
+
+    <div class="pros-title">Pros</div>
+    <div class="pro"><div class="pro-dot"></div>Fastest possible delegation — widget is always ready</div>
+    <div class="pro"><div class="pro-dot"></div>Draggable — move it anywhere on screen</div>
+    <div class="pro"><div class="pro-dot"></div>Never need to hunt for the toolbar icon</div>
+    <div class="pro"><div class="pro-dot"></div>Minimises to a tiny pill when not in use</div>
+  </div>
+
+  <!-- V3 -->
+  <div class="version-card featured">
+    <div class="version-tag">Version 3.0</div>
+    <div class="version-name">Full Side Panel</div>
+    <div class="version-tagline">Tab on right edge slides open a full-height panel with history</div>
+
+    <div class="sketch sketch-v3">
+      <div class="mock-browser">
+        <div class="mock-browser-bar">
+          <div class="mock-dot r"></div>
+          <div class="mock-dot y"></div>
+          <div class="mock-dot g"></div>
+          <div class="mock-url"></div>
+        </div>
+        <div class="mock-content" style="position:relative; overflow:hidden;">
+          <div class="mock-page-lines" style="margin-right:94px;">
+            <div class="mock-line"></div>
+            <div class="mock-line med"></div>
+            <div class="mock-line short"></div>
+            <div class="mock-line"></div>
+          </div>
+          <div class="mock-side-panel">
+            <div class="mock-side-header">
+              <div class="mock-side-powered">powered by</div>
+              <div class="mock-side-logo"></div>
+              <div class="mock-side-actions">
+                <div class="mock-side-btn s"></div>
+                <div class="mock-side-btn xs"></div>
+              </div>
+            </div>
+            <div class="mock-side-body">
+              <div class="mock-side-label"></div>
+              <div class="mock-side-box">
+                <div class="mock-side-line"></div>
+                <div class="mock-side-line s"></div>
+              </div>
+              <div class="mock-side-label"></div>
+              <div class="mock-side-textarea"></div>
+              <div class="mock-side-send"></div>
+            </div>
+          </div>
+          <div class="mock-tab">
+            <div class="mock-tab-icon"></div>
+            <span class="mock-tab-label">Delegate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clicks-badge">1 click to delegate</div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div>Click the green Delegate tab on the right edge</div>
+      <div class="flow-step"><div class="flow-num">2</div>Full panel slides in from the right</div>
+      <div class="flow-step"><div class="flow-num">3</div>Type task → Delegate Now → panel closes</div>
+    </div>
+
+    <div class="pros-title">Pros</div>
+    <div class="pro"><div class="pro-dot"></div>Most screen real estate for task writing</div>
+    <div class="pro"><div class="pro-dot"></div>Shows full delegation history in the panel</div>
+    <div class="pro"><div class="pro-dot"></div>Tab is always visible without blocking content</div>
+    <div class="pro"><div class="pro-dot"></div>Professional feel — like Intercom or Notion sidebars</div>
+    <div class="pro"><div class="pro-dot"></div>Smooth slide animation feels premium</div>
+  </div>
+
+  <!-- V4 -->
+  <div class="version-card">
+        <div class="recommended">⭐ Recommended</div>
+    <div class="version-tag">Version 4.0</div>
+    <div class="version-name">Mini Side Panel</div>
+    <div class="version-tagline">Same tab trigger, but opens a compact floating card at top right instead of full panel</div>
+
+    <div class="sketch sketch-v4">
+      <div class="mock-browser">
+        <div class="mock-browser-bar">
+          <div class="mock-dot r"></div>
+          <div class="mock-dot y"></div>
+          <div class="mock-dot g"></div>
+          <div class="mock-url"></div>
+        </div>
+        <div class="mock-content" style="position:relative; overflow:hidden;">
+          <div class="mock-page-lines">
+            <div class="mock-line"></div>
+            <div class="mock-line med"></div>
+            <div class="mock-line short"></div>
+            <div class="mock-line"></div>
+          </div>
+          <div class="mock-small-card">
+            <div class="mock-small-header">
+              <div class="mock-small-branding">
+                <div class="mock-small-powered">powered by</div>
+                <div class="mock-small-logo"></div>
+              </div>
+              <div class="mock-small-actions">
+                <div class="mock-small-btn s"></div>
+                <div class="mock-small-btn xs"></div>
+              </div>
+            </div>
+            <div class="mock-small-body">
+              <div class="mock-small-urlbox">
+                <div class="mock-small-line"></div>
+                <div class="mock-small-line s"></div>
+              </div>
+              <div class="mock-small-textarea"></div>
+              <div class="mock-small-send"></div>
+            </div>
+          </div>
+          <div class="mock-tab">
+            <div class="mock-tab-icon"></div>
+            <span class="mock-tab-label">Delegate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clicks-badge">1 click to delegate</div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-num">1</div>Click the green Delegate tab on the right edge</div>
+      <div class="flow-step"><div class="flow-num">2</div>Small card pops in at top right corner</div>
+      <div class="flow-step"><div class="flow-num">3</div>Type task → Delegate → card disappears, tab returns</div>
+    </div>
+
+    <div class="pros-title">Pros</div>
+    <div class="pro"><div class="pro-dot"></div>Least intrusive — card is compact, not full screen</div>
+    <div class="pro"><div class="pro-dot"></div>Page content fully visible while delegating</div>
+    <div class="pro"><div class="pro-dot"></div>Quick in-and-out feel — popup and gone</div>
+    <div class="pro"><div class="pro-dot"></div>Tab stays hidden until clicked — zero visual noise</div>
+  </div>
+
+</div>
+
+<!-- SUMMARY TABLE -->
+<div class="summary">
+  <h2>At a Glance</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>v1.0 Popup</th>
+        <th>v2.0 Widget</th>
+        <th>v3.0 Side Panel</th>
+        <th>v4.0 Mini Card</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Clicks to delegate</td>
+        <td>3</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Always visible on page</td>
+        <td><span class="cross">✗</span> Only in toolbar</td>
+        <td><span class="check">✓</span> Always open</td>
+        <td><span class="check">✓</span> Tab on edge</td>
+        <td><span class="check">✓</span> Tab on edge</td>
+      </tr>
+      <tr>
+        <td>Blocks page content</td>
+        <td><span class="check">✓</span> Never</td>
+        <td>Partially (draggable)</td>
+        <td>Right side only (when open)</td>
+        <td><span class="check">✓</span> Barely</td>
+      </tr>
+      <tr>
+        <td>Task history visible</td>
+        <td><span class="check">✓</span></td>
+        <td><span class="cross">✗</span></td>
+        <td><span class="check">✓</span> In panel</td>
+        <td><span class="cross">✗</span></td>
+      </tr>
+      <tr>
+        <td>Space for task writing</td>
+        <td>Medium</td>
+        <td>Small</td>
+        <td><span class="star">★</span> Large</td>
+        <td>Small</td>
+      </tr>
+      <tr>
+        <td>Interference with page</td>
+        <td>None</td>
+        <td>Medium</td>
+        <td>Low (tab only when closed)</td>
+      </tr>
+      <tr>
+        <td>Best for</td>
+        <td>Occasional delegators</td>
+        <td>Power users, VA-heavy founders</td>
+        <td>Founders who delegate often + want history</td>
+        <td>Founders who want speed + minimal UI</td>
+                <td><span class="star">★</span> Minimal</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>Delegate by Wishup · Internal Stakeholder Document · wishup.co</footer>
+
+</body>
+</html>
