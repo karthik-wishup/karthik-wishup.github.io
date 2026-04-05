@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Annual Review — Karthik | Senior Content Writer, Wishup</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #0a1f0e;
+    --green-dark: #0f2d14;
+    --green-mid: #1a4d22;
+    --green-bright: #2d7a3a;
+    --green-accent: #3fa34d;
+    --green-glow: #5ec96b;
+    --cream: #f5f0e8;
+    --cream-dim: #d9d2c2;
+    --cream-faint: #c2b99e;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --white: #ffffff;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--green-deep);
+    color: var(--cream);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green-accent), var(--gold-light));
+    z-index: 1000;
+    width: 0%;
+    transition: width 0.1s;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(10,31,14,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--green-glow);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(61,163,77,0.12) 0%, transparent 70%);
+    right: -200px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .hero-bg-circle-2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    left: -100px;
+    bottom: 100px;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 96px);
+    font-weight: 900;
+    line-height: 1.0;
+    color: var(--cream);
+    max-width: 820px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--green-glow);
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--cream-dim);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-stats-row {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .hero-stat { position: relative; }
+
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .hero-stat-num span {
+    color: var(--green-glow);
+    font-size: 28px;
+  }
+
+  .hero-stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-top: 6px;
+  }
+
+  .hero-divider {
+    width: 1px;
+    background: rgba(245,240,232,0.1);
+    align-self: stretch;
+  }
+
+  /* ── SCROLL INDICATOR ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+
+  .scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--green-accent);
+    animation: scrollLine 2s ease infinite;
+  }
+
+  .scroll-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+  }
+
+  @keyframes scrollLine {
+    0%, 100% { width: 40px; }
+    50% { width: 20px; }
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section-wrap {
+    padding: 120px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 16px;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .section-heading em {
+    font-style: italic;
+    color: var(--green-glow);
+  }
+
+  .section-body {
+    font-size: 16px;
+    color: var(--cream-dim);
+    max-width: 680px;
+    line-height: 1.9;
+  }
+
+  /* ── DIVIDER ── */
+  .h-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, var(--green-mid) 0%, transparent 100%);
+    margin: 0 60px;
+  }
+
+  /* ── SECTION 1: MANDATE VS REALITY ── */
+  .mandate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 56px;
+    border: 1px solid rgba(61,163,77,0.2);
+  }
+
+  .mandate-col {
+    padding: 48px 40px;
+  }
+
+  .mandate-col:first-child {
+    background: rgba(255,255,255,0.02);
+    border-right: 1px solid rgba(61,163,77,0.2);
+  }
+
+  .mandate-col:last-child {
+    background: rgba(61,163,77,0.06);
+  }
+
+  .mandate-col-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(245,240,232,0.1);
+  }
+
+  .mandate-col:first-child .mandate-col-label { color: var(--cream-faint); }
+  .mandate-col:last-child .mandate-col-label { color: var(--green-glow); }
+
+  .mandate-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+
+  .mandate-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  .mandate-col:first-child .mandate-dot { background: var(--cream-faint); }
+  .mandate-col:last-child .mandate-dot { background: var(--green-glow); }
+
+  .mandate-item p {
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+
+  .mandate-col:last-child .mandate-item p { color: var(--cream); }
+
+  /* ── SECTION 2: SCOREBOARD ── */
+  .scoreboard-section {
+    background: linear-gradient(180deg, var(--green-deep) 0%, rgba(15,45,20,0.8) 50%, var(--green-deep) 100%);
+    border-top: 1px solid rgba(61,163,77,0.15);
+    border-bottom: 1px solid rgba(61,163,77,0.15);
+  }
+
+  .roi-hero {
+    text-align: center;
+    padding: 80px 60px 60px;
+    position: relative;
+  }
+
+  .roi-bg-text {
+    position: absolute;
+    font-family: var(--font-display);
+    font-size: 200px;
+    font-weight: 900;
+    color: rgba(61,163,77,0.04);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .roi-label-top {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 16px;
+  }
+
+  .roi-main-num {
+    font-family: var(--font-display);
+    font-size: clamp(80px, 12vw, 160px);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--green-glow), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .roi-subtitle {
+    font-size: 17px;
+    color: var(--cream-dim);
+    max-width: 500px;
+    margin: 0 auto 12px;
+  }
+
+  .roi-note {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--cream-faint);
+    letter-spacing: 0.08em;
+  }
+
+  /* LTV TABLE */
+  .ltv-table-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 60px 80px;
+  }
+
+  .ltv-table-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .ltv-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    border-bottom: 1px solid rgba(61,163,77,0.15);
+    transition: background 0.2s;
+  }
+
+  .ltv-row:hover { background: rgba(61,163,77,0.04); }
+
+  .ltv-row.header {
+    border-bottom: 1px solid rgba(61,163,77,0.3);
+    margin-bottom: 0;
+  }
+
+  .ltv-cell {
+    padding: 20px 24px;
+    font-size: 14px;
+    color: var(--cream-dim);
+  }
+
+  .ltv-row.header .ltv-cell {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    padding-bottom: 14px;
+  }
+
+  .ltv-cell.big {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .ltv-cell.green { color: var(--green-glow); }
+  .ltv-cell.gold { color: var(--gold-light); }
+  .ltv-cell.highlight-row { background: rgba(61,163,77,0.08); }
+
+  .ltv-note {
+    text-align: center;
+    margin-top: 28px;
+    padding: 20px 32px;
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(201,168,76,0.04);
+  }
+
+  .ltv-note p {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--gold-light);
+    line-height: 1.7;
+  }
+
+  /* BLOGS VS PAGES */
+  .versus-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 60px 0;
+  }
+
+  .versus-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .versus-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .versus-card {
+    padding: 48px 40px;
+    border: 1px solid rgba(61,163,77,0.2);
+  }
+
+  .versus-card.winner {
+    background: rgba(61,163,77,0.08);
+    border-color: var(--green-accent);
+    position: relative;
+  }
+
+  .winner-badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--green-accent);
+    color: var(--green-deep);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    font-weight: 500;
+  }
+
+  .versus-card-name {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 32px;
+  }
+
+  .versus-card.winner .versus-card-name { color: var(--green-glow); }
+  .versus-card:not(.winner) .versus-card-name { color: var(--cream-faint); }
+
+  .versus-metric { margin-bottom: 20px; }
+
+  .versus-metric-num {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .versus-card.winner .versus-metric-num { color: var(--cream); }
+  .versus-card:not(.winner) .versus-metric-num { color: var(--cream-dim); }
+
+  .versus-metric-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-top: 4px;
+  }
+
+  .versus-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-style: italic;
+    color: var(--cream-faint);
+  }
+
+  .versus-context {
+    max-width: 900px;
+    margin: 32px auto 0;
+    padding: 0 60px 80px;
+  }
+
+  .versus-context p {
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .versus-context strong {
+    color: var(--green-glow);
+    font-weight: 500;
+  }
+
+  /* MONTHLY CHART */
+  .chart-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 60px 80px;
+  }
+
+  .chart-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    height: 200px;
+    border-bottom: 1px solid rgba(61,163,77,0.3);
+    padding-bottom: 0;
+    margin-bottom: 12px;
+  }
+
+  .chart-bar-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 8px;
+  }
+
+  .chart-bar-num {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .chart-bar {
+    width: 100%;
+    background: linear-gradient(180deg, var(--green-glow), var(--green-mid));
+    border-radius: 2px 2px 0 0;
+    transition: opacity 0.2s;
+    min-height: 4px;
+  }
+
+  .chart-bar:hover { opacity: 0.8; }
+
+  .chart-bar.highlight {
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+  }
+
+  .chart-month-labels {
+    display: flex;
+    gap: 16px;
+  }
+
+  .chart-month {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    padding-top: 10px;
+  }
+
+  /* ── SECTION 3: HOW THE MONEY WAS MADE ── */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .how-card {
+    padding: 48px 40px;
+    border: 1px solid rgba(61,163,77,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .how-card:hover { border-color: rgba(61,163,77,0.4); }
+
+  .how-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--green-accent);
+    transition: height 0.4s ease;
+  }
+
+  .how-card:hover::before { height: 100%; }
+
+  .how-card-num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(61,163,77,0.12);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .how-card-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .how-card-body {
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.8;
+  }
+
+  .how-card-body strong {
+    color: var(--green-glow);
+    font-weight: 500;
+  }
+
+  .high-agency-banner {
+    margin-top: 48px;
+    padding: 36px 48px;
+    border: 1px solid rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.04);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .high-agency-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .high-agency-text {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  .high-agency-text em { color: var(--gold-light); font-style: normal; font-weight: 700; }
+
+  /* ── SECTION 4: BEYOND THE BRIEF ── */
+  .beyond-section {
+    background: rgba(15,45,20,0.4);
+    border-top: 1px solid rgba(61,163,77,0.12);
+  }
+
+  .initiative-list { margin-top: 56px; }
+
+  .initiative {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0;
+    border-bottom: 1px solid rgba(61,163,77,0.12);
+    padding: 0;
+    transition: background 0.2s;
+    overflow: hidden;
+  }
+
+  .initiative:hover { background: rgba(61,163,77,0.04); }
+
+  .initiative:first-child { border-top: 1px solid rgba(61,163,77,0.12); }
+
+  .initiative-index {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 900;
+    color: rgba(61,163,77,0.1);
+    padding: 32px 20px 32px 0;
+    line-height: 1;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 36px;
+  }
+
+  .initiative-content { padding: 36px 0 36px 32px; border-left: 1px solid rgba(61,163,77,0.15); }
+
+  .initiative-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 10px;
+  }
+
+  .initiative-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .initiative-body {
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.85;
+    max-width: 680px;
+  }
+
+  .initiative-body strong { color: var(--cream); font-weight: 500; }
+
+  .initiative-impact {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px solid rgba(61,163,77,0.3);
+    background: rgba(61,163,77,0.06);
+  }
+
+  .initiative-impact span {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-glow);
+  }
+
+  /* DELEGATE spotlight */
+  .delegate-spotlight {
+    margin-top: 60px;
+    padding: 56px 60px;
+    border: 1px solid rgba(94,201,107,0.3);
+    background: linear-gradient(135deg, rgba(61,163,77,0.08), rgba(10,31,14,0.8));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .delegate-spotlight::before {
+    content: 'DELEGATE';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 140px;
+    font-weight: 900;
+    color: rgba(94,201,107,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .delegate-spotlight-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-glow);
+    margin-bottom: 16px;
+  }
+
+  .delegate-spotlight-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .delegate-spotlight-title em {
+    font-style: italic;
+    color: var(--green-glow);
+  }
+
+  .delegate-spotlight-body {
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.9;
+    max-width: 700px;
+    margin-bottom: 28px;
+  }
+
+  .delegate-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .delegate-feature-tag {
+    padding: 8px 18px;
+    border: 1px solid rgba(94,201,107,0.4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--green-glow);
+  }
+
+  /* CASE STUDIES SPOTLIGHT */
+  .casestudy-spotlight {
+    margin-top: 40px;
+    padding: 56px 60px;
+    border: 1px solid rgba(201,168,76,0.3);
+    background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(10,31,14,0.8));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .casestudy-spotlight::before {
+    content: '16';
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: 220px;
+    font-weight: 900;
+    color: rgba(201,168,76,0.05);
+    pointer-events: none;
+  }
+
+  .casestudy-spotlight-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .casestudy-spotlight-title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .casestudy-spotlight-body {
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.9;
+    max-width: 680px;
+  }
+
+  .casestudy-spotlight-body strong { color: var(--gold-light); font-weight: 500; }
+
+  /* VA OUTLOOK SPOTLIGHT */
+  .outlook-spotlight {
+    margin-top: 40px;
+    padding: 56px 60px;
+    border: 1px solid rgba(61,163,77,0.2);
+    background: rgba(15,45,20,0.5);
+    position: relative;
+  }
+
+  .outlook-spotlight-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 16px;
+  }
+
+  .outlook-spotlight-title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .outlook-spotlight-body {
+    font-size: 16px;
+    color: var(--cream-dim);
+    line-height: 1.9;
+    max-width: 680px;
+  }
+
+  .outlook-spotlight-body strong { color: var(--green-glow); font-weight: 500; }
+
+  /* ── SECTION 5: YEAR 2 ── */
+  .year2-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+
+  .year2-card {
+    padding: 40px 32px;
+    border: 1px solid rgba(61,163,77,0.15);
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+  }
+
+  .year2-card:hover {
+    border-color: rgba(61,163,77,0.35);
+    background: rgba(61,163,77,0.04);
+  }
+
+  .year2-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  .year2-card-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .year2-card-body {
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.8;
+  }
+
+  .year2-target {
+    margin-top: 48px;
+    padding: 48px;
+    background: rgba(61,163,77,0.06);
+    border: 1px solid rgba(61,163,77,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .year2-target-left { flex: 1; }
+
+  .year2-target-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 10px;
+  }
+
+  .year2-target-text {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.4;
+  }
+
+  .year2-target-num {
+    font-family: var(--font-display);
+    font-size: 72px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--green-glow), var(--gold-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .year2-target-sub {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--cream-faint);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
+  /* ── SECTION 6: THE ASK ── */
+  .ask-section {
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ask-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(61,163,77,0.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .ask-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 120px 60px 140px;
+  }
+
+  .ask-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 24px;
+  }
+
+  .ask-title {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 900;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .ask-title em { font-style: italic; color: var(--green-glow); }
+
+  .ask-body {
+    font-size: 18px;
+    color: var(--cream-dim);
+    max-width: 620px;
+    margin: 0 auto 64px;
+    line-height: 1.8;
+  }
+
+  .ask-number-row {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 48px;
+  }
+
+  .ask-num-box {
+    padding: 32px 48px;
+    border: 1px solid rgba(61,163,77,0.2);
+  }
+
+  .ask-num-box.center-box {
+    background: linear-gradient(135deg, rgba(61,163,77,0.12), rgba(94,201,107,0.08));
+    border-color: var(--green-accent);
+  }
+
+  .ask-num-box-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-faint);
+    margin-bottom: 8px;
+  }
+
+  .ask-num-box-val {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+  }
+
+  .ask-num-box.center-box .ask-num-box-val { color: var(--green-glow); font-size: 40px; }
+  .ask-num-box:not(.center-box) .ask-num-box-val { color: var(--cream-dim); }
+
+  .ask-logic {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 32px 40px;
+    border: 1px solid rgba(245,240,232,0.08);
+    text-align: left;
+  }
+
+  .ask-logic-title {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--cream-faint);
+    margin-bottom: 16px;
+  }
+
+  .ask-logic-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+
+  .ask-logic-arrow {
+    color: var(--green-accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  .ask-logic-text {
+    font-size: 14px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+
+  .ask-logic-text strong { color: var(--cream); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid rgba(61,163,77,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+  }
+
+  .footer-date {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--cream-faint);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero, .section-wrap { padding-left: 24px; padding-right: 24px; }
+    .hero-stats-row { gap: 32px; }
+    .mandate-grid, .how-grid { grid-template-columns: 1fr; }
+    .versus-grid { grid-template-columns: 1fr; }
+    .versus-vs { padding: 12px 0; writing-mode: initial; }
+    .year2-grid { grid-template-columns: 1fr; }
+    .ltv-table-wrap, .versus-wrap, .versus-context, .chart-wrap { padding-left: 24px; padding-right: 24px; }
+    .delegate-spotlight, .casestudy-spotlight, .outlook-spotlight { padding: 36px 24px; }
+    .ask-number-row { flex-direction: column; align-items: center; }
+    .year2-target { flex-direction: column; text-align: center; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .h-divider { margin: 0 24px; }
+    .roi-hero, .ltv-table-wrap { padding-left: 24px; padding-right: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav>
+  <div class="nav-brand">Karthik — Annual Review '25–'26</div>
+  <ul class="nav-links">
+    <li><a href="#scoreboard">Scoreboard</a></li>
+    <li><a href="#how">How</a></li>
+    <li><a href="#beyond">Beyond</a></li>
+    <li><a href="#year2">Year 2</a></li>
+    <li><a href="#ask">The Ask</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════ HERO -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-circle-2"></div>
+
+  <div class="hero-label">Senior Content Writer · Wishup · March 2025 – April 2026</div>
+  <h1 class="hero-title">The Writer Who Became a <em>Revenue Channel.</em></h1>
+  <p class="hero-subtitle">An annual performance review, backed by data and built end-to-end with full ownership.</p>
+
+  <div class="hero-stats-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">$34,900<span> USD</span></div>
+      <div class="hero-stat-label">Revenue Attributed From Conversion Value Only</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">260<span>%</span></div>
+      <div class="hero-stat-label">ROI on Salary (first month conversion value only)</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">182</div>
+      <div class="hero-stat-label">Total Blog Leads Generated In My 1 Year</div>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">29</div>
+      <div class="hero-stat-label">Total Conversions Attributed</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll to review</span>
+  </div>
+</section>
+
+<hr class="h-divider">
+
+
+<hr class="h-divider">
+
+<!-- ═══════════════════════════════════════════ SECTION 1: SCOREBOARD -->
+<section id="scoreboard" class="scoreboard-section">
+  <div class="section-wrap">
+    <div class="section-label reveal">The Scoreboard</div>
+    <h2 class="section-heading reveal">Numbers that<br><em>speak for themselves.</em></h2>
+  </div>
+
+  <!-- BLOGS VS PAGES -->
+  <div class="versus-wrap reveal">
+       <p>In June 2025, the team made a strategic call: <strong>pages had more BoFu scope than blogs</strong> and deserved one more dedicated resource. So, Prachi was moved to the Pages team in addition to Shubh and Kanika (totally 3 members). Blogs were handed over to Karthik (one-man team) as a secondary channel. By December, blogs had more leads, more conversions, and a solo operator doing it all. <strong></p>
+</br>
+</br>
+    <div class="versus-grid">
+      <div class="versus-card winner">
+        <div class="winner-badge">✦ Outperformed</div>
+        <div class="versus-card-name">Blogs</div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">226</div>
+          <div class="versus-metric-label">Leads Generated</div>
+        </div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">23</div>
+          <div class="versus-metric-label">Conversions</div>
+        </div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">Solo</div>
+          <div class="versus-metric-label">Team Size</div>
+        </div>
+      </div>
+      <div class="versus-vs">vs</div>
+      <div class="versus-card">
+        <div class="versus-card-name">Pages</div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">212</div>
+          <div class="versus-metric-label">Leads Generated</div>
+        </div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">21</div>
+          <div class="versus-metric-label">Conversions</div>
+        </div>
+        <div class="versus-metric">
+          <div class="versus-metric-num">3-Member</div>
+          <div class="versus-metric-label">Team</div>
+        </div>
+      </div>
+    </div>
+    <div class="versus-context">
+  
+    </div>
+  </div>
+
+  <!-- MONTHLY CHART -->
+  <div class="chart-wrap reveal">
+    <div class="chart-label">Monthly Blog Leads — June 2025 to March 2026</div>
+    <div class="chart-bars" id="chart-bars">
+      <!-- JS renders bars -->
+    </div>
+    <div class="chart-month-labels" id="chart-months"></div>
+  </div>
+
+  <!-- ROI HERO -->
+  <div class="roi-hero reveal">
+    <div class="roi-bg-text">ROI</div>
+    <div class="roi-label-top">Conservative ROI · First-Month Conversion Value Only</div>
+    <div class="roi-main-num">260%</div>
+    <p class="roi-subtitle">₹9 lakhs invested. ₹32.36 lakhs returned — on conversion value alone.</p>
+    <p class="roi-note">Every customer pays monthly. This number is a floor, not a ceiling.</p>
+  </div>
+
+  <!-- LTV TABLE -->
+  <div class="ltv-table-wrap reveal">
+    <div class="ltv-table-label">The Real Picture — Lifetime Value Projection of Attributed Conversions</div>
+    <div class="ltv-row header">
+      <div class="ltv-cell">Scenario</div>
+      <div class="ltv-cell">Revenue (USD)</div>
+      <div class="ltv-cell">Revenue (INR @ ₹92.74)</div>
+      <div class="ltv-cell">ROI on ₹9L Salary</div>
+    </div>
+    <div class="ltv-row">
+      <div class="ltv-cell">First-Month Value Only</div>
+      <div class="ltv-cell big">$34,900</div>
+      <div class="ltv-cell green">₹32.4 Lakhs</div>
+      <div class="ltv-cell green">260%</div>
+    </div>
+    <div class="ltv-row">
+      <div class="ltv-cell">If customers stay 6 months</div>
+      <div class="ltv-cell big">$2,09,400</div>
+      <div class="ltv-cell gold">₹1.94 Crores</div>
+      <div class="ltv-cell gold">2060%</div>
+    </div>
+    <div class="ltv-row highlight-row">
+      <div class="ltv-cell">If customers stay 12 months</div>
+      <div class="ltv-cell big">$4,18,800</div>
+      <div class="ltv-cell gold">₹3.89 Crores</div>
+      <div class="ltv-cell gold" style="font-family:var(--font-display);font-size:22px;font-weight:700;">4220%</div>
+    </div>
+
+</section>
+
+<hr class="h-divider">
+
+<!-- ═══════════════════════════════════════════ SECTION 2: HOW -->
+<section id="how">
+  <div class="section-wrap">
+    <div class="section-label reveal">How the Money Was Made</div>
+    <h2 class="section-heading reveal">High agency.<br><em>Zero handholding.</em></h2>
+    <p class="section-body reveal">The results didn't come from a playbook. There was no content brief, no keyword architect, no tech support. What existed was a bit of a shaky SEO foundation, redundant URLs, and a blank slate. What emerged was a fully owned revenue channel.</p>
+
+    <div class="how-grid reveal">
+      <div class="how-card">
+        <div class="how-card-num">01</div>
+        <div class="how-card-title">Optimised What Existed — Without Any Support</div>
+        <div class="how-card-body">Inherited a library of underperforming blogs sitting on a shaky structural SEO base. Rather than starting fresh, went deep — <strong>rewrote for ergonomics</strong>, reduced cognitive load in UX and visual content design, and made every existing blog work harder for conversion. No tech team. No designer. No direction. Just a clear-eyed understanding of what was broken and the instinct to fix it.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">02</div>
+        <div class="how-card-title">Picked the Right Topics — Before Anyone Else Did</div>
+        <div class="how-card-body">Owned the entire research-to-publish pipeline: identifying keyword opportunities that should have been written two years ago, placing calculated bets, writing, and measuring. <strong>No content briefs. No editorial oversight. No architect.</strong> This is what senior-level content strategy looks like — not waiting for assignments, but knowing which bets to take.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">03</div>
+        <div class="how-card-title">Flagged 120+ Redundant URLs — The Bold Call</div>
+        <div class="how-card-body">While others kept writing more, took a step back and audited the entire blog architecture. Identified <strong>120+ thin and redundant URLs</strong> actively diluting Wishup's topical authority. This caused initial panic — but Raymond confirmed it, Koray's framework confirmed it, and fixing it is now a known priority. This is not what a writer does. This is what a strategist does.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-card-num">04</div>
+        <div class="how-card-title">Generated Results on a Shaky Foundation</div>
+        <div class="how-card-body">All of this — every lead, every conversion — happened on top of a shaky SEO setup. <strong>29 conversions with the wind against you</strong> is a different kind of result than with a clean, optimised architecture. Imagine what happens when the foundation and blog UI is fixed.</div>
+      </div>
+    </div>
+
+    <div class="high-agency-banner reveal">
+      <div class="high-agency-label">High Agency</div>
+      <div class="high-agency-text"><em>Owned the entire research, architecture, writing, and lead generation </em > without waiting for instructions or asking for permission to do more.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="h-divider">
+
+<!-- ═══════════════════════════════════════════ SECTION 3: BEYOND -->
+<section id="beyond" class="beyond-section">
+  <div class="section-wrap">
+    <div class="section-label reveal">Beyond the Brief</div>
+    <h2 class="section-heading reveal">What happened beyond the JD?<br><em>Extended Ownership.</em></h2>
+    <p class="section-body reveal">While the primary role focused on assigned blog content creation, the initiatives below were taken up independently, without a formal mandate, additional compensation, or guaranteed visibility.</p>
+
+    <!-- DELEGATE SPOTLIGHT -->
+    <div class="delegate-spotlight reveal">
+      <div class="delegate-spotlight-label">★ Spotlight Initiative — Product Building</div>
+      <div class="delegate-spotlight-title">DELEGATE — <em>A Chrome Extension to Grow Wishup 10x</em></div>
+      <div class="delegate-spotlight-body">
+        Built entirely outside of the content scope, DELEGATE is a Google Chrome extension designed as a direct shortcut to VA delegation for busy founders — Wishup's exact target customer. Conceived, prototyped, and paired with a full GTM strategy — all by a content writer who was supposed to be writing blogs.
+        <br><br>
+        <strong>This is not a side project. This is product thinking.</strong> If DELEGATE takes off, the same writer who built it is ready to own its product marketing and communications entirely — at no additional hiring cost.
+      </div>
+      <div class="delegate-features">
+        <div class="delegate-feature-tag">Chrome Extension · v6.0</div>
+        <div class="delegate-feature-tag">Multi-VA Support</div>
+        <div class="delegate-feature-tag">Task History</div>
+        <div class="delegate-feature-tag">Delegation Timer</div>
+        <div class="delegate-feature-tag">Full PRD Document</div>
+        <div class="delegate-feature-tag">GTM Strategy</div>
+      </div>
+    </div>
+
+    <!-- CASE STUDIES SPOTLIGHT -->
+    <div class="casestudy-spotlight reveal">
+      <div class="casestudy-spotlight-label">★ Spotlight Initiative — Trust Assets</div>
+      <div class="casestudy-spotlight-title">16 Legitimate Case Studies — Built to Last</div>
+      <div class="casestudy-spotlight-body">
+        Wishup had 3 case studies when this year began. They were fabricated. They had no real client data, no VA names, no verifiable ROI. They existed on the website as filler.
+        <br><br>
+        What exists now: <strong>16 verified, data-backed case studies</strong> — with real client names, actual VA names, measurable ROI numbers, and stories that a lead can trust. These aren't content pieces. They are <strong>permanent persuasion assets</strong> that will influence buying decisions as long as Wishup exists.
+        <br><br>
+        Every new lead who reads one of these case studies is partially converted by work done in 2025. <strong>The attribution on these doesn't expire.</strong>
+      </div>
+    </div>
+
+    <!-- VA INDUSTRY OUTLOOK -->
+    <div class="outlook-spotlight reveal">
+      <div class="outlook-spotlight-label">★ Spotlight Initiative — Thought Leadership</div>
+      <div class="outlook-spotlight-title">2025 VA Industry Market Outlook Report</div>
+      <div class="outlook-spotlight-body">
+        Co-created with Naetik Tandon, this is the first original proprietary research report published by Wishup. Not syndicated. Not curated. <strong>Original data, original insights, original positioning.</strong>
+        <br><br>
+        Most VA companies don't publish original research. Wishup now does. This is the kind of content that gets cited, referenced, and linked — the kind that builds domain authority, earns press coverage, and puts Wishup in the same room as larger players when analysts and journalists talk about the VA industry.
+        <br><br>
+        <strong>One content piece. Permanent thought-leadership equity.</strong>
+      </div>
+    </div>
+
+    <!-- OTHER INITIATIVES -->
+    <div class="initiative-list reveal">
+      <div class="initiative">
+        <div class="initiative-index">A</div>
+        <div class="initiative-content">
+          <div class="initiative-tag">Brand Strategy</div>
+          <div class="initiative-title">Homepage Revision — Translating the Founder's Vision</div>
+          <div class="initiative-body">Playing a key role alongside Kanika to take Neelesh's vision for Wishup's brand positioning and translate it into copy that makes the company look more premium — at the exact entry point where every new visitor forms their first impression. <strong>This is senior brand communications work, not content writing.</strong></div>
+          <div class="initiative-impact"><span>↗ Premium Positioning · Direct Founder Collaboration</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="h-divider">
+
+<!-- ═══════════════════════════════════════════ SECTION 4: YEAR 2 -->
+<section id="year2">
+  <div class="section-wrap">
+    <div class="section-label reveal">The Path Ahead</div>
+    <h2 class="section-heading reveal">Year 2 - <em>What's on store?</em></h2>
+    <p class="section-body reveal">Year 1 was largely about adapting to Wishup's culture, working through an evolving foundation, and operating as a one-person team. Year 2 reflects a more structured approach, with clearer planning, new initiatives, and learnings shaping the direction.</p>
+
+    <div class="year2-grid reveal">
+      <div class="year2-card">
+        <div class="year2-icon">⚙️</div>
+        <div class="year2-card-title">Wishup Vault — Claude-Powered Content Intelligence</div>
+        <div class="year2-card-body">A private AI system being built to intersect sales, support, marketing, VAs, and content — enabling the team to create highly personalised, original content using Wishup's internal goldmines. Competitive moat, not just a tool.</div>
+      </div>
+      <div class="year2-card">
+        <div class="year2-icon">🏗️</div>
+        <div class="year2-card-title">Koray's Semantic SEO — Deployed Across All Content</div>
+        <div class="year2-card-body">Deep knowledge in topical authority, central entity mapping, and content configuration (via Koray's framework) — ready to partner with the SEO manager and systematically rebuild Wishup's content architecture from the ground up.</div>
+      </div>
+      <div class="year2-card">
+        <div class="year2-icon">📡</div>
+        <div class="year2-card-title">DELEGATE Product Marketing — If It Launches</div>
+        <div class="year2-card-body">The same person who built DELEGATE is ready to own all its product marketing and communications independently — no additional hiring needed. A full-stack content-to-product contribution at zero incremental cost to Wishup.</div>
+      </div>
+      <div class="year2-card">
+        <div class="year2-icon">✍️</div>
+        <div class="year2-card-title">DonnaLabs & Product Technical Content</div>
+        <div class="year2-card-body">Ready to own UX writing and technical content for Wishup products including DonnaLabs — an area already worked in. Consolidates product communications under one voice rather than fragmenting it across multiple resources.</div>
+      </div>
+      <div class="year2-card">
+        <div class="year2-icon">📈</div>
+        <div class="year2-card-title">Blog Revenue Channel — Scale</div>
+        <div class="year2-card-body">With a fixed SEO foundation and the redundant URL consolidation underway, the same channel that produced $34,900 in Year 1 — on a broken foundation — is primed for significantly higher output in Year 2.</div>
+      </div>
+      <div class="year2-card">
+        <div class="year2-icon">🌐</div>
+        <div class="year2-card-title">AI Answer Engine Optimisation (AEO/GEO)</div>
+        <div class="year2-card-body">Already applying AEO principles to ensure Wishup's content gets cited by AI search engines — a channel that most content teams haven't even begun to think about. Early mover advantage, being built now.</div>
+      </div>
+    </div>
+
+    <div class="year2-target reveal">
+      <div class="year2-target-left">
+        <div class="year2-target-label">2026 Blog Revenue Target</div>
+        <div class="year2-target-text">From blogs alone. On a fixed foundation. With proper investment.</div>
+      </div>
+      <div>
+        <div class="year2-target-num">$60,000</div>
+        <div class="year2-target-sub">USD · First-Month Conversion Value</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="h-divider">
+
+<!-- ═══════════════════════════════════════════ SECTION 5: THE ASK -->
+<section id="ask" class="ask-section">
+  <div class="ask-bg"></div>
+  <div class="ask-wrap">
+    <h2 class="ask-title reveal">Beyond the role.<br><em>Backed by results.</em></h2>
+
+    <div class="ask-logic reveal">
+      <div class="ask-logic-item">
+        <div class="ask-logic-arrow">→</div>
+        <div class="ask-logic-text"><strong>I am not a writer.</strong> I am a content strategist, product builder, brand communicator, product marketer, and revenue channel — operating under a writer's title and a writer's salary.</div>
+      </div>
+
+      <div class="ask-logic-item">
+        <div class="ask-logic-arrow">→</div>
+        <div class="ask-logic-text"><strong>The ROI on my current salary is 260% on conservative basis.</strong> At 6-month LTV it's 2020%. At 12-month LTV it's 4220%.</div>
+      </div>
+
+      <div class="ask-logic-item">
+        <div class="ask-logic-arrow">→</div>
+        <div class="ask-logic-text"><strong>Year 2 is bigger.</strong> The foundation is being fixed. The tools are being built. The target is $60,000.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Karthikeyan — Senior Content Writer, Wishup</div>
+  <div class="footer-date">Annual Self-Appraisal · April 2026</div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (window.scrollY / total) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Monthly chart — updated data
+  const chartData = [
+    { label: "Jun'25", leads: 21 },
+    { label: 'Jul',    leads: 21 },
+    { label: 'Aug',    leads: 23 },
+    { label: 'Sep',    leads: 21 },
+    { label: 'Oct',    leads: 19 },
+    { label: 'Nov',    leads: 21 },
+    { label: 'Dec',    leads: 15 },
+    { label: "Jan'26", leads: 17 },
+    { label: 'Feb',    leads: 9  },
+    { label: 'Mar',    leads: 15 },
+  ];
+
+  const highlights = [false, false, false, false, false, false, false, false, false, false];
+
+  const barsContainer = document.getElementById('chart-bars');
+  const monthsContainer = document.getElementById('chart-months');
+
+  const maxVal = Math.max(...chartData.map(d => d.leads));
+
+  chartData.forEach(({ label, leads }, i) => {
+    const barHeight = Math.max((leads / maxVal) * 170, 6);
+    const barWrap = document.createElement('div');
+    barWrap.className = 'chart-bar-wrap';
+    barWrap.innerHTML = `
+      <div class="chart-bar-num">${leads}</div>
+      <div class="chart-bar${highlights[i] ? ' highlight' : ''}" style="height:${barHeight}px"></div>
+    `;
+    barsContainer.appendChild(barWrap);
+
+    const monthEl = document.createElement('div');
+    monthEl.className = 'chart-month';
+    monthEl.textContent = label;
+    monthsContainer.appendChild(monthEl);
+  });
+
+  // Animate bars on scroll
+  const chartWrap = document.querySelector('.chart-wrap');
+  const chartObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.chart-bar').forEach((bar, i) => {
+        const finalH = bar.style.height;
+        bar.style.height = '0px';
+        setTimeout(() => {
+          bar.style.transition = 'height 0.6s ease';
+          bar.style.height = finalH;
+        }, i * 60);
+      });
+      chartObserver.disconnect();
+    }
+  }, { threshold: 0.3 });
+  chartObserver.observe(chartWrap);
+</script>
+</body>
+</html>
