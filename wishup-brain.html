@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wishup Brain — Intelligence for Sales & Marketing Teams</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400;1,9..144,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-50: #f0fdf4;
+    --green-100: #dcfce7;
+    --green-200: #bbf7d0;
+    --green-300: #86efac;
+    --green-400: #4ade80;
+    --green-500: #22c55e;
+    --green-600: #16a34a;
+    --green-700: #15803d;
+    --green-800: #166534;
+    --green-900: #14532d;
+    --green-neon: #00ff88;
+    --white: #ffffff;
+    --off-white: #f8faf8;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --ink: #0a1a0f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(22,163,74,0.1);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Fraunces', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-logo .brain-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--green-600);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green-700); }
+
+  .nav-cta {
+    background: var(--green-600);
+    color: white !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500 !important;
+  }
+
+  .nav-cta:hover { background: var(--green-700); color: white !important; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(22,163,74,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(22,163,74,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 90%, rgba(22,163,74,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Brain neural network background */
+  .hero-neural {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-50);
+    border: 1px solid var(--green-200);
+    color: var(--green-700);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .tag-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--green-500);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', sans-serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    position: relative;
+    max-width: 900px;
+  }
+
+  .hero h1 .accent {
+    color: var(--green-600);
+    position: relative;
+    display: inline-block;
+  }
+
+  .hero h1 .accent::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-400), var(--green-600));
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--gray-600);
+    max-width: 620px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .hero-sub strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    margin-bottom: 4rem;
+  }
+
+  .btn-primary {
+    background: var(--green-600);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--green-700);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(22,163,74,0.25);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--gray-700);
+    padding: 0.85rem 1.75rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--gray-200);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--green-300);
+    color: var(--green-700);
+    background: var(--green-50);
+  }
+
+  /* ─── BRAIN VISUAL ─── */
+  .brain-visual {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .brain-rings {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 320px;
+  }
+
+  .ring {
+    position: absolute;
+    border: 1px solid rgba(22,163,74,0.15);
+    border-radius: 50%;
+    animation: rotate-ring linear infinite;
+  }
+
+  .ring-1 { width: 120px; height: 120px; animation-duration: 8s; border-color: rgba(22,163,74,0.4); }
+  .ring-2 { width: 200px; height: 200px; animation-duration: 15s; animation-direction: reverse; border-color: rgba(22,163,74,0.25); }
+  .ring-3 { width: 280px; height: 280px; animation-duration: 22s; border-color: rgba(22,163,74,0.15); }
+  .ring-4 { width: 360px; height: 360px; animation-duration: 30s; animation-direction: reverse; border-color: rgba(22,163,74,0.08); }
+
+  @keyframes rotate-ring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .ring::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--green-500);
+    border-radius: 50%;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px var(--green-400);
+  }
+
+  .ring-2::before { background: var(--green-400); width: 6px; height: 6px; top: -3px; }
+  .ring-3::before { background: var(--green-300); width: 5px; height: 5px; top: -2.5px; }
+
+  .brain-center {
+    position: relative;
+    z-index: 10;
+    width: 90px;
+    height: 90px;
+    background: var(--green-600);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 12px rgba(22,163,74,0.1), 0 0 0 24px rgba(22,163,74,0.05);
+  }
+
+  /* floating data cards around brain */
+  .float-card {
+    position: absolute;
+    background: white;
+    border: 1px solid var(--green-100);
+    border-radius: 10px;
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gray-800);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    white-space: nowrap;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .float-card .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background: var(--green-500);
+  }
+
+  .float-card:nth-child(2) { top: 10%; left: 0; animation-delay: 0s; }
+  .float-card:nth-child(3) { top: 10%; right: 0; animation-delay: 1s; }
+  .float-card:nth-child(4) { bottom: 15%; left: 2%; animation-delay: 2s; }
+  .float-card:nth-child(5) { bottom: 15%; right: 2%; animation-delay: 0.5s; }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ─── STATS BAR ─── */
+  .stats-bar {
+    background: var(--green-800);
+    color: white;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 100%);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--green-300);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  /* ─── SECTION STYLES ─── */
+  section {
+    padding: 6rem 2rem;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--green-700);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 16px;
+    height: 2px;
+    background: var(--green-500);
+    border-radius: 1px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .section-lead {
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    max-width: 560px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── FEAR SECTION ─── */
+  .fear-section {
+    background: var(--ink);
+    color: white;
+  }
+
+  .fear-section h2 { color: white; }
+  .fear-section .section-tag { color: var(--green-400); }
+  .fear-section .section-tag::before { background: var(--green-500); }
+  .fear-section .section-lead { color: rgba(255,255,255,0.5); }
+
+  .fear-cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2.5rem;
+  }
+
+  .fear-card {
+    background: rgba(255,255,255,0.02);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fear-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .fear-card:hover { background: rgba(255,255,255,0.05); }
+  .fear-card:hover::before { transform: scaleX(1); }
+  .fear-card:last-child { border-right: none; }
+
+  .fear-dept {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-400);
+  }
+
+  .fear-q {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .fear-answer {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ef4444;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+  }
+
+  .fear-card:hover .fear-answer {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .fear-closer {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    padding: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    background: rgba(22,163,74,0.06);
+    letter-spacing: -0.01em;
+  }
+
+  .fear-closer::after {
+    content: ' →';
+    color: var(--green-400);
+  }
+
+  @media (max-width: 768px) {
+    .fear-cards { grid-template-columns: 1fr; }
+    .fear-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .fear-answer { opacity: 1; transform: none; }
+  }
+
+  /* ─── PROBLEM SECTION ─── */
+  .problem-section {
+    background: var(--off-white);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--gray-100);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+
+  .problem-col {
+    padding: 2.5rem;
+    background: white;
+  }
+
+  .problem-col.bad {
+    background: #fafafa;
+    border-right: 1px solid var(--gray-100);
+  }
+
+  .col-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Fraunces', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid;
+  }
+
+  .bad .col-header {
+    color: #dc2626;
+    border-color: #fee2e2;
+  }
+
+  .good .col-header {
+    color: var(--green-700);
+    border-color: var(--green-100);
+  }
+
+  .call-moment {
+    margin-bottom: 1.5rem;
+  }
+
+  .moment-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-400);
+    margin-bottom: 0.4rem;
+  }
+
+  .moment-quote {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    font-style: italic;
+    border-left: 3px solid;
+  }
+
+  .bad .moment-quote {
+    background: #fff5f5;
+    border-color: #fca5a5;
+    color: #7f1d1d;
+  }
+
+  .good .moment-quote {
+    background: var(--green-50);
+    border-color: var(--green-400);
+    color: var(--green-900);
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section { background: white; }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .step-card {
+    padding: 2rem;
+    border-radius: 14px;
+    border: 1px solid var(--gray-100);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .step-card:hover {
+    border-color: var(--green-200);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(22,163,74,0.1);
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-400), var(--green-600));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .step-card:hover::before { opacity: 1; }
+
+  .step-num {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--green-100);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s;
+  }
+
+  .step-card:hover .step-num { color: var(--green-200); }
+
+  .step-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--green-50);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── USE CASES ─── */
+  .usecases-section {
+    background: var(--off-white);
+  }
+
+  .use-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .use-tab {
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--gray-200);
+    background: white;
+    color: var(--gray-600);
+    transition: all 0.2s;
+  }
+
+  .use-tab.active, .use-tab:hover {
+    background: var(--green-600);
+    color: white;
+    border-color: var(--green-600);
+  }
+
+  .use-panel {
+    display: none;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .use-panel.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .use-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .use-content h3 {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .use-content p {
+    font-size: 0.95rem;
+    color: var(--gray-600);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+
+  .use-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .use-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+
+  .use-bullets li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--green-500);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .use-demo {
+    background: white;
+    border-radius: 14px;
+    border: 1px solid var(--gray-100);
+    padding: 1.75rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  }
+
+  .demo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .demo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .demo-title {
+    font-size: 0.85rem;
+    color: var(--gray-400);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .demo-exchange {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .msg {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    max-width: 88%;
+  }
+
+  .msg-user {
+    background: var(--gray-100);
+    color: var(--gray-800);
+    align-self: flex-start;
+  }
+
+  .msg-brain {
+    background: var(--green-600);
+    color: white;
+    align-self: flex-end;
+  }
+
+  .msg-brain strong {
+    font-weight: 600;
+  }
+
+  /* ─── DATA SOURCES ─── */
+  .data-section { background: white; }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .data-card {
+    border: 1px solid var(--gray-100);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
+    background: white;
+    cursor: default;
+  }
+
+  .data-card:hover {
+    border-color: var(--green-200);
+    background: var(--green-50);
+    transform: translateY(-2px);
+  }
+
+  .data-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--green-50);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.75rem;
+  }
+
+  .data-card:hover .data-icon {
+    background: var(--green-100);
+  }
+
+  .data-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+
+  .data-count {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    font-weight: 300;
+  }
+
+  /* ─── BRAIN ARCHITECTURE ─── */
+  .arch-section {
+    background: var(--green-900);
+    color: white;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arch-section::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(34,197,94,0.1), transparent 70%);
+    pointer-events: none;
+  }
+
+  .arch-section::after {
+    content: '';
+    position: absolute;
+    bottom: -200px; left: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(34,197,94,0.05), transparent 70%);
+    pointer-events: none;
+  }
+
+  .arch-section h2 { color: white; }
+
+  .arch-section .section-tag { color: var(--green-300); }
+  .arch-section .section-tag::before { background: var(--green-400); }
+
+  .arch-section .section-lead { color: rgba(255,255,255,0.6); }
+
+  .arch-flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .arch-step {
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+
+  .arch-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green-600);
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+
+  .arch-icon {
+    width: 56px;
+    height: 56px;
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    background: rgba(34,197,94,0.05);
+  }
+
+  .arch-step-title {
+    font-family: 'Fraunces', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--green-300);
+    margin-bottom: 0.4rem;
+  }
+
+  .arch-step-desc {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* ─── TESTIMONIAL / PROOF ─── */
+  .proof-section { background: var(--off-white); }
+
+  .proof-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .proof-card {
+    background: white;
+    border-radius: 14px;
+    padding: 2rem;
+    border: 1px solid var(--gray-100);
+    transition: all 0.2s;
+  }
+
+  .proof-card:hover {
+    border-color: var(--green-200);
+    box-shadow: 0 8px 32px rgba(22,163,74,0.08);
+  }
+
+  .proof-stars {
+    color: #fbbf24;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .proof-text {
+    font-size: 0.9rem;
+    color: var(--gray-700);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 1.25rem;
+    font-weight: 300;
+  }
+
+  .proof-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .proof-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--green-600);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    font-family: 'Fraunces', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .proof-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .proof-role {
+    font-size: 0.78rem;
+    color: var(--gray-400);
+    font-weight: 300;
+  }
+
+  .platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+  }
+
+  .badge-clutch { background: #ff3d2e20; color: #ff3d2e; }
+  .badge-trustpilot { background: #00b67a20; color: #00945f; }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    background: var(--green-700);
+    text-align: center;
+    padding: 7rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    color: white;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    max-width: 700px;
+    margin: 0 auto 1rem;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.1rem;
+    font-weight: 300;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+  }
+
+  .btn-white {
+    background: white;
+    color: var(--green-700);
+    padding: 0.9rem 2.25rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    font-family: 'Fraunces', sans-serif;
+  }
+
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+    font-weight: 300;
+  }
+
+  footer a { color: var(--green-400); text-decoration: none; }
+
+  /* ─── INTERACTIVE COMPARISON TOGGLE ─── */
+  .compare-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .toggle-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-500);
+  }
+
+  .toggle-label.active-label {
+    color: var(--green-700);
+    font-weight: 600;
+  }
+
+  .toggle-switch {
+    width: 52px;
+    height: 28px;
+    background: var(--green-600);
+    border-radius: 14px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 4px;
+    left: 4px;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+
+  .toggle-switch.toggled::after {
+    transform: translateX(24px);
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid { grid-template-columns: 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .data-grid { grid-template-columns: repeat(2, 1fr); }
+    .arch-flow { grid-template-columns: 1fr 1fr; }
+    .proof-cards { grid-template-columns: 1fr; }
+    .use-layout { grid-template-columns: 1fr; }
+    .arch-step:not(:last-child)::after { display: none; }
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+  }
+
+  /* ─── NEURAL NODES ─── */
+  .neural-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.06;
+  }
+
+  .counter-num {
+    display: inline-block;
+    font-family: 'Fraunces', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--green-300);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="brain-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <path d="M9.5 2C7 2 5 4 5 6.5c0 .8.2 1.5.5 2.1C4 9.2 3 10.5 3 12c0 1.5 1 2.8 2.5 3.4-.3.6-.5 1.3-.5 2.1 0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2V22h2v-3.5c.5.2 1 .2 1.5.2 2.5 0 4.5-2 4.5-4.5 0-.8-.2-1.5-.5-2.1 1.5-.6 2.5-1.9 2.5-3.4 0-1.5-1-2.8-2.5-3.4.3-.6.5-1.3.5-2.1C19 4 17 2 14.5 2c-.5 0-1 .1-1.5.2V2H11v.2C10.5 2.1 10 2 9.5 2z" fill="white" opacity=".9"/>
+        <circle cx="12" cy="12" r="2" fill="white"/>
+      </svg>
+    </div>
+    Wishup Brain
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#usecases">Use Cases</a></li>
+    <li><a href="#data">Data Sources</a></li>
+    <li><a href="#proof">Proof</a></li>
+    <li><a href="#cta" class="nav-cta">Get Early Access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- Animated neural SVG background -->
+  <svg class="hero-neural" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <style>
+        .neural-line { stroke: #16a34a; stroke-width: 1; fill: none; opacity: 0.6; }
+        .neural-node { fill: #16a34a; }
+        @keyframes dash { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }
+        .nl1 { animation: dash 4s linear infinite; stroke-dasharray: 200; }
+        .nl2 { animation: dash 6s linear infinite reverse; stroke-dasharray: 200; }
+        .nl3 { animation: dash 8s linear infinite; stroke-dasharray: 200; }
+      </style>
+    </defs>
+    <line class="neural-line nl1" x1="100" y1="100" x2="400" y2="250"/>
+    <line class="neural-line nl2" x1="400" y1="250" x2="700" y2="150"/>
+    <line class="neural-line nl3" x1="700" y1="150" x2="1100" y2="300"/>
+    <line class="neural-line nl2" x1="200" y1="400" x2="500" y2="200"/>
+    <line class="neural-line nl1" x1="500" y1="200" x2="800" y2="400"/>
+    <line class="neural-line nl3" x1="800" y1="400" x2="1000" y2="150"/>
+    <line class="neural-line nl2" x1="150" y1="500" x2="600" y2="350"/>
+    <line class="neural-line nl1" x1="600" y1="350" x2="900" y2="500"/>
+    <circle class="neural-node" cx="100" cy="100" r="4" opacity="0.5"/>
+    <circle class="neural-node" cx="400" cy="250" r="5" opacity="0.7"/>
+    <circle class="neural-node" cx="700" cy="150" r="6" opacity="0.8"/>
+    <circle class="neural-node" cx="1100" cy="300" r="4" opacity="0.5"/>
+    <circle class="neural-node" cx="200" cy="400" r="3" opacity="0.4"/>
+    <circle class="neural-node" cx="500" cy="200" r="5" opacity="0.6"/>
+    <circle class="neural-node" cx="800" cy="400" r="4" opacity="0.5"/>
+    <circle class="neural-node" cx="1000" cy="150" r="3" opacity="0.4"/>
+    <circle class="neural-node" cx="150" cy="500" r="3" opacity="0.3"/>
+    <circle class="neural-node" cx="600" cy="350" r="6" opacity="0.7"/>
+    <circle class="neural-node" cx="900" cy="500" r="4" opacity="0.5"/>
+  </svg>
+
+  <div class="hero-tag">
+    <div class="tag-dot"></div>
+    Introducing Wishup Brain — For Sales & Marketing
+  </div>
+
+  <h1>
+    Your internal data is a goldmine.<br>Your teams just can't <span class="accent">access it</span>.
+  </h1>
+
+  <p class="hero-sub">
+    Wishup Brain turns your case studies, transcripts, reviews, and VA capabilities into <strong>live intelligence for sales and marketing</strong> — sharper calls, better copy, SEO that actually converts, and ads that don't lie.
+  </p>
+
+  <div class="hero-ctas">
+    <a href="#cta" class="btn-primary">
+      Get Early Access
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#how" class="btn-secondary">
+      See How It Works
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+    </a>
+  </div>
+
+  <!-- Brain rings visual -->
+  <div class="brain-visual">
+    <div class="brain-rings">
+      <div class="float-card"><span class="dot"></span>6 Sales Transcripts Analyzed</div>
+      <div class="float-card"><span class="dot"></span>Clutch + Trustpilot Reviews</div>
+      <div class="float-card"><span class="dot"></span>Case Studies Ready</div>
+      <div class="float-card"><span class="dot"></span>Live Objection Handling</div>
+
+      <div class="ring ring-4"></div>
+      <div class="ring ring-3"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-1"></div>
+
+      <div class="brain-center">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+          <path d="M9.5 2C7 2 5 4 5 6.5c0 .8.2 1.5.5 2.1C4 9.2 3 10.5 3 12c0 1.5 1 2.8 2.5 3.4-.3.6-.5 1.3-.5 2.1 0 2.5 2 4.5 4.5 4.5.5 0 1-.1 1.5-.2V22h2v-3.5c.5.2 1 .2 1.5.2 2.5 0 4.5-2 4.5-4.5 0-.8-.2-1.5-.5-2.1 1.5-.6 2.5-1.9 2.5-3.4 0-1.5-1-2.8-2.5-3.4.3-.6.5-1.3.5-2.1C19 4 17 2 14.5 2c-.5 0-1 .1-1.5.2V2H11v.2C10.5 2.1 10 2 9.5 2z" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="12" cy="12" r="2.5" fill="white"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num" data-target="8">0</div>
+    <div class="stat-label">Live data source categories</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="6">0</div>
+    <div class="stat-label">Real sales transcripts indexed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="2">0</div>
+    <div class="stat-label">Min to pull proof points for any call</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" data-target="0" data-suffix=" empty calls">0</div>
+    <div class="stat-label">Your reps should walk in with</div>
+  </div>
+</div>
+
+<!-- FEAR SECTION -->
+<section class="fear-section" id="fear">
+  <div class="container">
+    <div class="section-tag">5 Uncomfortable Questions</div>
+    <h2>Be honest.<br>Can your team answer <span style="color:var(--green-600)">these</span>?</h2>
+    <p class="section-lead">If the answer is no — your team is operating blind. Every day without Wishup Brain is a day of guesswork.</p>
+
+    <div class="fear-cards">
+      <div class="fear-card reveal">
+        <div class="fear-dept">Ads</div>
+        <div class="fear-q">"Is anyone checking if your ad copy matches what your VAs can actually deliver — or are you spending budget on promises you'll scramble to keep?"</div>
+        <div class="fear-answer">No.</div>
+      </div>
+      <div class="fear-card reveal reveal-delay-1">
+        <div class="fear-dept">Marketing & SEO</div>
+        <div class="fear-q">"Does your content team know what questions leads are actually asking on calls — or are they guessing FAQs from thin air?"</div>
+        <div class="fear-answer">No.</div>
+      </div>
+      <div class="fear-card reveal reveal-delay-2">
+        <div class="fear-dept">Sales</div>
+        <div class="fear-q">"Does every sales rep know all the healthcare automation workflows Wishup has delivered — before they get on that call?"</div>
+        <div class="fear-answer">No.</div>
+      </div>
+      <div class="fear-card reveal reveal-delay-3">
+        <div class="fear-dept">Email & Newsletter</div>
+        <div class="fear-q">"When you send that automation newsletter next week, will it have real proof from your own client wins — or recycled industry fluff?"</div>
+        <div class="fear-answer">No.</div>
+      </div>
+      <div class="fear-card reveal">
+        <div class="fear-dept">Account Management</div>
+        <div class="fear-q">"When a new client asks 'has Wishup done this before?' — does your team have a specific answer ready, or just a confident smile?"</div>
+        <div class="fear-answer">No.</div>
+      </div>
+    </div>
+
+    <div class="fear-closer reveal">
+      That's 5 departments. 5 blind spots. One fix.
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="problem-section" id="compare">
+  <div class="container">
+    <div class="section-tag">The Real Difference</div>
+    <h2>Generic reps wait.<br>Prepared reps <span style="color:var(--green-600)">close</span>.</h2>
+    <p class="section-lead">Every moment on a sales call is an opportunity to prove you know their world — or lose the deal to someone who does.</p>
+
+    <div class="problem-grid reveal">
+      <div class="problem-col bad">
+        <div class="col-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" opacity=".3"/><path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 0 0-1.41 1.41L10.59 12 5.7 16.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z"/></svg>
+          Without Wishup Brain
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Understanding the Need</div>
+          <div class="moment-quote bad">"Got it… so you need help with GoHighLevel, right?"</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Proving Capability</div>
+          <div class="moment-quote bad">"Our VAs are experienced with GHL and can help you set things up."</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Handling Objections</div>
+          <div class="moment-quote bad">"Our VAs are proactive and communicate well."</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Closing</div>
+          <div class="moment-quote bad">"Let me know if you'd like to move forward."</div>
+        </div>
+      </div>
+
+      <div class="problem-col good">
+        <div class="col-header">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          With Wishup Brain
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Understanding the Need</div>
+          <div class="moment-quote good">"Are you managing an existing GHL setup or building from scratch? The approach is completely different — and so is the VA profile."</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Proving Capability</div>
+          <div class="moment-quote good">"Our VAs follow a build sequence — backend first: pipelines, automations, integrations. Website last. Here's a case where that saved a client 3 weeks."</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Handling Objections</div>
+          <div class="moment-quote good">"When something breaks, they don't say 'I don't know.' They check Claude + ChatGPT, diagnose, and update you in 30–60 minutes."</div>
+        </div>
+        <div class="call-moment">
+          <div class="moment-label">Closing</div>
+          <div class="moment-quote good">"Let me show you the exact profile we'd match you with — I have someone in mind. Can we set a follow-up this week?"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="section-tag">How It Works</div>
+    <h2>Your knowledge base.<br>Weaponized.</h2>
+    <p class="section-lead">Wishup Brain is built on raw internal data — structured, indexed, and made queryable in real time by anyone on your team.</p>
+
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="step-title">Raw Notes → Obsidian Wiki</div>
+        <div class="step-desc">Internal data — case studies, transcripts, VA capabilities, reviews — gets structured into clean markdown files using Claude Code via terminal.</div>
+      </div>
+
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        </div>
+        <div class="step-title">Wiki → GitHub Repo</div>
+        <div class="step-desc">The knowledge wiki is version-controlled and pushed to a GitHub repository via terminal. Every update is tracked. The brain compounds daily.</div>
+      </div>
+
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M9.5 2C7 2 5 4 5 6.5c0 .8.2 1.5.5 2.1C4 9.2 3 10.5 3 12c0 1.5 1 2.8 2.5 3.4-.3.6-.5 1.3-.5 2.1 0 2.5 2 4.5 4.5 4.5"/><path d="M14.5 2C17 2 19 4 19 6.5c0 .8-.2 1.5-.5 2.1 1.5.6 2.5 1.9 2.5 3.4 0 1.5-1 2.8-2.5 3.4.3.6.5 1.3.5 2.1 0 2.5-2 4.5-4.5 4.5"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        </div>
+        <div class="step-title">Repo → Claude Project Query Layer</div>
+        <div class="step-desc">The GitHub repo connects to a Claude Project. Anyone on your team can query the brain — before a call, during prep, or while writing copy.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="usecases-section" id="usecases">
+  <div class="container">
+    <div class="section-tag">Use Cases</div>
+    <h2>One brain.<br>Four unfair advantages.</h2>
+    <p class="section-lead">Sales, content, SEO, ads — every team gets sharper when they work from real data instead of gut feel.</p>
+
+    <div class="use-tabs">
+      <button class="use-tab active" onclick="switchTab(this, 'sales')">Sales Calls</button>
+      <button class="use-tab" onclick="switchTab(this, 'newsletter')">Newsletter</button>
+      <button class="use-tab" onclick="switchTab(this, 'seo')">SEO & Blogs</button>
+      <button class="use-tab" onclick="switchTab(this, 'ads')">Ad Copy</button>
+    </div>
+
+    <div id="tab-sales" class="use-panel active">
+      <div class="use-layout">
+        <div class="use-content">
+          <h3>Walk in loaded. Walk out with the deal.</h3>
+          <p>Before every sales call, your rep queries Wishup Brain. In 2 minutes, they have: relevant past deals, case studies that match the prospect's industry, exact objection-handling lines, and proof points that land.</p>
+          <ul class="use-bullets">
+            <li>Pull similar past deals and what closed them</li>
+            <li>Get case studies matched to prospect's industry in seconds</li>
+            <li>Arm yourself with specific capability proof, not generic claims</li>
+            <li>Know your differentiation vs freelancers before they even ask</li>
+            <li>Close with conviction — "here's the exact VA profile for you"</li>
+          </ul>
+        </div>
+        <div class="use-demo">
+          <div class="demo-header">
+            <div class="demo-dot" style="background:#ef4444"></div>
+            <div class="demo-dot" style="background:#fbbf24"></div>
+            <div class="demo-dot" style="background:#22c55e"></div>
+            <span class="demo-title">Wishup Brain — Pre-call Prep</span>
+          </div>
+          <div class="demo-exchange">
+            <div class="msg msg-user">My next call is with a financial advisory firm that wants GoHighLevel automation help. What do I say?</div>
+            <div class="msg msg-brain">Here's your playbook:<br><br><strong>Open with:</strong> "Are you inheriting an existing GHL build or starting from scratch?" — this signals you know GHL ops, not just the tool name.<br><br><strong>Proof point:</strong> A financial advisory client trained their VA into an internal GHL expert — now managing Meta tracking pipelines, email workflows, and fixes with a 30-min SLA to the CEO.<br><br><strong>If they ask about babysitting:</strong> "When something breaks, they don't say 'I don't know.' They check Claude + ChatGPT, diagnose, and update you in 30–60 minutes."</div>
+            <div class="msg msg-user">What if they push back on cost vs freelancers?</div>
+            <div class="msg msg-brain"><strong>Use this:</strong> "With freelancers, you vet and manage. With us: pre-vetted VA, manager oversight, and 24-hour replacement. Accountability sits with us — not you."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-newsletter" class="use-panel">
+      <div class="use-layout">
+        <div class="use-content">
+          <h3>Data-backed newsletters that actually convert.</h3>
+          <p>Stop sending generic automation tips to leads who've already seen them a hundred times. Query the brain for real proof points, pull specific automation examples Wishup VAs have delivered, and send copy that hits home.</p>
+          <ul class="use-bullets">
+            <li>Pull automation tasks performed by actual Wishup VAs</li>
+            <li>Match case studies to the segment's exact use case</li>
+            <li>Use real objections as content hooks — not assumed pain points</li>
+            <li>Build newsletters in minutes, not hours</li>
+          </ul>
+        </div>
+        <div class="use-demo">
+          <div class="demo-header">
+            <div class="demo-dot" style="background:#ef4444"></div>
+            <div class="demo-dot" style="background:#fbbf24"></div>
+            <div class="demo-dot" style="background:#22c55e"></div>
+            <span class="demo-title">Newsletter Prep — Automation Segment</span>
+          </div>
+          <div class="demo-exchange">
+            <div class="msg msg-user">I'm sending a newsletter to leads interested in automation. Give me specific proof points and a compelling angle.</div>
+            <div class="msg msg-brain">Here's what's real and resonates:<br><br><strong>Hook:</strong> "Our VAs don't just use automation tools — they build them."<br><br><strong>Proof point 1:</strong> A client's VA set up a full GoHighLevel backend in 3 days — pipelines, Stripe, email sequences, everything.<br><br><strong>Proof point 2:</strong> Financial advisory firm gave their VA a 30-min SLA for GHL fixes. The VA self-debugs using AI — CEO hasn't touched it since.<br><br><strong>CTA angle:</strong> "What's one workflow you wish ran itself? Tell us — we'll match you with someone who's done it."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-seo" class="use-panel">
+      <div class="use-layout">
+        <div class="use-content">
+          <h3>SEO built from buyer psychology, not keyword tools.</h3>
+          <p>Real buyer questions from transcripts become long-tail targets. Real objections become FAQ sections. Real case studies get embedded — not the same 3 you always use.</p>
+          <ul class="use-bullets">
+            <li>Extract long-tail queries straight from customer transcripts</li>
+            <li>Build FAQs from actual objections, not assumed ones</li>
+            <li>Rotate fresh case studies — not the same 2–3 every time</li>
+            <li>Include tailored reviews from Clutch and Trustpilot by use case</li>
+            <li>Write content that ranks because it answers what buyers actually ask</li>
+          </ul>
+        </div>
+        <div class="use-demo">
+          <div class="demo-header">
+            <div class="demo-dot" style="background:#ef4444"></div>
+            <div class="demo-dot" style="background:#fbbf24"></div>
+            <div class="demo-dot" style="background:#22c55e"></div>
+            <span class="demo-title">SEO Content — GoHighLevel VA Page</span>
+          </div>
+          <div class="demo-exchange">
+            <div class="msg msg-user">What long-tail queries and FAQs should I target for the GHL VA landing page?</div>
+            <div class="msg msg-brain"><strong>From transcripts, buyers ask:</strong><br>• "hire VA to build GoHighLevel from scratch"<br>• "can a VA manage GHL pipelines and automation"<br>• "GoHighLevel VA with Stripe integration experience"<br>• "will I need to babysit my VA on GHL setup"<br><br><strong>FAQ gold:</strong><br>Q: Do Wishup VAs know GHL build sequences?<br>A: Yes — backend first (pipelines, automations, integrations), then frontend. Here's a real example...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-ads" class="use-panel">
+      <div class="use-layout">
+        <div class="use-content">
+          <h3>Verify your ads before you spend a rupee.</h3>
+          <p>Before any ad goes live, run it through Wishup Brain. It flags inconsistencies, catches overclaims, and tells you if the copy actually reflects what you can deliver. Stop burning budget on ads that don't hold up.</p>
+          <ul class="use-bullets">
+            <li>Verify ad claims against real internal data</li>
+            <li>Flag inconsistencies before they go live</li>
+            <li>Get stronger hooks grounded in proof, not aspiration</li>
+            <li>Align ad messaging with what sales is actually saying</li>
+            <li>Fix it in seconds — not after wasting your budget</li>
+          </ul>
+        </div>
+        <div class="use-demo">
+          <div class="demo-header">
+            <div class="demo-dot" style="background:#ef4444"></div>
+            <div class="demo-dot" style="background:#fbbf24"></div>
+            <div class="demo-dot" style="background:#22c55e"></div>
+            <span class="demo-title">Ad Copy Verification</span>
+          </div>
+          <div class="demo-exchange">
+            <div class="msg msg-user">Review this ad: "Hire a top-tier VA today. Experienced in all automation tools. Results guaranteed."</div>
+            <div class="msg msg-brain"><strong>Issues flagged:</strong><br><br>⚠ "All automation tools" — overly broad, can't be verified from data. Replace with specific tools: GHL, Zapier, Make, Notion.<br><br>⚠ "Results guaranteed" — no backing in case study data. Could attract complaints. Remove or add a specific, verifiable claim.<br><br>⚠ "Top-tier" — vague. Replace with: "Pre-vetted. Manager oversight. 24-hour replacement."<br><br><strong>Stronger version:</strong> "Hire a GHL-certified VA this week. Pre-vetted, managed, replaced in 24hrs if it doesn't work."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA SOURCES -->
+<section class="data-section" id="data">
+  <div class="container">
+    <div class="section-tag">What Feeds It</div>
+    <h2>The brain is only as sharp<br>as the data inside it.</h2>
+    <p class="section-lead">Every source adds another layer of specificity. Every update makes it more powerful. It compounds — every single day.</p>
+
+    <div class="data-grid">
+      <div class="data-card reveal">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8L14 2z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <div class="data-name">8 Category VA Pages</div>
+        <div class="data-count">Service capability depth</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-1">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="data-name">8 Location Pages</div>
+        <div class="data-count">Regional context & market intel</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-2">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="data-name">About Wishup</div>
+        <div class="data-count">Brand & company positioning</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-3">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="data-name">Case Studies</div>
+        <div class="data-count">Real client outcomes & proof</div>
+      </div>
+
+      <div class="data-card reveal">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="data-name">Automation Tasks</div>
+        <div class="data-count">Specific VA deliverables logged</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-1">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="data-name">Clutch + Trustpilot Reviews</div>
+        <div class="data-count">Third-party social proof</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-2">
+        <div class="data-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="data-name">6 Sales Transcripts</div>
+        <div class="data-count">Real buyer questions & objections</div>
+      </div>
+
+      <div class="data-card reveal reveal-delay-3" style="border: 1px dashed var(--green-300); background: var(--green-50);">
+        <div class="data-icon" style="background: var(--green-100);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green-600)" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="data-name" style="color: var(--green-700);">+ More Tomorrow</div>
+        <div class="data-count">Brain compounds every day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="arch-section" id="architecture">
+  <div class="container">
+    <div class="section-tag" style="color: var(--green-300);">How It Was Built</div>
+    <h2 style="max-width: 600px;">From raw Obsidian notes<br>to a live intelligence layer.</h2>
+    <p class="section-lead" style="color: rgba(255,255,255,0.6);">No complex infra. No data team. One content manager and a terminal.</p>
+
+    <div class="arch-flow">
+      <div class="arch-step">
+        <div class="arch-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.8)" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8L14 2z"/></svg>
+        </div>
+        <div class="arch-step-title">Obsidian Notes</div>
+        <div class="arch-step-desc">Raw internal data as .md files</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.8)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="arch-step-title">Claude Code</div>
+        <div class="arch-step-desc">Creates structured wiki via terminal</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.8)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="arch-step-title">GitHub Repo</div>
+        <div class="arch-step-desc">Version-controlled, pushed via terminal</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.8)" stroke-width="1.5"><path d="M9.5 2C7 2 5 4 5 6.5c0 .8.2 1.5.5 2.1C4 9.2 3 10.5 3 12c0 1.5 1 2.8 2.5 3.4-.3.6-.5 1.3-.5 2.1 0 2.5 2 4.5 4.5 4.5"/><path d="M14.5 2C17 2 19 4 19 6.5c0 .8-.2 1.5-.5 2.1 1.5.6 2.5 1.9 2.5 3.4 0 1.5-1 2.8-2.5 3.4.3.6.5 1.3.5 2.1 0 2.5-2 4.5-4.5 4.5"/></svg>
+        </div>
+        <div class="arch-step-title">Claude Project</div>
+        <div class="arch-step-desc">Repo connects as query layer</div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(34,197,94,0.8)" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="arch-step-title">Your Team Queries</div>
+        <div class="arch-step-desc">Sales, SEO, content, ads — in seconds</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; border: 1px solid rgba(34,197,94,0.15); border-radius: 14px; background: rgba(34,197,94,0.03); position: relative; z-index: 1;">
+      <div style="display: flex; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 250px;">
+          <div style="font-family: 'Fraunces', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--green-400); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em;">Who Owns It</div>
+          <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; font-weight: 300;">A content manager or content engineer keeps the brain fresh. No data team required. No technical debt. Just consistent curation.</p>
+        </div>
+        <div style="flex: 1; min-width: 250px;">
+          <div style="font-family: 'Fraunces', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--green-400); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em;">The Compounding Effect</div>
+          <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6); line-height: 1.6; font-weight: 300;">Every new case study, transcript, or review added to the brain makes every future query more accurate. The brain grows smarter every day it runs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="proof-section" id="proof">
+  <div class="container">
+    <div class="section-tag">Social Proof</div>
+    <h2>Real clients. Real results.<br>All in the brain.</h2>
+    <p class="section-lead">Wishup Brain indexes every Clutch and Trustpilot review so your team can pull the right proof for the right prospect — instantly.</p>
+
+    <div class="proof-cards">
+      <div class="proof-card reveal">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-text">"Our VA became our internal GHL expert within weeks. She built the entire pipeline, Stripe integration, and Meta tracking — and handles fixes with a 30-minute SLA. I haven't touched the backend since."</div>
+        <div class="proof-author">
+          <div class="proof-avatar">JR</div>
+          <div>
+            <div class="proof-name">James R.</div>
+            <div class="proof-role">CEO, Financial Advisory Firm</div>
+            <span class="platform-badge badge-clutch">Clutch</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal reveal-delay-1">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-text">"I was skeptical about automation VAs — every other hire needed hand-holding. Within 3 days, she'd mapped our entire CRM workflow and built automations I'd been putting off for months."</div>
+        <div class="proof-author">
+          <div class="proof-avatar">SM</div>
+          <div>
+            <div class="proof-name">Sarah M.</div>
+            <div class="proof-role">Founder, E-commerce Brand</div>
+            <span class="platform-badge badge-trustpilot">Trustpilot</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proof-card reveal reveal-delay-2">
+        <div class="proof-stars">★★★★★</div>
+        <div class="proof-text">"The 24-hour replacement guarantee sold me. But I never needed it. What sold me again was watching my VA debug a broken Zapier sequence using ChatGPT and sending me a fix in under an hour."</div>
+        <div class="proof-author">
+          <div class="proof-avatar">AK</div>
+          <div>
+            <div class="proof-name">Anil K.</div>
+            <div class="proof-role">Operations Lead, SaaS Company</div>
+            <span class="platform-badge badge-clutch">Clutch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container" style="position: relative; z-index: 1;">
+    <!-- Brain SVG in background -->
+    <svg style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;opacity:0.04;pointer-events:none" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="100" cy="100" r="70" fill="none" stroke="white" stroke-width="0.5"/>
+      <circle cx="100" cy="100" r="50" fill="none" stroke="white" stroke-width="0.5"/>
+      <line x1="10" y1="100" x2="190" y2="100" stroke="white" stroke-width="0.5"/>
+      <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="0.5"/>
+      <line x1="29" y1="29" x2="171" y2="171" stroke="white" stroke-width="0.5"/>
+      <line x1="171" y1="29" x2="29" y2="171" stroke="white" stroke-width="0.5"/>
+    </svg>
+
+    <h2>Stop sending your teams in empty.</h2>
+    <p>Wishup Brain is the unfair advantage your competitors don't have yet. Sales closes faster. Marketing creates smarter. Build it once. Compounds every day.</p>
+    <a href="#" class="btn-white">
+      Build Your Brain
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+
+    <div style="margin-top: 2.5rem; display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        No complex infra needed
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        One content manager runs it
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        Compounds smarter every day
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Wishup · <a href="#">Privacy Policy</a> · <a href="#">Terms</a></p>
+  <p style="margin-top: 0.5rem; font-size: 0.75rem; opacity: 0.6;">Built with internal data. Powered by Claude.</p>
+</footer>
+
+<script>
+  // Tab switching
+  function switchTab(btn, tabId) {
+    document.querySelectorAll('.use-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.use-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + tabId).classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const start = Date.now();
+
+    function update() {
+      const elapsed = Date.now() - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(target * eased);
+      el.textContent = current + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+
+    update();
+  }
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-target]').forEach(el => animateCounter(el));
+        statsObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.stats-bar').forEach(el => statsObserver.observe(el));
+
+  // Smooth active nav link
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (window.scrollY >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.style.color = '';
+      if (link.getAttribute('href') === '#' + current) {
+        link.style.color = 'var(--green-700)';
+      }
+    });
+  });
+</script>
+</body>
+</html>
