@@ -20,6 +20,9 @@
     --border: #e8e4df;
     --gold: #d4a017;
     --gold-light: #fef3c7;
+    --wishup-green: #5CD699;
+    --wishup-green-deep: #2e7d32;
+    --wishup-green-dark: #1b5e20;
   }
   html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--text-main); line-height: 1.7; font-size: 16px; }
@@ -117,66 +120,58 @@
   .consult-card {
     border-radius: 18px;
     overflow: hidden;
-    background: linear-gradient(160deg, #0f0a00 0%, #1a1000 40%, #0a0f0a 100%);
-    border: 1px solid rgba(212,160,23,0.25);
+    background: #fff;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(46,125,50,0.06);
     position: relative;
   }
-  .consult-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 20% 0%, rgba(212,160,23,0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 100% 100%, rgba(46,125,50,0.1) 0%, transparent 50%);
-    pointer-events: none;
+  .consult-head {
+    background: linear-gradient(135deg, #eafaf2 0%, #e8f5e9 100%);
+    padding: 22px 24px 20px;
+    border-bottom: 1px solid #dcefe2;
   }
-  .consult-card::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold), #f59e0b, var(--gold), transparent);
+  .consult-brand { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .consult-brand .cb-mark {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: linear-gradient(135deg, var(--wishup-green), var(--wishup-green-deep));
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 12px; font-weight: 800;
   }
-  .consult-inner { padding: 26px 24px 24px; position: relative; }
+  .consult-brand .cb-name { font-weight: 700; font-size: 16px; color: var(--black); }
+  .consult-head h3 {
+    font-family: 'Playfair Display', serif; font-size: 21px; color: var(--black);
+    line-height: 1.25; margin-bottom: 4px;
+  }
+  .consult-head h3 em { font-style: normal; color: var(--wishup-green-deep); }
+  .consult-sub { font-size: 12px; color: var(--text-muted); }
 
-  .consult-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(212,160,23,0.12); border: 1px solid rgba(212,160,23,0.3);
-    border-radius: 20px; padding: 4px 12px; font-size: 11px; color: #f59e0b;
-    font-weight: 600; margin-bottom: 14px; letter-spacing: 0.3px;
-  }
-  .consult-badge::before { content: '✦'; font-size: 9px; }
-
-  .consult-inner h3 {
-    font-family: 'Playfair Display', serif; font-size: 21px; color: #fff;
-    line-height: 1.3; margin-bottom: 18px;
-  }
-  .consult-inner h3 em {
-    font-style: normal;
-    background: linear-gradient(135deg, #f59e0b, var(--gold));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .consult-sub { font-size: 12px; color: #999; margin-bottom: 18px; line-height: 1.5; }
+  .consult-inner { padding: 20px 24px 24px; position: relative; }
 
   .cf-field { position: relative; margin-bottom: 11px; }
   .cf-field .cf-icon {
     position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-    width: 16px; height: 16px; stroke: #7a7158; fill: none; stroke-width: 2; pointer-events: none;
+    width: 16px; height: 16px; stroke: #9aa6b0; fill: none; stroke-width: 2; pointer-events: none;
   }
   .cf-field.cf-textarea .cf-icon { top: 14px; transform: none; }
   .cf-field input, .cf-field textarea {
     width: 100%; padding: 12px 14px 12px 38px;
-    border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px;
-    font-size: 14px; font-family: 'DM Sans', sans-serif; color: #fff;
-    background: rgba(255,255,255,0.05); outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main);
+    background: #fff; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
   .cf-field textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
   .cf-field input:focus, .cf-field textarea:focus {
-    border-color: var(--gold); background: rgba(255,255,255,0.08);
-    box-shadow: 0 0 0 3px rgba(212,160,23,0.15);
+    border-color: var(--wishup-green);
+    box-shadow: 0 0 0 3px rgba(92,214,153,0.18);
   }
-  .cf-field input::placeholder, .cf-field textarea::placeholder { color: #777; }
+  .cf-field input::placeholder, .cf-field textarea::placeholder { color: #aab4bd; }
 
   .cf-phone { display: flex; gap: 8px; margin-bottom: 11px; }
   .cf-phone .cf-code {
     display: flex; align-items: center; gap: 6px; padding: 0 13px;
-    border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px;
-    background: rgba(255,255,255,0.05); font-size: 14px; color: #fff;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    background: #fff; font-size: 14px; color: var(--text-main);
     white-space: nowrap; flex-shrink: 0;
   }
   .cf-phone .cf-code .flag { font-size: 15px; line-height: 1; }
@@ -185,25 +180,23 @@
 
   .cf-submit {
     width: 100%; margin-top: 5px; padding: 14px;
-    background: linear-gradient(135deg, #92400e, var(--gold), #b45309);
+    background: var(--wishup-green-deep);
     color: #fff; border: none; border-radius: 10px;
     font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; transition: opacity 0.2s, transform 0.15s; letter-spacing: 0.3px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    cursor: pointer; transition: background 0.2s, transform 0.15s; letter-spacing: 0.2px;
   }
-  .cf-submit:hover { opacity: 0.92; transform: translateY(-1px); }
-  .cf-note { font-size: 11px; color: #666; text-align: center; margin-top: 10px; }
+  .cf-submit:hover { background: var(--wishup-green-dark); transform: translateY(-1px); }
 
   /* ===== MARQUEE LOGO STRIP ===== */
   .marquee-strip {
-    background: var(--black); border-radius: 14px;
-    padding: 18px 0 16px; overflow: hidden; position: relative;
+    background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 0 14px; overflow: hidden; position: relative;
   }
   .marquee-title {
     font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-    color: #8a8a8a; text-align: center; margin-bottom: 14px; padding: 0 18px;
+    color: var(--text-muted); text-align: center; margin-bottom: 14px; padding: 0 18px;
   }
-  .marquee-title b { color: #f59e0b; }
+  .marquee-title b { color: var(--wishup-green-deep); }
   .marquee-track {
     display: flex; width: max-content;
     animation: marquee 18s linear infinite;
@@ -214,16 +207,17 @@
     height: 28px; margin: 0 22px; flex-shrink: 0;
   }
   .marquee-track .m-logo img {
-    max-height: 24px; max-width: 100px; width: auto; object-fit: contain; opacity: 0.85;
+    max-height: 24px; max-width: 100px; width: auto; object-fit: contain;
+    opacity: 0.7; filter: grayscale(100%); transition: opacity 0.2s, filter 0.2s;
   }
-  .marquee-track .m-logo.invert img { filter: brightness(0) invert(1); opacity: 0.8; }
-  .marquee-track .m-logo .m-fallback { color: #e8e8e8; font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .marquee-track .m-logo:hover img { opacity: 1; filter: grayscale(0%); }
+  .marquee-track .m-logo .m-fallback { color: var(--text-muted); font-weight: 700; font-size: 15px; white-space: nowrap; }
   /* fade edges */
   .marquee-strip::before, .marquee-strip::after {
     content: ''; position: absolute; top: 0; bottom: 0; width: 36px; z-index: 2; pointer-events: none;
   }
-  .marquee-strip::before { left: 0; background: linear-gradient(90deg, var(--black), transparent); }
-  .marquee-strip::after { right: 0; background: linear-gradient(270deg, var(--black), transparent); }
+  .marquee-strip::before { left: 0; background: linear-gradient(90deg, #fff, transparent); }
+  .marquee-strip::after { right: 0; background: linear-gradient(270deg, #fff, transparent); }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* POPUP */
@@ -233,40 +227,40 @@
   .popup-box { background: #fff; border-radius: 20px; width: 100%; max-width: 440px; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.5); animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
   @keyframes slideUp { from{opacity:0;transform:translateY(24px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
   .popup-header { background: var(--black); padding: 28px 28px 24px; position: relative; overflow: hidden; }
-  .popup-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(212,160,23,0.2) 0%, transparent 55%); }
-  .popup-header::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .popup-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 80% 20%, rgba(92,214,153,0.22) 0%, transparent 55%); }
+  .popup-header::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--wishup-green), transparent); }
   .popup-close { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; color: #aaa; cursor: pointer; font-size: 16px; line-height: 30px; text-align: center; transition: background 0.2s, color 0.2s; z-index: 1; }
   .popup-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
-  .popup-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #f59e0b; margin-bottom: 8px; display: block; position: relative; }
+  .popup-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--wishup-green); margin-bottom: 8px; display: block; position: relative; }
   .popup-header h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: #fff; line-height: 1.3; position: relative; }
   .popup-header p { font-size: 13px; color: #888; margin-top: 6px; position: relative; }
   .popup-body { padding: 24px 28px 28px; }
   .popup-field { margin-bottom: 16px; }
   .popup-field label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px; }
   .popup-field input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main); background: var(--off-white); outline: none; transition: border-color 0.2s, background 0.2s; }
-  .popup-field input:focus { border-color: var(--gold); background: #fff; }
+  .popup-field input:focus { border-color: var(--wishup-green); background: #fff; }
   .popup-field input::placeholder { color: #bbb; }
   .popup-field textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main); background: var(--off-white); outline: none; transition: border-color 0.2s, background 0.2s; resize: vertical; min-height: 80px; line-height: 1.5; }
-  .popup-field textarea:focus { border-color: var(--gold); background: #fff; }
+  .popup-field textarea:focus { border-color: var(--wishup-green); background: #fff; }
   .popup-field textarea::placeholder { color: #bbb; }
-  .popup-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #92400e, var(--gold)); color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: opacity 0.2s; margin-top: 4px; }
-  .popup-submit:hover { opacity: 0.9; }
+  .popup-submit { width: 100%; padding: 14px; background: var(--wishup-green-deep); color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: background 0.2s; margin-top: 4px; }
+  .popup-submit:hover { background: var(--wishup-green-dark); }
   .popup-note { font-size: 11px; color: var(--text-light); text-align: center; margin-top: 12px; }
 
   /* CAROUSEL */
-  .carousel-widget { background: var(--black); border-radius: 16px; overflow: hidden; }
+  .carousel-widget { background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
   .carousel-slide { display: none; padding: 24px 22px; }
   .carousel-slide.active { display: block; animation: slideIn 0.5s ease; }
   @keyframes slideIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
-  .carousel-quote { font-family: 'DM Serif Display', serif; font-size: 15px; color: #e8e8e8; line-height: 1.7; font-style: italic; margin-bottom: 20px; position: relative; padding-top: 24px; }
-  .carousel-quote::before { content: '\201C'; position: absolute; top: 0; left: -2px; font-size: 48px; color: #f59e0b; line-height: 1; font-family: 'Playfair Display', serif; }
+  .carousel-quote { font-family: 'DM Serif Display', serif; font-size: 15px; color: #2c2c2c; line-height: 1.7; font-style: italic; margin-bottom: 20px; position: relative; padding-top: 24px; }
+  .carousel-quote::before { content: '\201C'; position: absolute; top: 0; left: -2px; font-size: 48px; color: var(--wishup-green); line-height: 1; font-family: 'Playfair Display', serif; }
   .carousel-author { display: flex; align-items: center; gap: 12px; }
-  .carousel-author img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(212,160,23,0.4); }
-  .carousel-author-name { font-size: 14px; font-weight: 600; color: #fff; }
-  .carousel-author-role { font-size: 12px; color: #888; margin-top: 2px; }
+  .carousel-author img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(92,214,153,0.5); }
+  .carousel-author-name { font-size: 14px; font-weight: 600; color: var(--black); }
+  .carousel-author-role { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .carousel-dots { display: flex; justify-content: center; gap: 6px; padding: 0 22px 18px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background: #333; cursor: pointer; transition: background 0.2s, width 0.2s; }
-  .dot.active { background: #f59e0b; width: 18px; border-radius: 3px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #d8dde2; cursor: pointer; transition: background 0.2s, width 0.2s; }
+  .dot.active { background: var(--wishup-green-deep); width: 18px; border-radius: 3px; }
 
   footer { background: var(--black); color: #666; text-align: center; padding: 28px 40px; font-size: 13px; }
   footer a { color: #f59e0b; text-decoration: none; }
@@ -459,9 +453,12 @@
 
     <!-- CONSULTATION FORM -->
     <div class="consult-card">
+      <div class="consult-head">
+        <div class="consult-brand"><span class="cb-mark">W</span><span class="cb-name">Wishup</span></div>
+        <h3>Get a <em>free consultation</em> &amp; $100 off</h3>
+        <p class="consult-sub">** Only for first-time customers</p>
+      </div>
       <div class="consult-inner">
-        <div class="consult-badge">Get $100 Off · First-time only</div>
-        <h3>Book your <em>free consultation</em></h3>
 
         <div class="cf-field">
           <svg class="cf-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -499,14 +496,14 @@
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/11/Spotify-Logo.png" alt="Spotify" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Spotify</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-Logo.png" alt="YouTube" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>YouTube</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-Logo.png" alt="Facebook" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Facebook</span>'"></div>
-        <div class="m-logo invert"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
         <!-- set 2 (duplicate for seamless loop) -->
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png" alt="Google" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Google</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2023/01/LinkedIn-logo.png" alt="LinkedIn" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>LinkedIn</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/11/Spotify-Logo.png" alt="Spotify" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Spotify</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-Logo.png" alt="YouTube" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>YouTube</span>'"></div>
         <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-Logo.png" alt="Facebook" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Facebook</span>'"></div>
-        <div class="m-logo invert"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
       </div>
     </div>
 
@@ -516,21 +513,21 @@
         <div class="carousel-slide active">
           <div class="carousel-quote">Hiring through Wishup was the best decision I made this year. My VA took over everything within 48 hours — emails, scheduling, research. I finally have my mornings back.</div>
           <div class="carousel-author">
-            <img src="https://cms-assets.wishup.co/Niels_Growth_M_908f3ee1ca.webp?quality=75&width=640&format=webp" alt="Niels" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#92400e'">
+            <img src="https://cms-assets.wishup.co/Niels_Growth_M_908f3ee1ca.webp?quality=75&width=640&format=webp" alt="Niels" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#2e7d32'">
             <div><div class="carousel-author-name">Niels Hoffman</div><div class="carousel-author-role">Founder, GrowthStack</div></div>
           </div>
         </div>
         <div class="carousel-slide">
           <div class="carousel-quote">I was skeptical at first — I'd tried freelancers before and it never stuck. But my Wishup VA was different. Proactive, reliable, and honestly better than some full-time hires I've made.</div>
           <div class="carousel-author">
-            <img src="https://cms-assets.wishup.co/Trish_d9ad733caf.png?quality=75&width=640&format=webp" alt="Trish" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#92400e'">
+            <img src="https://cms-assets.wishup.co/Trish_d9ad733caf.png?quality=75&width=640&format=webp" alt="Trish" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#2e7d32'">
             <div><div class="carousel-author-name">Trish Calloway</div><div class="carousel-author-role">CEO, Calloway Consulting</div></div>
           </div>
         </div>
         <div class="carousel-slide">
           <div class="carousel-quote">We scaled from 2 to 8 VAs over 18 months. Each one hit the ground running. Wishup's matching process is genuinely impressive — they understood what we needed before we did.</div>
           <div class="carousel-author">
-            <img src="https://cms-assets.wishup.co/TA_Mccann_75854fb849.png?quality=75&width=640&format=webp" alt="TA McCann" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#92400e'">
+            <img src="https://cms-assets.wishup.co/TA_Mccann_75854fb849.png?quality=75&width=640&format=webp" alt="TA McCann" onerror="this.style.cssText='width:44px;height:44px;border-radius:50%;background:#2e7d32'">
             <div><div class="carousel-author-name">T.A. McCann</div><div class="carousel-author-role">Managing Partner, Fathom Capital</div></div>
           </div>
         </div>
