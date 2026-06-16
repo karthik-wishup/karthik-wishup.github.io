@@ -113,118 +113,118 @@
   /* RIGHT */
   .right-col { position: sticky; top: 80px; display: flex; flex-direction: column; gap: 20px; }
 
-  /* VERSION B CARD */
-  .promo-card-b {
+  /* ===== CONSULTATION FORM ===== */
+  .consult-card {
     border-radius: 18px;
     overflow: hidden;
     background: linear-gradient(160deg, #0f0a00 0%, #1a1000 40%, #0a0f0a 100%);
     border: 1px solid rgba(212,160,23,0.25);
     position: relative;
   }
-  .promo-card-b::before {
-    content: '';
-    position: absolute; inset: 0;
+  .consult-card::before {
+    content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse at 20% 0%, rgba(212,160,23,0.12) 0%, transparent 50%),
                 radial-gradient(ellipse at 100% 100%, rgba(46,125,50,0.1) 0%, transparent 50%);
     pointer-events: none;
   }
-
-  /* Gold shimmer border top */
-  .promo-card-b::after {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 2px;
+  .consult-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
     background: linear-gradient(90deg, transparent, var(--gold), #f59e0b, var(--gold), transparent);
   }
+  .consult-inner { padding: 26px 24px 24px; position: relative; }
 
-  .promo-b-inner { padding: 26px 24px; position: relative; }
-
-  .promo-b-badge {
+  .consult-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(212,160,23,0.12);
-    border: 1px solid rgba(212,160,23,0.3);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 11px;
-    color: #f59e0b;
-    font-weight: 600;
-    margin-bottom: 18px;
-    letter-spacing: 0.3px;
+    background: rgba(212,160,23,0.12); border: 1px solid rgba(212,160,23,0.3);
+    border-radius: 20px; padding: 4px 12px; font-size: 11px; color: #f59e0b;
+    font-weight: 600; margin-bottom: 14px; letter-spacing: 0.3px;
   }
-  .promo-b-badge::before { content: '✦'; font-size: 9px; }
+  .consult-badge::before { content: '✦'; font-size: 9px; }
 
-  .promo-b-inner h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    color: #fff;
-    line-height: 1.3;
-    margin-bottom: 12px;
+  .consult-inner h3 {
+    font-family: 'Playfair Display', serif; font-size: 21px; color: #fff;
+    line-height: 1.3; margin-bottom: 18px;
   }
-  .promo-b-inner h3 em {
+  .consult-inner h3 em {
     font-style: normal;
     background: linear-gradient(135deg, #f59e0b, var(--gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
+  .consult-sub { font-size: 12px; color: #999; margin-bottom: 18px; line-height: 1.5; }
 
-  /* Credential pills */
-  .credential-row {
-    display: flex; gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+  .cf-field { position: relative; margin-bottom: 11px; }
+  .cf-field .cf-icon {
+    position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; stroke: #7a7158; fill: none; stroke-width: 2; pointer-events: none;
   }
-  .cred-pill {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    padding: 7px 10px;
-    flex: 1;
-    min-width: 110px;
+  .cf-field.cf-textarea .cf-icon { top: 14px; transform: none; }
+  .cf-field input, .cf-field textarea {
+    width: 100%; padding: 12px 14px 12px 38px;
+    border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px;
+    font-size: 14px; font-family: 'DM Sans', sans-serif; color: #fff;
+    background: rgba(255,255,255,0.05); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   }
-  .cred-pill-logo {
-    width: 22px; height: 22px;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
+  .cf-field textarea { resize: vertical; min-height: 78px; line-height: 1.5; }
+  .cf-field input:focus, .cf-field textarea:focus {
+    border-color: var(--gold); background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 3px rgba(212,160,23,0.15);
   }
-  .cred-pill-text { font-size: 11px; color: #ccc; line-height: 1.3; }
-  .cred-pill-text strong { display: block; font-size: 12px; color: #fff; }
+  .cf-field input::placeholder, .cf-field textarea::placeholder { color: #777; }
 
-  /* Stat strip */
-  .b-stats {
-    display: flex; gap: 0;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
+  .cf-phone { display: flex; gap: 8px; margin-bottom: 11px; }
+  .cf-phone .cf-code {
+    display: flex; align-items: center; gap: 6px; padding: 0 13px;
+    border: 1.5px solid rgba(255,255,255,0.12); border-radius: 10px;
+    background: rgba(255,255,255,0.05); font-size: 14px; color: #fff;
+    white-space: nowrap; flex-shrink: 0;
   }
-  .b-stat { flex: 1; padding: 12px 10px; text-align: center; position: relative; }
-  .b-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 1px; background: rgba(255,255,255,0.08); }
-  .b-stat-num { font-size: 18px; font-weight: 700; color: #f59e0b; line-height: 1; }
-  .b-stat-label { font-size: 10px; color: #666; margin-top: 3px; }
+  .cf-phone .cf-code .flag { font-size: 15px; line-height: 1; }
+  .cf-phone .cf-field { flex: 1; margin-bottom: 0; }
+  .cf-phone .cf-field input { padding-left: 14px; }
 
-  .btn-hire {
-    width: 100%;
+  .cf-submit {
+    width: 100%; margin-top: 5px; padding: 14px;
     background: linear-gradient(135deg, #92400e, var(--gold), #b45309);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    font-family: 'DM Sans', sans-serif;
-    cursor: pointer;
-    transition: opacity 0.2s, transform 0.15s;
-    letter-spacing: 0.3px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    color: #fff; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: opacity 0.2s, transform 0.15s; letter-spacing: 0.3px;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
   }
-  .btn-hire:hover { opacity: 0.9; transform: translateY(-1px); }
+  .cf-submit:hover { opacity: 0.92; transform: translateY(-1px); }
+  .cf-note { font-size: 11px; color: #666; text-align: center; margin-top: 10px; }
 
-  .b-footnote { font-size: 11px; color: #555; text-align: center; margin-top: 10px; }
+  /* ===== MARQUEE LOGO STRIP ===== */
+  .marquee-strip {
+    background: var(--black); border-radius: 14px;
+    padding: 18px 0 16px; overflow: hidden; position: relative;
+  }
+  .marquee-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #8a8a8a; text-align: center; margin-bottom: 14px; padding: 0 18px;
+  }
+  .marquee-title b { color: #f59e0b; }
+  .marquee-track {
+    display: flex; width: max-content;
+    animation: marquee 18s linear infinite;
+  }
+  .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+  .marquee-track .m-logo {
+    display: flex; align-items: center; justify-content: center;
+    height: 28px; margin: 0 22px; flex-shrink: 0;
+  }
+  .marquee-track .m-logo img {
+    max-height: 24px; max-width: 100px; width: auto; object-fit: contain; opacity: 0.85;
+  }
+  .marquee-track .m-logo.invert img { filter: brightness(0) invert(1); opacity: 0.8; }
+  .marquee-track .m-logo .m-fallback { color: #e8e8e8; font-weight: 700; font-size: 15px; white-space: nowrap; }
+  /* fade edges */
+  .marquee-strip::before, .marquee-strip::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 36px; z-index: 2; pointer-events: none;
+  }
+  .marquee-strip::before { left: 0; background: linear-gradient(90deg, var(--black), transparent); }
+  .marquee-strip::after { right: 0; background: linear-gradient(270deg, var(--black), transparent); }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* POPUP */
   .popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 500; display: none; align-items: center; justify-content: center; padding: 20px; }
@@ -243,9 +243,12 @@
   .popup-body { padding: 24px 28px 28px; }
   .popup-field { margin-bottom: 16px; }
   .popup-field label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px; }
-  .popup-field input, .popup-field select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main); background: var(--off-white); outline: none; transition: border-color 0.2s, background 0.2s; appearance: none; }
-  .popup-field input:focus, .popup-field select:focus { border-color: var(--gold); background: #fff; }
+  .popup-field input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main); background: var(--off-white); outline: none; transition: border-color 0.2s, background 0.2s; }
+  .popup-field input:focus { border-color: var(--gold); background: #fff; }
   .popup-field input::placeholder { color: #bbb; }
+  .popup-field textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text-main); background: var(--off-white); outline: none; transition: border-color 0.2s, background 0.2s; resize: vertical; min-height: 80px; line-height: 1.5; }
+  .popup-field textarea:focus { border-color: var(--gold); background: #fff; }
+  .popup-field textarea::placeholder { color: #bbb; }
   .popup-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, #92400e, var(--gold)); color: #fff; border: none; border-radius: 9px; font-size: 15px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: opacity 0.2s; margin-top: 4px; }
   .popup-submit:hover { opacity: 0.9; }
   .popup-note { font-size: 11px; color: var(--text-light); text-align: center; margin-top: 12px; }
@@ -299,16 +302,8 @@
         <input type="tel" placeholder="+1 (555) 000-0000" />
       </div>
       <div class="popup-field">
-        <label>What Are You Looking For?</label>
-        <select>
-          <option value="" disabled selected>Select your primary need</option>
-          <option>Email & Calendar Management</option>
-          <option>Research & Admin Support</option>
-          <option>Social Media Management</option>
-          <option>Customer Support</option>
-          <option>Data Entry & Operations</option>
-          <option>Something else</option>
-        </select>
+        <label>What Do You Need Help With?</label>
+        <textarea placeholder="e.g. inbox &amp; calendar, research, customer support…"></textarea>
       </div>
       <button class="popup-submit">Hire Now →</button>
       <p class="popup-note">Free consultation included. No long-term commitment.</p>
@@ -462,42 +457,56 @@
   <!-- RIGHT -->
   <aside class="right-col">
 
-    <!-- VERSION B CARD -->
-    <div class="promo-card-b">
-      <div class="promo-b-inner">
-        <div class="promo-b-badge">Top 0.1% Talent</div>
-        <h3>Hire the best.<br><em>Trusted where it counts.</em></h3>
+    <!-- CONSULTATION FORM -->
+    <div class="consult-card">
+      <div class="consult-inner">
+        <div class="consult-badge">Get $100 Off · First-time only</div>
+        <h3>Book your <em>free consultation</em></h3>
 
-        <div class="credential-row">
-          <div class="cred-pill">
-            <div class="cred-pill-logo">🚀</div>
-            <div class="cred-pill-text"><strong>Y-Combinator</strong>Founders trust Wishup VAs</div>
-          </div>
-          <div class="cred-pill">
-            <div class="cred-pill-logo">🎓</div>
-            <div class="cred-pill-text"><strong>Harvard</strong>Professionals rely on our team</div>
+        <div class="cf-field">
+          <svg class="cf-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input type="text" placeholder="Your name" autocomplete="name" />
+        </div>
+
+        <div class="cf-field">
+          <svg class="cf-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          <input type="email" placeholder="you@company.com" autocomplete="email" />
+        </div>
+
+        <div class="cf-phone">
+          <div class="cf-code"><span class="flag">🇮🇳</span> +91 ▾</div>
+          <div class="cf-field">
+            <input type="tel" placeholder="Phone number" autocomplete="tel" />
           </div>
         </div>
 
-        <div class="b-stats">
-          <div class="b-stat">
-            <div class="b-stat-num">0.1%</div>
-            <div class="b-stat-label">acceptance rate</div>
-          </div>
-          <div class="b-stat">
-            <div class="b-stat-num">60min</div>
-            <div class="b-stat-label">to your VA</div>
-          </div>
-          <div class="b-stat">
-            <div class="b-stat-num">1000+</div>
-            <div class="b-stat-label">clients served</div>
-          </div>
+        <div class="cf-field cf-textarea">
+          <svg class="cf-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+          <textarea placeholder="What do you need help with? (e.g. inbox &amp; calendar, research, support)"></textarea>
         </div>
 
-        <button class="btn-hire" onclick="openPopup()">
-          ✦ &nbsp;Hire Now
-        </button>
-        <p class="b-footnote">Free consultation · No long-term contracts</p>
+        <button class="cf-submit">Get Free Consultation</button>
+      </div>
+    </div>
+
+    <!-- MARQUEE LOGO STRIP -->
+    <div class="marquee-strip">
+      <div class="marquee-title">Trusted by <b>1500+</b> founders &amp; teams</div>
+      <div class="marquee-track">
+        <!-- set 1 -->
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png" alt="Google" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Google</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2023/01/LinkedIn-logo.png" alt="LinkedIn" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>LinkedIn</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/11/Spotify-Logo.png" alt="Spotify" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Spotify</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-Logo.png" alt="YouTube" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>YouTube</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-Logo.png" alt="Facebook" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Facebook</span>'"></div>
+        <div class="m-logo invert"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
+        <!-- set 2 (duplicate for seamless loop) -->
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2021/05/Google-logo.png" alt="Google" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Google</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2023/01/LinkedIn-logo.png" alt="LinkedIn" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>LinkedIn</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/11/Spotify-Logo.png" alt="Spotify" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Spotify</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2017/05/Youtube-Logo.png" alt="YouTube" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>YouTube</span>'"></div>
+        <div class="m-logo"><img src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-Logo.png" alt="Facebook" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>Facebook</span>'"></div>
+        <div class="m-logo invert"><img src="https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png" alt="GitHub" onerror="this.outerHTML='<span class=&quot;m-fallback&quot;>GitHub</span>'"></div>
       </div>
     </div>
 
